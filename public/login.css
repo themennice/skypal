@@ -1,0 +1,26 @@
+html, body { height: 100%; width: 100%; margin: 0; }
+
+.container {
+    display: table;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+}
+
+.helper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.prompt {
+    margin: 0 auto;
+	background-color:#f2f5fa;
+	width:670px;
+	height:860px;
+	border-radius:25px;
+}
+
+.data {
+	margin:0 auto;
+}

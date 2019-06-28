@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Login</title>
+		<link rel="stylesheet" href="login.css">
+		<script src="login.js" defer></script>
+	</head>
+	
+	<body>
+		<div class="container">
+			<div class="helper">
+				<div class="prompt">
+					<form class="data" action="/login" method="post">
+						<table>
+							<tr>
+								<td>Username:</td>
+								<td><input type="text" name="username" value=""/></td>
+							</tr>
+							<tr>
+								<td>Password:</td>
+								<td><input type="password" name="password" value=""/></td>		
+							</tr>
+							<tr>
+								<td><button name="submit" value="submit">Submit</button></td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
