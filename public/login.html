@@ -14,22 +14,27 @@
 		<div class="container">
 			<div class="helper">
 				<div class="prompt">
-					<form class="data" action="/login" method="post">
-						<table>
-							<tr>
-								<td>Username:</td>
-								<td><input type="text" name="username" value=""/></td>
-							</tr>
-							<tr>
-								<td>Password:</td>
-								<td><input type="password" name="password" value=""/></td>		
-							</tr>
-							<tr>
-								<td><button name="submit" value="submit">Submit</button></td>
-							</tr>
-						</table>
-					</form>
-					<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+					
+					<div class="signup">
+						<form action="">
+							<h2 style="font-family:sans-serif;">Signup</h2>
+							<h3 style="font-family:sans-serif; font-style:italic;">Don't have an account?</h3>
+							<button name="submit" value="submit">Signup</button>
+						</form>
+					</div>
+					<div class="separator"></div>					
+					<div class="login">
+						<form class="data" action="/login" method="post">
+							<h2 style="font-family:sans-serif;">Login</h2>
+							<h3 style="font-family:sans-serif;">Username:</h3>
+							<input type="text" name="username" value=""/>
+							<h3 style="font-family:sans-serif;">Password:</h3>
+							<input type="password" name="password" value=""/><br>
+							<button name="submit" value="submit">Submit</button>
+						</form>
+						<h3 style="font-family:sans-serif; font-style:italic;">or...</h3>
+						<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+					</div>
 					<script>
 					  function onSignIn(googleUser) {
 						// Useful data for your client-side scripts:
