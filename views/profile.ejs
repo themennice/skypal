@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!-- C:\Program Files\Git\node-js-getting-started /-->
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Profile</title>
+		<link rel="stylesheet" href="profile.css"/ type="text/css">
+
+	</head>
+
+	<body>
+		<div id="profile">
+			<h1> Your Profile </h1>
+     <% results.forEach(function(r) { %>
+
+      <div class="user" onclick="Show(this)" username="<%= JSON.stringify(r)%>">
+				<p>Your name is </p>
+        <span class="Name"><%=r.name%></span>
+				<p>Your username is </p>
+        <span class="UserName"><%=r.username%></span>
+				<p>Your passwords is </p>
+				<p1>********</p1>
+				<p> Your email is </p>
+        <span class="email"><%=r.email%></span>
+				<p>Your age is </p>
+        <span class="age"><%=r.age%></span>
+
+      </div>
+
+
+			<style>
+				body {background-color: powderblue;text-align: center;}
+				h1   {color: blue;text-align: center;}
+				p    {color: red;text-align: center;}
+
+
+			</style>
+			<% } )%>
+	</body>
+</html>
