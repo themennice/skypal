@@ -25,8 +25,13 @@ express()
 				// ** Load main page here ** //
 
 				var user = {'user' : uname};
-				res.render("login", user);
+				//res.render("login", user);
+				
+				
+				//res.send(result.rows)
 			
+				var results = { 'results': (result) ? result.rows : [] };
+				res.render('profile',results);
 			
 				// ** ******************* ** //
 				
@@ -54,7 +59,6 @@ express()
   		res.render('profile',results);
   	})
   })
-
   .get('/db', async (req, res) => {
       try {
         const client = await pool.connect()
