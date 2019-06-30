@@ -24,7 +24,8 @@ express()
 			
 				// ** Load main page here ** //
 
-				res.render("login", { 'user' : uname } );
+				var user = {'user' : uname};
+				res.render("login", user);
 			
 			
 				// ** ******************* ** //
@@ -44,6 +45,8 @@ express()
    })
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
+  .get('/login', (req, res) => res.render('login'))
+  .get('/', (req, res) => res.render('pages/index'))
   .get('/users', function (req, res) {
     console.log('Hello');
   	pool.query('select * from users', function(error, result){
@@ -51,8 +54,7 @@ express()
   		res.render('profile',results);
   	})
   })
-  .get('/login', (req, res) => res.render('login'))
-  .get('/', (req, res) => res.render('pages/index'))
+
   .get('/db', async (req, res) => {
       try {
         const client = await pool.connect()
