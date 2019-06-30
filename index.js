@@ -44,6 +44,13 @@ express()
    })
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
+  .get('/users', function (req, res) {
+    console.log('Hello');
+  	pool.query('select * from users', function(error, result){
+  		var results = { 'results': (result) ? result.rows : [] };
+  		res.render('profile',results);
+  	})
+  })
   .get('/login', (req, res) => res.render('login'))
   .get('/', (req, res) => res.render('pages/index'))
   .get('/db', async (req, res) => {
