@@ -24,8 +24,7 @@ express()
 			
 				// ** Load main page here ** //
 
-				var user = {'user' : uname};
-				res.render("login", user);
+				res.render("login", { 'user' : uname } );
 			
 			
 				// ** ******************* ** //
