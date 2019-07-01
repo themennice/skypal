@@ -21,16 +21,39 @@
     <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
     <!-- register using email-->
   <br>
-    <form name="registerForm" action="/reg" method="post">
+    <form name="registerForm" action="/reg" method="post" >
       <fieldset>
-            <input type = "text" class="Uname" name = "email" placeholder="email address" value="">
-            <input type = "text" class ="Uname" name = "username" placeholder="Username" value="">
-            <input type = "password" class="password" name = "password" placeholder="Password" value="">
-			<input type = "password" class="password" name = "confirmPassword" placeholder="confirmPassword" value="">
-          <button  name="submit" value="submit"><h2>Register</h2></button>
+        <p>
+            <input type = "text"
+                   class ="Uname"
+                   name = "email"
+                   placeholder="email address">
+          </p>
+          <p>
+              <input type = "text"
+                     class ="Uname"
+                     name = "username"
+                     placeholder="Username">
+            </p>
+          <p>
+              <input type = "password"
+                     class="password"
+                     name = "password"
+                     placeholder="Password">
+          </p>
+          <p>
+              <input type = "password"
+                     class="password"
+                     name = "confirmPassword"
+                     placeholder="confirmPassword"
+                     onchange="passwordCheck()">
+          </p>
+          <button type="button" name="button"><h2>Register</h2></button>
       </fieldset>
     </form>
+    <script src="checkCriteria.js" defer></script>
     <p class="citation">Photo by Ross Parmly on Unsplash</p>
+
   </body>
 
 </html>
