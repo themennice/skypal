@@ -77,7 +77,7 @@
 	<h2 style="font-family:Trebuchet MS; color:#ffffff">Please input your booked flight deails.</h2>
 	<br>
 	<div name="form">
-	  <form name = "ticketInfo" onsubmit="return submitForm()">
+	  <form name = "ticketInfo" action="/ticket" method="post" onsubmit="return submitForm()">
 	    <label for="fname">First Name on Passport</label>
 	    <input type="text" id="fname" name="firstname" placeholder="First Name" required>
 
