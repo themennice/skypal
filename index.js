@@ -16,7 +16,7 @@ express()
   .get('/', (req, res) => res.render('pages/index'))
   .post('/reg', async function(req, res){
       var emailAddr = req.body.email;
-      var uName = req.body.email;
+      var uName = req.body.username;
       var pass = req.body.password;
 
       try {
@@ -25,7 +25,7 @@ express()
 
 		// VALIDATE AND REDIRECT
         const result = await client.query("SELECT * FROM users where username='" + uName + "'");
-		if (result.rows[0]) { 
+		if (result.rows[0]) {
 			if (result.rows[0].password == pass) {
 				// ** Load main page here ** //
 				var results = { 'results': (result) ? result.rows : [] };
@@ -39,14 +39,14 @@ express()
 		}
 
 		//
-		
+
         client.release();
       } catch (err) {
         console.error(err);
         res.send("Error " + err);
       }
   })
-  .post("/loginem", async (req, res) => {	
+  .post("/loginem", async (req, res) => {
 	var email = req.body.key;
 	try {
         const client = await pool.connect()
@@ -57,9 +57,9 @@ express()
       } catch (err) {
         console.error(err);
         res.send("Error " + err);
-      }	
+      }
    })
-  .post("/login", async (req, res) => {	
+  .post("/login", async (req, res) => {
 	var uname = req.body.username;
 	var upass = req.body.password;
 	//console.log(uname);
@@ -67,7 +67,7 @@ express()
 	try {
         const client = await pool.connect()
         const result = await client.query("SELECT * FROM users where username='" + uname + "'");
-		if (result.rows[0]) { 
+		if (result.rows[0]) {
 			if (result.rows[0].password == upass) {
 				// ** Load main page here ** //
 				var results = { 'results': (result) ? result.rows : [] };
@@ -79,12 +79,12 @@ express()
 		} else {
 			res.send("User not found");
 		}
-        
+
 		client.release();
       } catch (err) {
         console.error(err);
         res.send("Error " + err);
-      }	
+      }
    })
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
