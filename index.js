@@ -96,9 +96,7 @@ express()
   		var results = { 'results': (result) ? result.rows : [] };
   		res.render('profile',results);
   	})
-    viewTicket.onclick({
-      res.render('register');
-    })
+    
   })
   .post('/ticket',function(req,res){
       console.log(req.body.fname);

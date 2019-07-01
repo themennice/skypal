@@ -26,9 +26,19 @@
 				<p>Your age is </p>
         <span class="age"><%=r.age%></span>
 
-				<p><button  name="viewTicket" value="viewTicket"><h2>Logout</h2></button></p>
-				<p><button  name="viewTicket" value="viewTicket"><h2>View Ticket</h2></button></p>
+				<p><button id="logout" class="logout" >Logout</button></p>
+				<p><button id="ViewTicket" class="ViewTicket" >ViewTicket</button></p>
+				<script type="text/javascript">
+				    document.getElementById("logout").onclick = function () {
+				        location.href = "register.html";
+				    };
+				</script>
 
+				<script type="text/javascript">
+						document.getElementById("ViewTicket").onclick = function () {
+								location.href = "add-ticket.html";
+						};
+				</script>
 
       </div>
 
