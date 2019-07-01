@@ -21,7 +21,7 @@ express()
 
       try {
         const client = await pool.connect();
-        const emailAdded = await client.query("INSERT INTO users [(username, password, email)] VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
+        const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
         res.send("User Added");
         client.release();
       } catch (err) {
