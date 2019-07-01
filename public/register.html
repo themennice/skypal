@@ -3,9 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="stylesheet" href="./stylesheets/register.css" />
   </head>
   <body>
-    <!--  Facebook SDK
+  <img src="SkyBG.jpg" alt="background" class="bg" />
+    <!--  Facebook SDK -->
     <script>
       window.fbAsyncInit = function() {
         FB.init({
@@ -17,25 +19,39 @@
       };
     </script>
     <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
-    <!-- register using email
-    <h2>Histogram Generator</h2>
+    <!-- register using email-->
   <br>
-    <form name="boundriesForm" onchange="changeitup()">
+    <form name="registerForm" action="/reg" method="post">
       <fieldset>
         <p>
             <input type = "text"
+                   class ="Uname"
                    name = "email"
                    placeholder="email address">
           </p>
           <p>
               <input type = "text"
+                     class ="Uname"
+                     name = "username"
+                     placeholder="Username">
+            </p>
+          <p>
+              <input type = "password"
+                     class="password"
                      name = "password"
                      placeholder="Password">
           </p>
+          <p>
+              <input type = "password"
+                     class="password"
+                     name = "confirmPassword"
+                     placeholder="confirmPassword">
+          </p>
+          <button type="button" name="button"><h2>Register</h2></button>
       </fieldset>
     </form>
+    <p class="citation">Photo by Ross Parmly on Unsplash</p>
 
-    -->
   </body>
 
 </html>
