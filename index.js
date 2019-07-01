@@ -12,7 +12,7 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .post('/reg', function(req, res){
+  .post('/reg', async function(req, res){
       var emailAddr = req.body.email;
       var uName = req.body.email;
       var pass = req.body.password;
@@ -22,7 +22,6 @@ express()
         const emailAdded = await client.query("INSERT INTO users [(username, password, email)] VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
         res.send("User Added");
         client.release();
-      }
       } catch (err) {
         console.error(err);
         res.send("Error " + err);
