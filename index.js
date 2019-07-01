@@ -22,7 +22,24 @@ express()
       try {
         const client = await pool.connect();
         const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
-        res.send("User Added");
+
+		// VALIDATE AND REDIRECT
+        const result = await client.query("SELECT * FROM users where username='" + uName + "'");
+		if (result.rows[0]) { 
+			if (result.rows[0].password == pass) {
+				// ** Load main page here ** //
+				var results = { 'results': (result) ? result.rows : [] };
+				res.render('profile',results);
+				// ** ******************* ** //
+			} else {
+				res.send("Wrong password");
+			}
+		} else {
+			res.send("User not found");
+		}
+
+		//
+		
         client.release();
       } catch (err) {
         console.error(err);
