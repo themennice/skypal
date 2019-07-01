@@ -16,6 +16,7 @@ express()
 	try {
         const client = await pool.connect()
         const result = await client.query("SELECT * FROM users where email='" + email + "'");
+		console.log("test");
 		res.send(result.rows[0]);
 		client.release();
       } catch (err) {
