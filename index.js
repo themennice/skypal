@@ -90,4 +90,26 @@ express()
   .set('view engine', 'ejs')
   .get('/login', (req, res) => res.render('login'))
   .get('/', (req, res) => res.render('pages/index'))
+  .get('/users', function (req, res) {
+    console.log('Hello');
+  	pool.query('select * from users', function(error, result){
+  		var results = { 'results': (result) ? result.rows : [] };
+  		res.render('profile',results);
+  	})
+  })
+  .post('/ticket',function(req,res){
+      console.log(req.body.fname);
+      console.log(req.body.lname);
+      console.log(req.body.flightno);
+      console.log(req.body.countryfrom);
+      console.log(req.body.countryto);
+      console.log(req.body.airline);
+      console.log(req.body.date);
+      console.log(req.body.time);
+      var sql = "INSERT INTO tickets (fname,lname,flightno,countryfrom.countryto,airline,date,time) VALUES '"+req.body.fname+"','"+req.body.lname+"','"+req.body.flightno+"','"+req.body.countryfrom+"','"+req.body.countryto+"','"+req.body.airline+"','"+req.body.date+"','"+req.body.time+"')";
+      pool.query(sql, function(error,result){
+        if (error) throw error;
+        console.log("ticket added");
+  })
+})
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
