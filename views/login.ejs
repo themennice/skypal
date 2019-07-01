@@ -37,19 +37,8 @@
 					</div>
 					<script>
 					  function onSignIn(googleUser) {
-						var req = require('request');
 						var profile = googleUser.getBasicProfile();
 						console.log("Email: " + profile.getEmail());
-						
-						req.post(
-							'/formpage',
-							{ json: { key: profile.getEmail() } },
-							function (error, response, body) {
-								if (!error && response.statusCode == 200) {
-									console.log(body);
-								}
-							}
-						);
 					  }
 					</script>					
 				</div>
