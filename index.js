@@ -96,6 +96,7 @@ express()
   		var results = { 'results': (result) ? result.rows : [] };
   		res.render('profile',results);
   	})
+    
   })
   .post('/ticket',function(req,res){
       console.log(req.body.fname);

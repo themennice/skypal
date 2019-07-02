@@ -10,6 +10,7 @@
 	</head>
 
 	<body>
+		<img src="background_foto.jpg" alt="background" class="bg" />
 		<div id="profile">
 			<h1> Your Profile </h1>
      <% results.forEach(function(r) { %>
@@ -26,6 +27,20 @@
 				<p>Your age is </p>
         <span class="age"><%=r.age%></span>
 
+				<p><button id="logout" class="logout" >Logout</button></p>
+				<p><button id="ViewTicket" class="ViewTicket" >ViewTicket</button></p>
+				<script type="text/javascript">
+				    document.getElementById("logout").onclick = function () {
+				        location.href = "register.html";
+				    };
+				</script>
+
+				<script type="text/javascript">
+						document.getElementById("ViewTicket").onclick = function () {
+								location.href = "add-ticket.html";
+						};
+				</script>
+
       </div>
 
 
@@ -33,6 +48,17 @@
 				body {background-color: powderblue;text-align: center;}
 				h1   {color: blue;text-align: center;}
 				p    {color: red;text-align: center;}
+
+				img.bg {
+				    min-height: 100%;
+				    min-width: 1024px;
+				    width: 100%;
+				    height: auto;
+				    position: fixed;
+				    top: 0;
+				    left: 0;
+				    z-index: -5;
+				}
 
 
 			</style>
