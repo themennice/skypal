@@ -111,7 +111,7 @@ express()
       pool.query(sql, function(error,result){
         if (error) throw error;
         console.log("ticket added");
-        res.render('/');
+        res.render('pages/index');
   })
 })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
