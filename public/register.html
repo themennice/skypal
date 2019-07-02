@@ -25,21 +25,27 @@
       <fieldset>
         <p>
             <input type = "text" class ="Uname"
-                   name = "email" placeholder="email address">
+                   name = "email" placeholder="email address" required>
           </p>
           <p>
               <input type = "text" class ="Uname"
-                     name = "username" placeholder="Username">
+                     name = "username" placeholder="Username" required>
             </p>
           <p>
-              <input type = "password" class="password"
-                     name = "password" placeholder="Password">
+              <input type = "password" class="password" id = "password"
+                     name = "password" placeholder="Password" required>
           </p>
           <p>
-              <input type = "password" class="password"
+              <input type = "password" class="password" id = "confirmPassword"
                      name = "confirmPassword" placeholder="confirmPassword"
-                     onchange="passwordCheck()">
+                     onchange="passwordCheck()" required>
           </p>
+          <script> 
+            var password = document.getElementById("password");
+            var confirmPassword = document.getElementById("confirmPassword");
+            if (password =! confirmPassword)
+              alert("password does not match!");
+          </script>
           <button type="submit" name="register"><h2>Register</h2></button>
       </fieldset>
     </form>
