@@ -98,7 +98,7 @@ express()
   	})
 
   })
-  .post('/ticket',function(req,res){
+ /* .post('/ticket',function(req,res){
       var fname = req.body.fname;
       var lname = req.body.lname;
       var flightno = req.body.flightno;
@@ -115,5 +115,5 @@ express()
           res.send("ticket added");
         res.render('pages/index');
       })
-  })
+  })*/
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
