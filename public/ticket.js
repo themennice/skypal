@@ -12,6 +12,7 @@ var yyyy = today.getFullYear();
 today = yyyy+'-'+mm+'-'+dd;
 
 document.getElementById("date").setAttribute("min", today);
+document.getElementById("date").setAttribute("value", today);
 
 function submitForm()
 {
