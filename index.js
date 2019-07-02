@@ -23,7 +23,7 @@ express()
         const client = await pool.connect();
         const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
 
-		// VALIDATE AND REDIRECT
+		// VALIDATE AND REDIRECT 
         const result = await client.query("SELECT * FROM users where username='" + uName + "'");
 		if (result.rows[0]) {
 			if (result.rows[0].password == pass) {
