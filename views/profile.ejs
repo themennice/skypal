@@ -10,6 +10,7 @@
 	</head>
 
 	<body>
+		<img src="background_foto.jpg" alt="background" class="bg" />
 		<div id="profile">
 			<h1> Your Profile </h1>
      <% results.forEach(function(r) { %>
@@ -47,6 +48,17 @@
 				body {background-color: powderblue;text-align: center;}
 				h1   {color: blue;text-align: center;}
 				p    {color: red;text-align: center;}
+
+				img.bg {
+				    min-height: 100%;
+				    min-width: 1024px;
+				    width: 100%;
+				    height: auto;
+				    position: fixed;
+				    top: 0;
+				    left: 0;
+				    z-index: -5;
+				}
 
 
 			</style>
