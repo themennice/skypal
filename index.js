@@ -107,7 +107,7 @@ express()
       console.log(req.body.airline);
       console.log(req.body.date);
       console.log(req.body.time);
-      var sql = "INSERT INTO tickets (fname,lname,flightno,countryfrom.countryto,airline,date,time) VALUES '"+req.body.fname+"','"+req.body.lname+"','"+req.body.flightno+"','"+req.body.countryfrom+"','"+req.body.countryto+"','"+req.body.airline+"','"+req.body.date+"','"+req.body.time+"')";
+      var sql = "INSERT INTO tickets (fname,lname,flightno,countryfrom,countryto,airline,date,time) VALUES '"+req.body.fname+"','"+req.body.lname+"','"+req.body.flightno+"','"+req.body.countryfrom+"','"+req.body.countryto+"','"+req.body.airline+"','"+req.body.date+"','"+req.body.time+"')";
       pool.query(sql, function(error,result){
         if (error) throw error;
         console.log("ticket added");
