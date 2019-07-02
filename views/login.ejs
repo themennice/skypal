@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<% include partials/header.ejs %>
 		<meta charset="utf-8">
 		<title>Login</title>
 		<link rel="stylesheet" href="login.css">
@@ -9,12 +10,13 @@
 		<meta name="google-signin-client_id" content="722594744836-bm0270bl5rkjsmpelu3t2d4di9fdqlf0.apps.googleusercontent.com">
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 	</head>
-	
+
 	<body>
+		<% include partials/nav.ejs %>
 		<div class="container">
 			<div class="helper">
 				<div class="prompt">
-					
+
 					<div class="signup">
 						<form action="">
 							<h2 style="font-family:sans-serif;">Signup</h2>
@@ -22,7 +24,7 @@
 							<button name="submit" value="submit">Signup</button>
 						</form>
 					</div>
-					<div class="separator"></div>					
+					<div class="separator"></div>
 					<div class="login">
 						<form class="data" action="/login" method="post">
 							<h2 style="font-family:sans-serif;">Login</h2>
@@ -40,7 +42,7 @@
 						var profile = googleUser.getBasicProfile();
 						console.log("Email: " + profile.getEmail());
 					  }
-					</script>					
+					</script>
 				</div>
 			</div>
 		</div>

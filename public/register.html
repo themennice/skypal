@@ -24,31 +24,23 @@
     <form name="registerForm" action="/reg" method="post" >
       <fieldset>
         <p>
-            <input type = "text"
-                   class ="Uname"
-                   name = "email"
-                   placeholder="email address">
+            <input type = "text" class ="Uname"
+                   name = "email" placeholder="email address">
           </p>
           <p>
-              <input type = "text"
-                     class ="Uname"
-                     name = "username"
-                     placeholder="Username">
+              <input type = "text" class ="Uname"
+                     name = "username" placeholder="Username">
             </p>
           <p>
-              <input type = "password"
-                     class="password"
-                     name = "password"
-                     placeholder="Password">
+              <input type = "password" class="password"
+                     name = "password" placeholder="Password">
           </p>
           <p>
-              <input type = "password"
-                     class="password"
-                     name = "confirmPassword"
-                     placeholder="confirmPassword"
+              <input type = "password" class="password"
+                     name = "confirmPassword" placeholder="confirmPassword"
                      onchange="passwordCheck()">
           </p>
-          <button type="button" name="button"><h2>Register</h2></button>
+          <button type="submit" name="register"><h2>Register</h2></button>
       </fieldset>
     </form>
     <script src="checkCriteria.js" defer></script>
