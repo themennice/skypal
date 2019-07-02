@@ -13,7 +13,7 @@
 		  box-sizing: border-box;
 		}
 
-		button{
+		button[name="submit"]{
 		  width: 100%;
 		  background-color: #4CAF50;
 		  color: white;
@@ -24,8 +24,23 @@
 		  cursor: pointer;
 		}
 
-		button:hover {
+		button[name="submit"]:hover {
 		  background-color: #45a049;
+		}
+
+		button[name="redirect"]{
+		  background-color: #f2f2f2;
+		  color: black;
+		  padding: 14px 20px;
+		  margin: 8px 0;
+		  border: none;
+		  border-radius: 4px;
+		  cursor: pointer;
+		  opacity: 0.6;
+		}
+
+		button[name="redirect"]:hover {
+		  background-color: #ffffff;
 		}
 
 		div[name="form"] {
@@ -75,6 +90,19 @@
 	<img src="background_foto.jpg" alt="background" class="bg" />
 	<h1>SkyPal - Your Flight</h1>
 	<h2 style="font-family:Trebuchet MS; color:#ffffff">Please input your booked flight deails.</h2>
+	<button name="redirect" id="logout" class="logout" >Logout</button>
+	<button name="redirect" id="ViewProfile" class="ViewProfile" >Back to my profile</button>
+			<script type="text/javascript">
+					document.getElementById("logout").onclick = function () {
+							location.href = "register.html";
+					};
+			</script>
+
+			<script type="text/javascript">
+					document.getElementById("ViewProfile").onclick = function () {
+							location.href = "users";
+					};
+			</script>
 	<br>
 	<div name="form">
 	  <form name = "ticketInfo" action="/ticket" method="post" onsubmit="return submitForm()">
@@ -114,7 +142,7 @@
 	    <label for="time">Departure Time</label><br>
 	    <input type="time" id="time" name="time" min="" max="2022-1-1" required><br>
 
-	    <button id="submit">Submit</button>
+	    <button name="submit" id="submit">Submit</button>
 	  </form>
 	</div>
 </body>
