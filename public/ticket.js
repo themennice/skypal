@@ -16,8 +16,8 @@ document.getElementById("date").setAttribute("value", today);
 
 function submitForm()
 {
-	var countryfrom = getElementById("countryfrom");
-	var countryto = getElementById("countryto");
+	var countryfrom = document.getElementById("countryfrom");
+	var countryto = document.getElementById("countryto");
 	if (countryto == countryfrom)
 	{
 		alert("Invalid Input Of Destinated Country!")
