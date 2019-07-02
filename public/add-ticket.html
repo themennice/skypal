@@ -115,6 +115,19 @@
 	    <input type="time" id="time" name="time" min="" max="2022-1-1" required><br>
 
 	    <button id="submit">Submit</button>
+			<p><button id="logout" class="logout" >Logout</button></p>
+			<p><button id="ViewProfile" class="ViewProfile" >ViewProfile</button></p>
+			<script type="text/javascript">
+					document.getElementById("logout").onclick = function () {
+							location.href = "register.html";
+					};
+			</script>
+
+			<script type="text/javascript">
+					document.getElementById("ViewProfile").onclick = function () {
+							location.href = "users";
+					};
+			</script>
 	  </form>
 	</div>
 </body>
