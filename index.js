@@ -24,9 +24,7 @@ express()
 		// VALIDATE AND REDIRECT
         const result = await client.query("SELECT * FROM users where username='" + uName + "'");
 
-		console.
-
-    (!result.rows[0], { result : result.rows[0], error : "User already exists" } );
+		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
 
 		if (result.rows[0]) {
 			res.send("User Already Exists Try Logigng in");
@@ -82,7 +80,7 @@ express()
   .post("/login", async (req, res) => {
 	var uname = req.body.username;
 	var upass = req.body.password;
-	//console.log (uname);
+	//console.log(uname);
 
 	try {
         const client = await pool.connect()
