@@ -23,7 +23,7 @@
     <!-- register   using email-->
     <h1 name="title">Welcome to SkyPal</h1>
   <br>
-    <form name="registerForm" action="/reg" method="post" >
+    <form name="registerForm" action="/reg" method="post" onsubmit="return validateForm()">
       <fieldset>
         <p>
             <input type = "text" class ="Uname"
@@ -39,8 +39,7 @@
           </p>
           <p>
               <input type = "password" class="password" id = "confirmPassword"
-                     name = "confirmPassword" placeholder="confirmPassword"
-                     onchange="passwordCheck()" required>
+                     name = "confirmPassword" placeholder="confirmPassword" required>
           </p>
 <<<<<<< HEAD
           <script>
