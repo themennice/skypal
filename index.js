@@ -27,8 +27,7 @@ express()
 			res.send("User Already Exists Try Logigng in");
 		} else {
         const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
-        var results = { 'results': (result) ? result.rows : [] };
-				res.render('profile',results);
+			res.render('profile',{ 'r': result.rows[0] });
 
 		}
 
@@ -52,6 +51,25 @@ express()
         res.send("Error " + err);
       }
    })
+  .post("/profile", async (req, res) => {
+	  console.log(req.body);
+	  console.log(req.body.Username);
+	  
+	  try {
+        const client = await pool.connect()
+		var test = "update users set name = '"+ req.body.Name + "', email = '"+ req.body.email + "', age = '"+ req.body.Age + "'where username = '" + req.body.Username + "'";
+		console.log(test);
+        const update = await client.query(test);
+		//{"Name":"Julian","Usename":"jbiedka","password":"123","email":"jbiedka@sfu.ca","Age":"19"}
+		const result = await client.query("SELECT * FROM users where username='" + req.body.Username + "'");
+		res.render('profile', { 'r': result.rows[0] } );
+
+		client.release();
+      } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+      }
+  })
   .post("/login", async (req, res) => {
 	var uname = req.body.username;
 	var upass = req.body.password;
@@ -63,8 +81,7 @@ express()
 		if ( (uname != "" && upass != "") && result.rows[0]) {
 			if (result.rows[0].password == upass) {
 				// ** Load main page here ** //
-				var results = { 'results': (result) ? result.rows : [] };
-				res.render('profile',results);
+				res.render('profile', { 'r': result.rows[0] });
 				// ** ******************* ** //
 			} else {
 				res.send("Wrong password");
@@ -86,8 +103,7 @@ express()
   .get('/users', function (req, res) {
     console.log('Hello');
   	pool.query('select * from users', function(error, result){
-  		var results = { 'results': (result) ? result.rows : [] };
-  		res.render('profile',results);
+  		res.render('profile', { 'r': result.rows[0] } );
   	})
 
   })
