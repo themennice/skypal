@@ -14,15 +14,15 @@ today = yyyy+'-'+mm+'-'+dd;
 document.getElementById("date").setAttribute("min", today);
 document.getElementById("date").setAttribute("value", today);
 
-function submitForm()
+function submitForm(event)
 {
-	var countryfrom = document.getElementById("countryfrom");
-	var countryto = document.getElementById("countryto");
+	var countryfrom = document.getElementById("countryfrom").value;
+	var countryto = document.getElementById("countryto").value;
 	if (countryto == countryfrom)
 	{
 		alert("Invalid Input Of Destinated Country!")
 		return;
 	}
-	var button = getElementById("submit");
-	button.onclick(alert("form submitted! Thank you."))
+	else
+		alert("Form submitted! Thank you.")
 }
