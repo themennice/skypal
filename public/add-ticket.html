@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tickets Information</title>
+	<style>
+		input[type=text], select {
+		  width: 100%;
+		  padding: 12px 20px;
+		  margin: 8px 0;
+		  display: inline-block;
+		  border: 1px solid #ccc;
+		  border-radius: 4px;
+		  box-sizing: border-box;
+		}
+
+		button{
+		  width: 100%;
+		  background-color: #4CAF50;
+		  color: white;
+		  padding: 14px 20px;
+		  margin: 8px 0;
+		  border: none;
+		  border-radius: 4px;
+		  cursor: pointer;
+		}
+
+		button:hover {
+		  background-color: #45a049;
+		}
+
+		div[name="form"] {
+		  border-radius: 5px;
+		  background-color: #f2f2f2;
+		  padding: 20px;
+		  font-family: Comic Sans MS;
+		  opacity: 0.8;
+		  width: 80%;
+		  margin: auto;
+		}
+
+		img.bg {
+		    min-height: 100%;
+		    min-width: 1024px;
+		    width: 100%;
+		    height: auto;
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    z-index: -5;
+		}
+
+		@media screen and (max-width: 1024px){
+		    img.bg {
+		    left: 50%;
+		    margin-left: -512px; }
+		}
+
+		h1 {
+		text-align: center;
+		font-family: Helvetica;
+		font-size: 48px;
+		font-style: normal;
+		font-weight: bold;
+		text-decoration: blink;
+		text-transform: capitalize;
+		letter-spacing: 0.3px;
+		line-height: 0.5px;
+		color: #ffffff;
+		background-color: #ffffff;
+		}
+</style>
+<script src="ticket.js" defer></script>
+</head>
+<body>
+	<img src="background_foto.jpg" alt="background" class="bg" />
+	<h1>SkyPal - Your Flight</h1>
+	<h2 style="font-family:Trebuchet MS; color:#ffffff">Please input your booked flight deails.</h2>
+	<br>
+	<div name="form">
+	  <form name = "ticketInfo" action="/ticket" method="post" onsubmit="return submitForm()">
+	    <label for="fname">First Name on Passport</label>
+	    <input type="text" id="fname" name="firstname" placeholder="First Name" required>
+
+	    <label for="lname">Last Name on Passport</label>
+	    <input type="text" id="lname" name="lastname" placeholder="Last Name" required>
+
+	    <label for="flightno">Flight Number</label>
+	    <input type="text" id="flightno" name="flightno" placeholder="Example: AX780" required>
+
+	    <label for="countryfrom">Departing Country</label>
+	    <select id="countryfrom" name="countryfrom" required>
+	      <option value="france">France</option>
+	      <option value="canada">Canada</option>
+	      <option value="usa">USA</option>
+	    </select>
+
+	    <label for="countryto">Destinated Country</label>
+	    <select id="countryto" name="countryto" required>
+	      <option value="france">France</option>
+	      <option value="canada">Canada</option>
+	      <option value="usa">USA</option>
+	    </select>
+
+	    <label for="airline">Airline</label>
+	    <select id="airline" name="airline" required>
+	      <option value="uairline">United Airline</option>
+	      <option value="westjet">Westjet</option>
+	      <option value="airca">Air Canada</option>
+	    </select> <br>
+
+	    <label for="date">Date of Departure</label><br>
+	    <input type="date" id="date" name="date" required> <br><br>
+
+	    <label for="time">Departure Time</label><br>
+	    <input type="time" id="time" name="time" required><br>
+
+	    <button id="submit">Submit</button>
+	  </form>
+	</div>
+</body>
+</html>
