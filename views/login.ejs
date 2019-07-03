@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<% include partials/header.ejs %>
 		<meta charset="utf-8">
 		<title>Login</title>
 		<link rel="stylesheet" href="login.css">
 		<script src="login.js" defer></script>
 		<meta name="google-signin-scope" content="profile email">
-		<meta name="google-signin-client_id" content="722594744836-fhbq1q3bhe76d688fgok6qr4bocsokdo.apps.googleusercontent.com">
+		<meta name="google-signin-client_id" content="915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com">
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 	</head>
 
 	<body>
+<<<<<<< HEAD
+=======
 		<img src="loginBG.jpeg" alt="background" class="bg" />
+>>>>>>> 35518480b228856b0edee55e337afd0e3863f113
 		<% include partials/nav.ejs %>
 		<div class="container">
 			<div class="helper">
@@ -29,9 +33,13 @@
 						<form class="data" action="/login" method="post">
 							<h2 style="font-family:sans-serif;">Login</h2>
 							<h3 style="font-family:sans-serif;">Username:</h3>
-							<input type="text" name="username" value="" required/>
+							<input type="text" name="username" value=""/>
 							<h3 style="font-family:sans-serif;">Password:</h3>
+<<<<<<< HEAD
+							<input type="password" name="password" value=""/><br>
+=======
 							<input type="password" name="password" value="" required /><br>
+>>>>>>> 35518480b228856b0edee55e337afd0e3863f113
 							<button name="submit" value="submit">Submit</button>
 						</form>
 						<h3 style="font-family:sans-serif; font-style:italic;">or...</h3>
@@ -39,7 +47,8 @@
 					</div>
 					<script>
 					  function onSignIn(googleUser) {
-						var email = googleUser.getBasicProfile().getEmail();
+						var profile = googleUser.getBasicProfile();
+						console.log("Email: " + profile.getEmail());
 					  }
 					</script>
 				</div>

@@ -13,20 +13,6 @@
 		<img src="profileBG.jpg" alt="background" class="bg" />
 
 			<h1> Your Profile </h1>
-     <% results.forEach(function(r) { %>
-<!--
-      <div class="user" onclick="Show(this)" username="<%= JSON.stringify(r)%>">
-				<p>Your name is </p>
-        <span class="Name"><%=r.name%></span>
-				<p>Your username is </p>
-        <span class="UserName"><%=r.username%></span>
-				<p>Your passwords is </p>
-				<p1>********</p1>
-				<p> Your email is </p>
-        <span class="email"><%=r.email%></span>
-				<p>Your age is </p>
-        <span class="age"><%=r.age%></span>
--->
 <fieldset>
 <form name="profile" action="/profile" method="post">
 	<p>
@@ -35,7 +21,7 @@
 	</p>
 	<p>
 		<label class="lbl">Username</label>
-		<input type="text" name="Usename" value="<%=r.username%>" readonly>
+		<input type="text" name="Username" value="<%=r.username%>" readonly>
 	</p>
 	<p>
 		<label class="lbl">Password</label>
@@ -49,10 +35,10 @@
 		<label class="lbl">Age</label>
 		<input type="text" name="Age" value="<%=r.age%>">
 	</p>
+	<p>
+		<button id="update" class="update" >Update</button>
+	</p>
 </form>
-
-
-
 				<p><button id="logout" class="logout" >Logout</button></p>
 				<p><button id="ViewTicket" class="ViewTicket" >ViewTicket</button></p>
 				<script type="text/javascript">
@@ -114,6 +100,5 @@
 					box-sizing: border-box;
 				}
 			</style>
-			<% } )%>
 	</body>
 </html>
