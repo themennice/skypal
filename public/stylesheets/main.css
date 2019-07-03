@@ -11,11 +11,10 @@
     color: #FEF539;
     max-width: 75%;
     margin: 1em auto 2em; }
-    .button
-  {
-    width: 150px;
-    text-align: center;
-    margin:0 auto;
+  .wrapper {
+      text-align: center;
+      position:relative;
+      margin-top:10%;
   }
   .navbar + .jumbotron {
     margin-top: -40px; }
