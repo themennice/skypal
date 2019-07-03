@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" href="./stylesheets/register.css" />
+    <script src="checkCriteria.js" defer></script>
   </head>
   <body>
   <img src="SkyBG.jpg" alt="background" class="bg" />
@@ -19,7 +20,7 @@
       };
     </script>
     <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
-    <!-- register using email-->
+    <!-- register   using email-->
     <h1 name="title">Welcome to SkyPal</h1>
   <br>
     <form name="registerForm" action="/reg" method="post" >
@@ -41,6 +42,7 @@
                      name = "confirmPassword" placeholder="confirmPassword"
                      onchange="passwordCheck()" required>
           </p>
+<<<<<<< HEAD
           <script>
             var password = document.getElementById("password");
             var confirmPassword = document.getElementById("confirmPassword");
@@ -48,9 +50,12 @@
               alert("password does not match!");
           </script>
           <button type="submit" name="register"><h2>Register</h2></button>
+=======
+          <button type="submit" name="register"><h2>Register</h2></button>
       </fieldset>
       <fieldset name="loginBtn">
-        <button type="submit" name="login" ><h2>I Already Have an Accout</h2></button>
+        <button type="submit" name="login" ><h2><a href="login">I already have an account</a></h2></button>
+>>>>>>> 35518480b228856b0edee55e337afd0e3863f113
       </fieldset>
     </form>
     <script src="checkCriteria.js" defer></script>
