@@ -20,7 +20,7 @@ h1{
 	color: rgba(230, 230, 230, 0.7);
 }
 fieldset{
-  background-color: rgba(230, 230, 230, 0.7);
+  background-color: lightgrey;
   border: none;
   width: 400px;
   margin:auto;
