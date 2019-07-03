@@ -9,12 +9,14 @@
 		<meta name="google-signin-client_id" content="722594744836-fhbq1q3bhe76d688fgok6qr4bocsokdo.apps.googleusercontent.com">
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 	</head>
-	
+
 	<body>
+		<img src="loginBG.jpeg" alt="background" class="bg" />
+		<% include partials/nav.ejs %>
 		<div class="container">
 			<div class="helper">
 				<div class="prompt">
-					
+
 					<div class="signup">
 						<form action="">
 							<h2 style="font-family:sans-serif;">Signup</h2>
@@ -22,7 +24,7 @@
 							<button name="signup" value="signup"><a href="register.html">Signup</a></button>
 						</form>
 					</div>
-					<div class="separator"></div>					
+					<div class="separator"></div>
 					<div class="login">
 						<form class="data" action="/login" method="post">
 							<h2 style="font-family:sans-serif;">Login</h2>
@@ -39,7 +41,7 @@
 					  function onSignIn(googleUser) {
 						var email = googleUser.getBasicProfile().getEmail();
 					  }
-					</script>					
+					</script>
 				</div>
 			</div>
 		</div>
