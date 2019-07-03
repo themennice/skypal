@@ -15,36 +15,29 @@ express()
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .post('/reg', async function(req, res){
-      var emailAddr = req.body.email;
-      var uName = req.body.username;
-      var pass = req.body.password;
+    var emailAddr = req.body.email;
+    var uName = req.body.username;
+    var pass = req.body.password;
 
       try {
         const client = await pool.connect();
-        const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
-
 		// VALIDATE AND REDIRECT
         const result = await client.query("SELECT * FROM users where username='" + uName + "'");
 		if (result.rows[0]) {
-			if (result.rows[0].password == pass) {
-				// ** Load main page here ** //
-				var results = { 'results': (result) ? result.rows : [] };
-				res.render('profile',results);
-				// ** ******************* ** //
-			} else {
-				res.send("Wrong password");
-			}
+			res.send("User Already Exists Try Logigng in");
 		} else {
-			res.send("User not found");
-		}
+        const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
+        var results = { 'results': (result) ? result.rows : [] };
+				res.render('profile',results);
 
-		//
+		}
 
         client.release();
       } catch (err) {
         console.error(err);
         res.send("Error " + err);
       }
+
   })
   .post("/loginem", async (req, res) => {
 	var email = req.body.key;

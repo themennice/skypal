@@ -14,14 +14,27 @@ img.bg {
 		    left: 50%;
 		    margin-left: -512px; }
 		}
-
+h1{
+	font-size: 42pt;
+	font-family: "Lato";
+	color: rgba(230, 230, 230, 0.7);
+}
 fieldset{
   background-color: lightgrey;
   border: none;
   width: 400px;
   margin:auto;
-  margin-top: 200px;
+  margin-top: 50px;
 }
+
+fieldset[name=loginBtn]{
+  background-color: rgba(230, 230, 230, 0.7);
+  border: none;
+  width: 400px;
+  margin:auto;
+	margin-top: 10px;
+}
+
 h2{
   font-size-adjust: auto;
   font-family: "Lato";
@@ -52,4 +65,13 @@ button{
   position: fixed;
   bottom: 0;
   right: 0;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+}
+
+a:visited {
+  color: white;
 }
