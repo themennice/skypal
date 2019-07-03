@@ -67,7 +67,7 @@ express()
 	try {
         const client = await pool.connect()
         const result = await client.query("SELECT * FROM users where username='" + uname + "'");
-		if (result.rows[0]) {
+		if ( (uname != "" && upass != "") && result.rows[0]) {
 			if (result.rows[0].password == upass) {
 				// ** Load main page here ** //
 				var results = { 'results': (result) ? result.rows : [] };

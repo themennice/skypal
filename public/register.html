@@ -21,37 +21,16 @@
     <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
     <!-- register using email-->
   <br>
-    <form name="registerForm" action="/reg" method="post" >
+    <form name="registerForm" action="/reg" method="post">
       <fieldset>
-        <p>
-            <input type = "text" class ="Uname"
-                   name = "email" placeholder="email address" required>
-          </p>
-          <p>
-              <input type = "text" class ="Uname"
-                     name = "username" placeholder="Username" required>
-            </p>
-          <p>
-              <input type = "password" class="password" id = "password"
-                     name = "password" placeholder="Password" required>
-          </p>
-          <p>
-              <input type = "password" class="password" id = "confirmPassword"
-                     name = "confirmPassword" placeholder="confirmPassword"
-                     onchange="passwordCheck()" required>
-          </p>
-          <script> 
-            var password = document.getElementById("password");
-            var confirmPassword = document.getElementById("confirmPassword");
-            if (password =! confirmPassword)
-              alert("password does not match!");
-          </script>
-          <button type="submit" name="register"><h2>Register</h2></button>
+            <input type = "text" class="Uname" name = "email" placeholder="email address" value="">
+            <input type = "text" class ="Uname" name = "username" placeholder="Username" value="">
+            <input type = "password" class="password" name = "password" placeholder="Password" value="">
+			<input type = "password" class="password" name = "confirmPassword" placeholder="confirmPassword" value="">
+          <button  name="submit" value="submit"><h2>Register</h2></button>
       </fieldset>
     </form>
-    <script src="checkCriteria.js" defer></script>
     <p class="citation">Photo by Ross Parmly on Unsplash</p>
-
   </body>
 
 </html>

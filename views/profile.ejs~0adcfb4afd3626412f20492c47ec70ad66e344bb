@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!-- C:\Program Files\Git\node-js-getting-started /-->
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Profile</title>
+		<link rel="stylesheet" href="profile.css"/ type="text/css">
+
+	</head>
+
+	<body>
+		<img src="profileBG.jpg" alt="background" class="bg" />
+
+			<h1> Your Profile </h1>
+     <% results.forEach(function(r) { %>
+<!--
+      <div class="user" onclick="Show(this)" username="<%= JSON.stringify(r)%>">
+				<p>Your name is </p>
+        <span class="Name"><%=r.name%></span>
+				<p>Your username is </p>
+        <span class="UserName"><%=r.username%></span>
+				<p>Your passwords is </p>
+				<p1>********</p1>
+				<p> Your email is </p>
+        <span class="email"><%=r.email%></span>
+				<p>Your age is </p>
+        <span class="age"><%=r.age%></span>
+-->
+<fieldset>
+<form name="profile" action="/profile" method="post">
+	<p>
+		<label class="lbl">Name </label>
+		<input type="text" name="Name" value="<%=r.name%>">
+	</p>
+	<p>
+		<label class="lbl">Username</label>
+		<input type="text" name="Usename" value="<%=r.username%>" readonly>
+	</p>
+	<p>
+		<label class="lbl">Password</label>
+		<input type="text" name="password" Value="<%=r.password%>" readonly>
+	</p>
+	<p>
+		<label class="lbl">Email Address</label>
+		<input type="text" name="email" value="<%=r.email%>" readonly>
+	</p>
+	<p>
+		<label class="lbl">Age</label>
+		<input type="text" name="Age" value="<%=r.age%>">
+	</p>
+</form>
+
+
+
+				<p><button id="logout" class="logout" >Logout</button></p>
+				<p><button id="ViewTicket" class="ViewTicket" >ViewTicket</button></p>
+				<script type="text/javascript">
+				    document.getElementById("logout").onclick = function () {
+				        location.href = "login";
+				    };
+				</script>
+
+				<script type="text/javascript">
+						document.getElementById("ViewTicket").onclick = function () {
+								location.href = "add-ticket.html";
+						};
+				</script>
+
+
+</fieldset>
+			<p class="citation">Photo by Gary Lopater on Unsplash</p>
+			<style>
+				body {text-align: center;}
+				h1   {color: Black; font-size-adjust: auto;
+			  font-family: "Lato";text-align: center; margin-top: 20px;}
+
+				img.bg {
+				    min-height: 100%;
+				    min-width: 1024px;
+				    width: 100%;
+				    height: auto;
+				    position: fixed;
+				    top: 0;
+				    left: 0;
+				    z-index: -5;
+				}
+				fieldset{
+					font-family: "Lato";
+          width: 400px;
+          box-sizing: border-box;
+          background: rgba(230, 230, 230, 0.6);
+				  border: 20px;
+				  margin:auto;
+				  margin-top: 5px;
+				}
+
+				.citation{
+				  color: lightgrey;
+				  position: fixed;
+				  bottom: 0;
+				  right: 0;
+				}
+				label.lbl{
+					float: left;
+				}
+				input{
+					font-family: "Lato";
+					font-size: 16pt;
+					width: 100%;
+				  padding: 12px 20px;
+				  margin: 8px 0;
+				  box-sizing: border-box;
+					box-sizing: border-box;
+				}
+			</style>
+			<% } )%>
+	</body>
+</html>
