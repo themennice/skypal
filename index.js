@@ -24,9 +24,7 @@ express()
 		// VALIDATE AND REDIRECT
         const result = await client.query("SELECT * FROM users where username='" + uName + "'");
 
-		console.
-
-    (!result.rows[0], { result : result.rows[0], error : "User already exists" } );
+		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
 
 		if (result.rows[0]) {
 			res.send("User Already Exists Try Logigng in");
@@ -66,7 +64,7 @@ express()
         const client = await pool.connect()
 		var test = "update users set name = '"+ req.body.Name + "', email = '"+ req.body.email + "', age = '"+ req.body.Age + "'where username = '" + req.body.Username + "'";
         const update = await client.query(test);
-		// {"Name":"Julian","Usename":"jbiedka","password":"123","email":"jbiedka@sfu.ca","Age":"19"}
+		//{"Name":"Julian","Usename":"jbiedka","password":"123","email":"jbiedka@sfu.ca","Age":"19"}
 		const result = await client.query("SELECT * FROM users where username='" + req.body.Username + "'");
 
 		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
@@ -82,7 +80,7 @@ express()
   .post("/login", async (req, res) => {
 	var uname = req.body.username;
 	var upass = req.body.password;
-	//console.log (uname);
+	//console.log(uname);
 
 	try {
         const client = await pool.connect()
