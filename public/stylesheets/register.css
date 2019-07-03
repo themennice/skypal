@@ -16,7 +16,7 @@ img.bg {
 		}
 
 fieldset{
-  background-color: lightgrey;
+  background-color: rgba(230, 230, 230, 0.7);
   border: none;
   width: 400px;
   margin:auto;
