@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" href="./stylesheets/register.css" />
+    <script src="checkCriteria.js" defer></script>
   </head>
   <body>
   <img src="SkyBG.jpg" alt="background" class="bg" />
@@ -41,19 +42,12 @@
                      name = "confirmPassword" placeholder="confirmPassword"
                      onchange="passwordCheck()" required>
           </p>
-          <script>
-            var password = document.getElementById("password");
-            var confirmPassword = document.getElementById("confirmPassword");
-            if (password =! confirmPassword)
-              alert("password does not match!");
-          </script>
           <button type="submit" name="register"><h2>Register</h2></button>
       </fieldset>
       <fieldset name="loginBtn">
         <button type="submit" name="login" ><h2><a href="login">I already have an account</a></h2></button>
       </fieldset>
     </form>
-    <script src="checkCriteria.js" defer></script>
     <p class="citation">Photo by Ross Parmly on Unsplash</p>
 
   </body>
