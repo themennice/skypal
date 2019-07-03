@@ -1,6 +1,12 @@
-function passwordCheck(){
-	var password = document.getElementById("password");
-    var confirmPassword = document.getElementById("confirmPassword");
-    if (password =! confirmPassword)
-        alert("password does not match!");
+function validateForm(){
+	var password = document.forms["registerForm"]["password"].value;
+    var confirmPassword = document.forms["registerForm"]["confirmPassword"].value;
+    //console.log(password);
+    //console.log(confirmPassword);
+    if (password =!confirmPassword)
+    {
+    	console.log("password does not match!");
+    } 
+    else
+    	return true;
 }
