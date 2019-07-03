@@ -23,6 +23,9 @@ express()
         const client = await pool.connect();
 		// VALIDATE AND REDIRECT
         const result = await client.query("SELECT * FROM users where username='" + uName + "'");
+		
+		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
+		
 		if (result.rows[0]) {
 			res.send("User Already Exists Try Logigng in");
 		} else {
@@ -43,7 +46,9 @@ express()
 	try {
         const client = await pool.connect()
         const result = await client.query("SELECT * FROM users where email='" + email + "'");
-		console.log("test");
+		
+		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
+		
 		res.send(result.rows[0]);
 		client.release();
       } catch (err) {
@@ -58,10 +63,12 @@ express()
 	  try {
         const client = await pool.connect()
 		var test = "update users set name = '"+ req.body.Name + "', email = '"+ req.body.email + "', age = '"+ req.body.Age + "'where username = '" + req.body.Username + "'";
-		console.log(test);
         const update = await client.query(test);
 		//{"Name":"Julian","Usename":"jbiedka","password":"123","email":"jbiedka@sfu.ca","Age":"19"}
 		const result = await client.query("SELECT * FROM users where username='" + req.body.Username + "'");
+		
+		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
+		
 		res.render('profile', { 'r': result.rows[0] } );
 
 		client.release();
@@ -78,6 +85,9 @@ express()
 	try {
         const client = await pool.connect()
         const result = await client.query("SELECT * FROM users where username='" + uname + "'");
+		
+		console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
+		
 		if ( (uname != "" && upass != "") && result.rows[0]) {
 			if (result.rows[0].password == upass) {
 				// ** Load main page here ** //
