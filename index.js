@@ -90,14 +90,14 @@ express()
   .set('view engine', 'ejs')
   .get('/login', (req, res) => res.render('login'))
   .get('/', (req, res) => res.render('pages/index'))
-  .get('/users', function (req, res) {
-    console.log('Hello');
-  	pool.query('select * from users', function(error, result){
-  		var results = { 'results': (result) ? result.rows : [] };
-  		res.render('profile',results);
-  	})
+  // .get('/users', function (req, res) {
+  //   console.log('Hello');
+  // 	pool.query('select * from users', function(error, result){
+  // 		var results = { 'results': (result) ? result.rows : [] };
+  // 		res.render('profile',results);
+  // 	})
 
-  })
+  //})
  /* .post('/ticket',function(req,res){
       var fname = req.body.fname;
       var lname = req.body.lname;
@@ -109,7 +109,7 @@ express()
       var time = req.body.time;
       pool.connect();
       pool.query("INSERT INTO tickets (fname,lname,flightno,countryfrom,countryto,airline,date,time) VALUES '"+fname+"','"+lname+"','"+flightno+"','"+countryfrom+"','"+countryto+"','"+airline+"','"+date+"','"+time+"')", function(error,result){
-        if (error) 
+        if (error)
           res.send("Error " + error);
         else
           res.send("ticket added");
