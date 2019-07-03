@@ -12,6 +12,7 @@
 	</head>
 
 	<body>
+		<img src="loginBG.jpeg" alt="background" class="bg" />
 		<% include partials/nav.ejs %>
 		<div class="container">
 			<div class="helper">
@@ -21,7 +22,12 @@
 						<form action="">
 							<h2 style="font-family:sans-serif;">Signup</h2>
 							<h3 style="font-family:sans-serif; font-style:italic;">Don't have an account?</h3>
-							<button name="submit" value="submit">Signup</button>
+							<button name="signUp" value="submit" >Signup</button>
+							<script>
+									document.getElementByName("signUp").onclick = function () {
+											location.href = "/register.html";
+									}
+							</script>
 						</form>
 					</div>
 					<div class="separator"></div>

@@ -1,4 +1,20 @@
 html, body { height: 100%; width: 100%; margin: 0; }
+img.bg {
+		    min-height: 100%;
+		    min-width: 1024px;
+		    width: 100%;
+		    height: auto;
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    z-index: -5;
+		}
+
+		@media screen and (max-width: 1024px){
+		    img.bg {
+		    left: 50%;
+		    margin-left: -512px; }
+		}
 
 .container {
     display: table;
@@ -14,7 +30,8 @@ html, body { height: 100%; width: 100%; margin: 0; }
 }
 
 .prompt {
-    margin: 0 auto;
+  background-color: rgba(80, 80, 80, 0.7);
+  margin: 0 auto;
 	width:900px;
 	height:600px;
 	border: 2px solid #e1e5eb;
@@ -34,6 +51,7 @@ html, body { height: 100%; width: 100%; margin: 0; }
 }
 
 .login, .signup {
+  color: lightgrey;
 	margin: 25px;
 	text-align: middle;
 	float:left;
@@ -41,7 +59,7 @@ html, body { height: 100%; width: 100%; margin: 0; }
 
 button {
 	height:40x;
-	background-color:royalblue;
+	background-color:rgba(10, 10, 10, 0.7);
 	box-shadow:3px 1px 2px grey;
 	color: white;
 	padding: 15px 32px;
@@ -53,5 +71,6 @@ button {
 }
 
 input {
+  color: Black;
 	height:30px;
 }
