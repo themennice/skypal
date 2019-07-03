@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+  <% include ../partials/nav.ejs %>
+
+<div class="jumbotron text-center">
+  <div class="container">
+    <a href="/" class="lang-logo">
+      <img src="/lang-logo.png">
+    </a>
+    <h1>Welcome to SkyPal</h1>
+    <p>Your platform for finding a perfect flight companion for your journey to anywhere in the world.</p>
+    <!--<a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Getting Started with Node</a>
+    <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/node-js-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>-->
+  </div>
+</div>
+<div class="container">
+  <div class="alert alert-info text-center" role="alert">
+    To start using SkyPal, please <a href="https://skypal.herokuapp.com/register.html" class="alert-link">register</a> an account in the top right corner of the website.
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <h3><span class="glyphicon glyphicon-info-sign"></span> How SkyPal works</h3>
+      <ul>
+        <li>SkyPal is a web-service that matches regular travellers with new travellers or travellers who need help.</li>
+        <li>Regular travellers would be able to offset some of their cost of travel by helping other people in their first journeys by airplane.</li>
+        <li>The software allows users to input there flight data and preferences so that they are later matched to other travellers.</li>
+        <li>Users would be able to register, login, create a user profile, input their <a href="https://skypal.herokuapp.com/add-ticket.html">flight details</a> and search for other travelers on the preferred flights as well as text them in real time and purchase tickets on the website.</li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
+      <ul>
+        <li>Have fun and <a href="https://skypal.herokuapp.com/register.html">Get Started</a> now!</li>
+      </ul>
+    </div>
+  </div> <!-- row -->
+   <div class="wrapper">
+    <button type="button" class="btn btn-info">About</button>
+  </div>
+</div>
+</body>
+</html>
