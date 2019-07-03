@@ -8,7 +8,7 @@
   </head>
   <body>
   <img src="SkyBG.jpg" alt="background" class="bg" />
-    <!--  Facebook  SDK -->
+    <!--  Facebook SDK -->
     <script>
       window.fbAsyncInit = function() {
         FB.init({
@@ -20,14 +20,14 @@
       };
     </script>
     <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
-    <!-- register   using email-->
+    <!-- register using email-->
     <h1 name="title">Welcome to SkyPal</h1>
   <br>
     <form name="registerForm" onsubmit="return validateForm()" action="/reg" method="post" >
       <fieldset>
         <p>
             <input type = "text" class ="Uname"
-                   name = "email" placeholder="email address" required>
+                   name = "email" placeholder="Email address" required>
           </p>
           <p>
               <input type = "text" class ="Uname"
@@ -39,8 +39,15 @@
           </p>
           <p>
               <input type = "password" class="password" id = "confirmPassword"
-                     name = "confirmPassword" placeholder="confirmPassword" required>
+                     name = "confirmPassword" placeholder="Confirm Password"
+                     onchange="passwordCheck()" required>
           </p>
+          <script>
+            var password = document.getElementById("password");
+            var confirmPassword = document.getElementById("confirmPassword");
+            if (password =! confirmPassword)
+              alert("password does not match!");
+          </script>
           <button type="submit" name="register"><h2>Register</h2></button>
       </fieldset>
       <fieldset name="loginBtn">
