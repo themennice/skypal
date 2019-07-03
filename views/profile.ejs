@@ -10,11 +10,11 @@
 	</head>
 
 	<body>
-		<img src="background_foto.jpg" alt="background" class="bg" />
-		<div id="profile">
+		<img src="profileBG.jpg" alt="background" class="bg" />
+
 			<h1> Your Profile </h1>
      <% results.forEach(function(r) { %>
-
+<!--
       <div class="user" onclick="Show(this)" username="<%= JSON.stringify(r)%>">
 				<p>Your name is </p>
         <span class="Name"><%=r.name%></span>
@@ -26,6 +26,32 @@
         <span class="email"><%=r.email%></span>
 				<p>Your age is </p>
         <span class="age"><%=r.age%></span>
+-->
+<fieldset>
+<form name="profile" action="/profile" method="post">
+	<p>
+		<label class="lbl">Name </label>
+		<input type="text" name="Name" value="<%=r.name%>">
+	</p>
+	<p>
+		<label class="lbl">Username</label>
+		<input type="text" name="Usename" value="<%=r.username%>" readonly>
+	</p>
+	<p>
+		<label class="lbl">Password</label>
+		<input type="text" name="password" Value="<%=r.password%>" readonly>
+	</p>
+	<p>
+		<label class="lbl">Email Address</label>
+		<input type="text" name="email" value="<%=r.email%>" readonly>
+	</p>
+	<p>
+		<label class="lbl">Age</label>
+		<input type="text" name="Age" value="<%=r.age%>">
+	</p>
+</form>
+
+
 
 				<p><button id="logout" class="logout" >Logout</button></p>
 				<p><button id="ViewTicket" class="ViewTicket" >ViewTicket</button></p>
@@ -41,13 +67,13 @@
 						};
 				</script>
 
-      </div>
 
-
+</fieldset>
+			<p class="citation">Photo by Gary Lopater on Unsplash</p>
 			<style>
-				body {background-color: powderblue;text-align: center;}
-				h1   {color: blue;text-align: center;}
-				p    {color: red;text-align: center;}
+				body {text-align: center;}
+				h1   {color: Black; font-size-adjust: auto;
+			  font-family: "Lato";text-align: center; margin-top: 20px;}
 
 				img.bg {
 				    min-height: 100%;
@@ -59,8 +85,34 @@
 				    left: 0;
 				    z-index: -5;
 				}
+				fieldset{
+					font-family: "Lato";
+          width: 400px;
+          box-sizing: border-box;
+          background: rgba(230, 230, 230, 0.6);
+				  border: 20px;
+				  margin:auto;
+				  margin-top: 5px;
+				}
 
-
+				.citation{
+				  color: lightgrey;
+				  position: fixed;
+				  bottom: 0;
+				  right: 0;
+				}
+				label.lbl{
+					float: left;
+				}
+				input{
+					font-family: "Lato";
+					font-size: 16pt;
+					width: 100%;
+				  padding: 12px 20px;
+				  margin: 8px 0;
+				  box-sizing: border-box;
+					box-sizing: border-box;
+				}
 			</style>
 			<% } )%>
 	</body>
