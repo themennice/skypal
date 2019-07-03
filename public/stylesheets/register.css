@@ -24,7 +24,7 @@ fieldset{
   border: none;
   width: 400px;
   margin:auto;
-  margin-top: 200px;
+  margin-top: 50px;
 }
 
 fieldset[name=loginBtn]{
