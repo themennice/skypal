@@ -6,6 +6,7 @@ function validateForm(){
     if (password =!confirmPassword)
     {
     	console.log("password does not match!");
+        return false;
     } 
     else
     	return true;
