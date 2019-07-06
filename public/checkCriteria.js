@@ -3,11 +3,11 @@ function validateForm(){
     var confirmPassword = document.forms["registerForm"]["confirmPassword"].value;
     //console.log(password);
     //console.log(confirmPassword);
-    if (password =!confirmPassword)
+    if (password == confirmPassword)
+        return true;
+    else
     {
-    	console.log("password does not match!");
+    	alert("password does not match!");
         return false;
     } 
-    else
-    	return true;
 }
