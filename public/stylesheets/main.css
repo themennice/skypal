@@ -1,3 +1,19 @@
+img.bg {
+        min-height: 100%;
+        min-width: 1024px;
+        width: 100%;
+        height: auto;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -5;
+    }
+
+    @media screen and (max-width: 1024px){
+        img.bg {
+        left: 50%;
+        margin-left: -512px; }
+    }
 .jumbotron {
   background: rgba(230, 230, 230, 0.3);
   color: white;

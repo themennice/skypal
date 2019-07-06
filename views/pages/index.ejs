@@ -8,28 +8,8 @@
 
   <% include ../partials/nav.ejs %>
 <img src="SkyBG.jpg" alt="background" class="bg" />
-<style>
-img.bg {
-        min-height: 100%;
-        min-width: 1024px;
-        width: 100%;
-        height: auto;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -5;
-    }
-
-    @media screen and (max-width: 1024px){
-        img.bg {
-        left: 50%;
-        margin-left: -512px; }
-    }
-</style>
 <div class="jumbotron text-center">
   <div class="container">
-    <a href="/" class="lang-logo">
-    </a>
     <h1>Welcome to SkyPal</h1>
     <p>Your platform for finding a perfect flight companion for your journey to anywhere in the world.</p>
     <!--<a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Getting Started with Node</a>
@@ -38,7 +18,7 @@ img.bg {
 </div>
 <div class="container">
   <div class="alert alert-info text-center" role="alert">
-    To start using SkyPal, please <a href="https://skypal.herokuapp.com/register.html" class="alert-link">register</a> an account in the top right corner of the website.
+    To start using SkyPal, please <a href="/register.html" class="alert-link">register</a> an account in the top right corner of the website.
   </div>
   <hr>
   <div class="row">
@@ -54,7 +34,7 @@ img.bg {
     <div class="col-md-6">
       <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
       <ul>
-        <li>Have fun and <a href="https://skypal.herokuapp.com/register.html">Get Started</a> now!</li>
+        <li>Have fun and <a href="/register.html">Get Started</a> now!</li>
       </ul>
     </div>
   </div> <!-- row -->
