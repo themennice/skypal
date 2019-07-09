@@ -1,14 +1,33 @@
+img.bg {
+        min-height: 100%;
+        min-width: 1024px;
+        width: 100%;
+        height: auto;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -5;
+    }
+
+    @media screen and (max-width: 1024px){
+        img.bg {
+        left: 50%;
+        margin-left: -512px; }
+    }
 .jumbotron {
-  background: #188CBB;
+  background: rgba(230, 230, 230, 0.3);
   color: white;
   padding-bottom: 10px; }
+.jumbotron h1{
+  text-shadow: 2px 2px grey;
+}
   .jumbotron .btn-primary {
     background: #845ac7;
     border-color: #845ac7; }
     .jumbotron .btn-primary:hover {
       background: #46c1bb; }
   .jumbotron p {
-    color: #FEF539;
+    color: Black;
     max-width: 75%;
     margin: 1em auto 2em; }
   .wrapper {
@@ -29,3 +48,7 @@
     border: 2px solid white; }
     .jumbotron .lang-logo img {
       max-width: 100%; }
+    .row{
+      	color: white;
+        text-shadow: 2px 2px grey;
+      }

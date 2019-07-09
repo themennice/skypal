@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<!-- C:\Program Files\Git\node-js-getting-started /-->
+<!-- C:\Program   Files\Git\node-js-getting-started /-->
 
 <html lang="en">
 	<head>
+		<% include partials/header.ejs %>
 		<meta charset="utf-8">
 		<title>Profile</title>
 		<link rel="stylesheet" href="profile.css"/ type="text/css">
@@ -10,6 +11,7 @@
 	</head>
 
 	<body>
+		<% include partials/nav.ejs %>
 		<img src="profileBG.jpg" alt="background" class="bg" />
 
 			<h1> Your Profile </h1>
@@ -17,7 +19,7 @@
 <form name="profile" action="/profile" method="post">
 	<p>
 		<label class="lbl">Name </label>
-		<input type="text" name="Name" value="<%=r.name">
+		<input type="text" name="Name" value="<%=r.name%>">
 	</p>
 	<p>
 		<label class="lbl">Username</label>

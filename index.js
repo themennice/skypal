@@ -30,7 +30,7 @@ express()
 			res.send("User Already Exists Try Logigng in");
 		} else {
         const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
-			res.render('pages/index');
+			res.render('login');
 
 		}
 
