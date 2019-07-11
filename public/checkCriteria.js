@@ -31,7 +31,8 @@ function validateForm(){
     } 
 }
 
-function sendEmail(email)
+/*function sendEmail(email)
 {
-
-}
+    var link = "mailto:'"++"'"+ "&subject=" + escape("Test")+ "&body=" + escape("Testing");
+    window.location.href = link;
+}*/
