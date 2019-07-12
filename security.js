@@ -25,7 +25,6 @@ function Encrypt(DataString, Code) {
 	 
 	// To print or store the binary data, you may convert it to hex
 	var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
-	console.log(encryptedHex);
 	
 	return encryptedHex
 }
@@ -41,7 +40,6 @@ function Decrypt(encryptedHex, key) {
 	 
 	// Convert our bytes back into text
 	var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
-	console.log(decryptedText);
 
 	return decryptedText
 }
@@ -81,21 +79,15 @@ function OnSignup(Username, Password, Data) {
 	
 	var HashedPass = Hash(Password + Sum(Code))
 	
-	//DataString = Stringify(Data)
-	
-	//SafeData = Encrypt(Data, Code)
-	
 	var DataString = JSON.stringify(Data)
 	
 	
-	SafeData = encrypt(DataString, Code);
+	var SafeData = encrypt(DataString, Code);
 	
-	UnsafeData = decrypt(SafeData, Code);
+	var UnsafeData = decrypt(SafeData, Code);
 	
 	
 	//DatabaseInsert("Passwords", HashedPass)
-	
-	
 	
 	//DatabaseInsert("Data", SafeData)
 }
