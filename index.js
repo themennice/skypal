@@ -16,6 +16,29 @@ express()
   .get('/', (req, res) => res.render('pages/index'))
   .post('/reg', async function(req, res){
     var emailAddr = req.body.email;
+    var nodemailer = require('nodemailer');
+    var transporter = nodemailer.createTransport(
+    {
+      service: 'gmail',
+      auth: { user: 'chloechan.chy@gmail.com',pass: '2383015238781'}   
+    });
+
+    var mailOptions = {
+      from: 'noreply.skypal@gmail.com',
+      to: emailAddr,
+      subject: 'Welcome to SkyPal',
+      text: 'Thank you for joining SkyPal. Start finding your fly-mate on SkyPal!'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info)
+    {
+      if (error) 
+        console.log(error);
+      else 
+        console.log('Email sent: ' + info.response);
+      
+    });
+
     var uName = req.body.username;
     var pass = req.body.password;
 
@@ -106,6 +129,31 @@ express()
         res.send("Error " + err);
       }
    })
+  /*.post("/sendEmail",function sendEmail() 
+    {
+        var nodemailer = require('nodemailer');
+        var transporter = nodemailer.createTransport(
+        {
+          service: 'gmail',
+          auth: { user: 'chloechan.chy@gmail.com',pass: '2383015238781'}   
+        });
+
+        var mailOptions = {
+          from: 'chloechan.chy@gmail.com',
+          to: 'chc70@sfu.ca',
+          subject: 'Sending Email using Node.js',
+          text: 'That was easy!'
+        };
+
+        transporter.sendMail(mailOptions, function(error, info)
+        {
+          if (error) 
+            console.log(error);
+          else 
+            console.log('Email sent: ' + info.response);
+          
+        });
+    })*/
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/login', (req, res) => res.render('login'))
