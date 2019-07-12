@@ -1,4 +1,4 @@
-Psuedocode:
+var aesjs = require('aes-js');
 
 function Hash(string) {
 	// Integer hashcode
@@ -11,12 +11,39 @@ function Hash(string) {
 	return hashcode % 65521
 }
 
-Encrypt(string -> text, string -> key) {
+function Encrypt(DataString, Code) {
+	// An example 128-bit key (16 bytes * 8 bits/byte = 128 bits)
+	var key = Code
+	 
+	// Convert text to bytes
+	var text = DataString
+	var textBytes = aesjs.utils.utf8.toBytes(text);
+	 
+	// The counter is optional, and if omitted will begin at 1
+	var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
+	var encryptedBytes = aesCtr.encrypt(textBytes);
+	 
+	// To print or store the binary data, you may convert it to hex
+	var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+	console.log(encryptedHex);
 	
+	return encryptedHex
 }
 
-Decrypt(string -> text, string -> key) {
-	
+function Decrypt(encryptedHex, key) {
+	// When ready to decrypt the hex string, convert it back to bytes
+	var encryptedBytes = aesjs.utils.hex.toBytes(encryptedHex);
+	 
+	// The counter mode of operation maintains internal state, so to
+	// decrypt a new instance must be instantiated.
+	var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
+	var decryptedBytes = aesCtr.decrypt(encryptedBytes);
+	 
+	// Convert our bytes back into text
+	var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
+	console.log(decryptedText);
+
+	return decryptedText
 }
 
 function RandomCode() {
@@ -54,11 +81,21 @@ function OnSignup(Username, Password, Data) {
 	
 	var HashedPass = Hash(Password + Sum(Code))
 	
-	//DatabaseInsert("Passwords", HashedPass)
-	
 	//DataString = Stringify(Data)
 	
 	//SafeData = Encrypt(Data, Code)
+	
+	var DataString = JSON.stringify(Data)
+	
+	
+	SafeData = encrypt(DataString, Code);
+	
+	UnsafeData = decrypt(SafeData, Code);
+	
+	
+	//DatabaseInsert("Passwords", HashedPass)
+	
+	
 	
 	//DatabaseInsert("Data", SafeData)
 }
