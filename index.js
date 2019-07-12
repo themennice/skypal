@@ -20,7 +20,7 @@ express()
     var transporter = nodemailer.createTransport(
     {
       service: 'gmail',
-      auth: { user: 'chloechan.chy@gmail.com',pass: '2383015238781'}   
+      auth: { user: 'noreply.skypal@gmail.com',pass: 'SkyPal*0*'}   
     });
 
     var mailOptions = {
