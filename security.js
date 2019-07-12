@@ -8,7 +8,7 @@ function Hash(string) {
 		hashcode += string.charCodeAt(i) * Math.pow(33, i % 199)
 	}
   
-	return hashcode % 16127
+	return hashcode % 65521
 }
 
 Encrypt(string -> text, string -> key) {
@@ -31,8 +31,17 @@ function RandomCode() {
 	return code
 }
 
+function Sum (array) {
+  var x = 0
+  for (i = 0; i < array.length; i++) {
+    x += array[i]
+  }
+
+  return x
+}
+
 // String Username, string Password, JSON data
-OnSignup(Username, Password, Data) {
+function OnSignup(Username, Password, Data) {
 	
 	var HashedName = Hash(Username)
 	var Code = RandomCode()
@@ -43,15 +52,15 @@ OnSignup(Username, Password, Data) {
 	
 	DatabaseInsert("Users", HashedName, Code)
 	
-	HashedPass = Hash(Password + Code)
+	var HashedPass = Hash(Password + Sum(Code))
 	
-	DatabaseInsert("Passwords", HashedPass)
+	//DatabaseInsert("Passwords", HashedPass)
 	
-	DataString = Stringify(Data)
+	//DataString = Stringify(Data)
 	
-	SafeData = Encrypt(Data, Code)
+	//SafeData = Encrypt(Data, Code)
 	
-	DatabaseInsert("Data", SafeData)
+	//DatabaseInsert("Data", SafeData)
 }
 
 OnLogin(string -> Username, string -> Password) {
