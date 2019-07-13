@@ -71,24 +71,37 @@ function OnSignup(Username, Password, Data) {
 	var HashedName = Hash(Username)
 	var Code = RandomCode()
 	
-	if DatabaseQuery(HashedName) {
-		return SignupError
-	}
 	
-	DatabaseInsert("Users", HashedName, Code)
+	/*
+	pool.query("select * from users", function(error, result){
+		var results = { 'results': (result.rows[0].id) ? result.rows : [] };
+		res.render('pages/db', results);
+	});	
+	*/
+	
+	pool.query("SELECT * from Users where name=" + HashedName, function(error, result) {
+		if (result.rows[0] == null) {
+			return SignupError
+		}
+	})
+	
+	pool.query("INSERT INTO Users VALUES (" + HashedName + ", {" + Code.toString() + "})", (error, result) => {} )
 	
 	var HashedPass = Hash(Password + Sum(Code))
-	
 	var DataString = JSON.stringify(Data)
 	
-	
 	var SafeData = encrypt(DataString, Code);
-	
 	var UnsafeData = decrypt(SafeData, Code);
 	
 	
+	pool.query("INSERT INTO Passwords VALUES (" + HashedPass + ")", (error, result) => {} )
+	
+	//passinsert = client.query("INSERT INTO Passwords VALUES (" + HashedPass + ")")
 	//DatabaseInsert("Passwords", HashedPass)
 	
+	pool.query("INSERT INTO Data Values ('" + SafeData + "')", (error, result) => {} )
+	
+	//datainsert = client.quert("INSERT INTO Data Values ('" + SafeData + "')") 
 	//DatabaseInsert("Data", SafeData)
 }
 
