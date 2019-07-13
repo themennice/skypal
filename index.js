@@ -6,6 +6,7 @@ const pool = new Pool({
 const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
+var rand,host,link;
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
@@ -16,6 +17,33 @@ express()
   .get('/', (req, res) => res.render('pages/index'))
   .post('/reg', async function(req, res){
     var emailAddr = req.body.email;
+    var nodemailer = require('nodemailer');
+        /*rand=Math.floor((Math.random() * 100) + 54);
+        host=req.get('host');
+        link="http://"+req.get('host')+"/verify?id="+rand;*/
+        var transporter = nodemailer.createTransport(
+        {
+          service: 'gmail',
+          auth: { user: 'noreply.skypal@gmail.com',pass: 'SkyPal*0*'}   
+        });
+
+        var mailOptions = {
+          from: 'noreply.skypal@gmail.com',
+          to: emailAddr,
+          subject: 'Welcome to Skypal',
+          text: 'Hello!',
+          html: 'Hello, <br><br> Thank you for registring SkyPal! <br><br>Best, <br> Team SkyPal'
+        };//<a href="+link+">Click here to verify</a> 
+
+        transporter.sendMail(mailOptions, function(error, info)
+        {
+          if (error) 
+            console.log(error);
+          else 
+            console.log('Email sent: ' + info.response);
+          
+        });
+
     var uName = req.body.username;
     var pass = req.body.password;
 
@@ -29,33 +57,7 @@ express()
 		if (result.rows[0]) {
 			res.send("User Already Exists Try Logigng in");
 		} else {
-      const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
-      /*var nodemailer = require('nodemailer');
-      var transporter = nodemailer.createTransport(
-      {
-        service: 'gmail',
-        auth: { user: 'noreply.skypal@gmail.com',pass: 'SkyPal*0*'}   
-      });
-
-      var rand=Math.floor((Math.random() * 100) + 54);
-      var host=req.get('host');
-      var link="http://"+req.get('host')+"/verify?id="+rand;
-
-      var mailOptions = {
-        from: 'noreply.skypal@gmail.com',
-        to: emailAddr,
-        subject: 'Welcome to SkyPal',
-        html: 'Hello, <br> Thank you for joining SkyPal. Please verify your account by clicking below link and start finding your fly-mate on SkyPal! <br><a href="+link+">Click here to verify</a>'
-      };
-
-      transporter.sendMail(mailOptions, function(error, info)
-      {
-        if (error) 
-          console.log(error);
-        else 
-          console.log('Email sent: ' + info.response);
-        
-      });*/
+        const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
 			res.render('login');
 
 		}
@@ -132,36 +134,35 @@ express()
         res.send("Error " + err);
       }
    })
-
-  .post("/sendEmail",function sendEmail() 
+  /*.post("/sendEmail",function sendEmail() 
     {
-      var nodemailer = require('nodemailer').request();
-      var transporter = nodemailer.createTransport(
-      {
-        service: 'gmail',
-        auth: { user: 'noreply.skypal@gmail.com',pass: 'SkyPal*0*'}   
-      });
+        var nodemailer = require('nodemailer');
+        /*rand=Math.floor((Math.random() * 100) + 54);
+        host=req.get('host');
+        link="http://"+req.get('host')+"/verify?id="+rand;
+        var transporter = nodemailer.createTransport(
+        {
+          service: 'gmail',
+          auth: { user: 'noreply.skypal@gmail.com',pass: 'SkyPal*0*'}   
+        });
 
-      var rand=Math.floor((Math.random() * 100) + 54);
-      var host=req.get('host');
-      var link="http://"+req.get('host')+"/verify?id="+rand;
+        var mailOptions = {
+          from: 'noreply.skypal@gmail.com',
+          to: 'chc70@sfu.ca',
+          subject: 'Welcome to Skypal',
+          text: 'Hello!',
+          html: 'Hello, <br><br> Thank you for registring SkyPal! <br><br>Best, <br> Team SkyPal'
+        };//<a href="+link+">Click here to verify</a> 
 
-      var mailOptions = {
-        from: 'noreply.skypal@gmail.com',
-        to: 'chc70@sfu.ca',
-        subject: 'Welcome to SkyPal',
-        html: "Hello, <br> Thank you for joining SkyPal. Please verify your account by clicking below link and start finding your fly-mate on SkyPal! <br><a href="+link+">Click here to verify</a>"
-      };
-
-      transporter.sendMail(mailOptions, function(error, info)
-      {
-        if (error) 
-          console.log(error);
-        else 
-          console.log('Email sent: ' + info.response);
-      });
-    })
-
+        transporter.sendMail(mailOptions, function(error, info)
+        {
+          if (error) 
+            console.log(error);
+          else 
+            console.log('Email sent: ' + info.response);
+          
+        });
+    })*/
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/login', (req, res) => res.render('login'))
