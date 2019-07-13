@@ -70,39 +70,31 @@ function OnSignup(Username, Password, Data) {
 	
 	var HashedName = Hash(Username)
 	var Code = RandomCode()
-	
-	
-	/*
-	pool.query("select * from users", function(error, result){
-		var results = { 'results': (result.rows[0].id) ? result.rows : [] };
-		res.render('pages/db', results);
-	});	
-	*/
-	
+		
 	pool.query("SELECT * from Users where name=" + HashedName, function(error, result) {
-		if (result.rows[0] == null) {
-			return SignupError
+		if (error) {
+			console.log(error)
+			return { "error" : error }
 		}
-	})
+		
+		if (result.rows[0] != null) {
+			console.log("User already exists");
+			return { "error" : "Exit early: User already exists" }
+		}
+		
+		
+		pool.query("INSERT INTO Users VALUES (" + HashedName + ", '{" + Code.toString() + "}')", (error, result) => { if (error) { console.log(error) } } )
 	
-	pool.query("INSERT INTO Users VALUES (" + HashedName + ", {" + Code.toString() + "})", (error, result) => {} )
-	
-	var HashedPass = Hash(Password + Sum(Code))
-	var DataString = JSON.stringify(Data)
-	
-	var SafeData = encrypt(DataString, Code);
-	var UnsafeData = decrypt(SafeData, Code);
-	
-	
-	pool.query("INSERT INTO Passwords VALUES (" + HashedPass + ")", (error, result) => {} )
-	
-	//passinsert = client.query("INSERT INTO Passwords VALUES (" + HashedPass + ")")
-	//DatabaseInsert("Passwords", HashedPass)
-	
-	pool.query("INSERT INTO Data Values ('" + SafeData + "')", (error, result) => {} )
-	
-	//datainsert = client.quert("INSERT INTO Data Values ('" + SafeData + "')") 
-	//DatabaseInsert("Data", SafeData)
+		var HashedPass = Hash(Password + Sum(Code))
+		var DataString = JSON.stringify(Data)
+		
+		var SafeData = Encrypt(DataString, Code);
+		//var UnsafeData = Decrypt(SafeData, Code);
+		
+		pool.query("INSERT INTO Passwords VALUES (" + HashedPass + ")", (error, result) => { if (error) { console.log(error) } } )
+		
+		pool.query("INSERT INTO Data Values ('" + SafeData + "', " + Hash(Username + Sum(Code)) + ")", (error, result) => { if (error) { console.log(error) } } )
+	})	
 }
 
 OnLogin(string -> Username, string -> Password) {
