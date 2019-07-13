@@ -7,8 +7,10 @@ function Hash(string) {
 	var hashcode = 0
 	
 	// Run a polynomial hashing function
+	var pow = 1
 	for (i = 0; i < string.length; i++){
-		hashcode += string.charCodeAt(i) * Math.pow(33, i % 199)
+		hashcode += string.charCodeAt(i) * pow
+		pow = pow * 33
 	}
   
 	// Compress the hashcode
