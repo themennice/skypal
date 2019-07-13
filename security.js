@@ -78,7 +78,7 @@ function OnSignup(Username, Password, Data) {
 		}
 		
 		if (result.rows[0] != null) {
-			console.log("User already exists");
+			console.log("User already exists")
 			return { "error" : "Exit early: User already exists" }
 		}
 		
@@ -88,7 +88,7 @@ function OnSignup(Username, Password, Data) {
 		var HashedPass = Hash(Password + Sum(Code))
 		var DataString = JSON.stringify(Data)
 		
-		var SafeData = Encrypt(DataString, Code);
+		var SafeData = Encrypt(DataString, Code)
 		//var UnsafeData = Decrypt(SafeData, Code);
 		
 		pool.query("INSERT INTO Passwords VALUES (" + HashedPass + ")", (error, result) => { if (error) { console.log(error) } } )
@@ -97,21 +97,37 @@ function OnSignup(Username, Password, Data) {
 	})	
 }
 
-OnLogin(string -> Username, string -> Password) {
+function OnLogin(Username, Password) {
 	
-	HashedName = Hash(Username)
+	var HashedName = Hash(Username)
+	var Code = null
 	
-	Code = null
-	
-	if DatabaseQuery("Users", HashedName)
-		Code = DatabasePull("Users", "Code")
-	else
-		return LoginError
-	
-	HashedPass = Hash(Password + Code)
-	
-	if DatabaseQuery(HashedPass)
-		return Login
-	else
-		return LoginError
+	pool.query("SELECT code FROM Users WHERE name=" + HashedName, function(error, result) {
+		if (error) {
+			console.log(error)
+			return { "error" : error }
+		}
+		
+		if (result.rows[0] == null) {
+			console.log("Error logging in, username or passoword was incorrect")
+			return { "error" : "Exit early: User does not exist" }
+		} else {
+			Code = result.rows[0].code
+			var HashedPass = Hash(Password + Sum(Code))
+			
+			pool.query("SELECT * FROM Passwords WHERE pass=" + HashedPass, function(error, result) {
+				if (result.rows[0] == null) {
+					console.log("Login failed")
+				} else {
+					console.log("Login successful")
+					
+					pool.query("SELECT data FROM data WHERE token=" + Hash(Username + Sum(Code)), function(error, result) {
+						if (result.rows[0] != null) {
+							console.log(JSON.parse(Decrypt(result.rows[0].data, Code)));
+						}
+					})
+				}
+			})
+		}
+	})
 }
