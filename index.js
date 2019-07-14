@@ -85,13 +85,16 @@ express()
 	try {
         const client = await pool.connect()
         const result = await client.query("SELECT * FROM users where username='" + uname + "'");
+        const result_ticket = await client.query("SELECT * FROM tickets where uname='" + uname + "'");
 
 		console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
 
 		if ( (uname != "" && upass != "") && result.rows[0]) {
 			if (result.rows[0].password == upass) {
 				// ** Load main page here ** //
-				res.render('profile', { 'r': result.rows[0] });
+        res.render('profile', { 'b': result_ticket.rows[0],'r': result.rows[0] });
+				//res.render('profile', { 'r': result.rows[0] });
+
 				// ** ******************* ** //
 			} else {
 				res.send("Wrong password");
@@ -106,6 +109,39 @@ express()
         res.send("Error " + err);
       }
    })
+  //  .post("/login", async (req, res) => {
+  //  var uname = req.body.username;
+  //  var upass = req.body.password;
+  //  //console.log(uname);
+   //
+  //  try {
+  //        const client = await pool.connect()
+  //        const result = await client.query("SELECT * FROM users where username='" + uname + "'");
+  //        //const result_ticket = await client.query("SELECT * FROM tickets where uname='" + uname + "'");
+   //
+  //    console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
+   //
+  //    if ( (uname != "" && upass != "") && result.rows[0]) {
+  //      if (result.rows[0].password == upass) {
+  //        // ** Load main page here ** //
+  //        //res.render('profile', { 'b': result_ticket.rows[0] });
+  //        res.render('profile', { 'r': result.rows[0] });
+   //
+  //        // ** ******************* ** //
+  //      } else {
+  //        res.send("Wrong password");
+  //      }
+  //    } else {
+  //      res.send("User not found");
+  //    }
+   //
+  //    client.release();
+  //      } catch (err) {
+  //        console.error(err);
+  //        res.send("Error " + err);
+  //      }
+  //   })
+
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/login', (req, res) => res.render('login'))
