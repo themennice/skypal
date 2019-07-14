@@ -6,7 +6,7 @@ var passport = require("passport");
 var fs = require('fs');
 var request = require('request');
 const { Pool, Client } = require('pg')
-const bcrypt = require('bcrypt'); // Julian, do we need this? -> for storing passwords in a hashed format.
+const bcrypt = require('bcryptjs'); // Julian, do we need this? -> for storing passwords in a hashed format.
 const uuidv4 = require('uuid/v4');// uuid/v4? //used for generating universal unique IDs
 
 const LocalStrategy = require('passport-local').Strategy; // strategy for authenticating with a username and password
@@ -24,7 +24,7 @@ module.exports = function (app) {
   app.get('/', (req, res, next) => { res.render('pages/index', {title: "Homepage",
         userData: req.user, messages: {danger: req.flash('danger'),
         warning: req.flash('warning'), success: req.flash('success')}});
-        console.log(req.user); })
+        console.log("The user is "+ req.user); })
 //
 //
 // 	app.get('/join', function (req, res, next) {
@@ -75,22 +75,22 @@ module.exports = function (app) {
 // 	});
 //
     app.get('/login', (req, res) => {
-      console.log("login attempt 12");
-      if (req.isAuthenticated()) {
-        console.log("login attempt 11");
-        res.redirect('/profile');}
-      else { res.render('login'); console.log("check HERE")}})
+        console.log("login attempt 12");
+        if (req.isAuthenticated()) {
+          console.log("login attempt 11");
+          res.redirect('/profile');}
+        else { res.render('login'); console.log("check HERE")}})
     app.get('/logout', function(req, res){
-     console.log(req.isAuthenticated());
-     req.logout();
-     console.log(req.isAuthenticated());
-     req.flash('success', "Logged out. See you soon!");
-     res.redirect('/');
-     })
-     app.post('/login', passport.authenticate('local'), //, {
-            //successRedirect: '/',
-          //  failureRedirect: '/login',
-            //failureFlash: true}
+         console.log(req.isAuthenticated());
+         req.logout();
+         console.log(req.isAuthenticated());
+         req.flash('success', "Logged out. See you soon!");
+         res.redirect('/');
+         })
+     app.post('/login', passport.authenticate('local'),//, {
+            // successRedirect: '/profile',
+            // failureRedirect: '/',
+            // failureFlash: true}),
             async function(req, res) {
               console.log("login attempt 8");
               if (req.body.remember) {
@@ -102,7 +102,7 @@ module.exports = function (app) {
                 }
               var uname = req.body.username;
               var upass = req.body.password;
-              	//console.log(uname);
+              	console.log(uname);
               	try {
                       const client = await pool.connect()
                       const result = await client.query("SELECT * FROM users where username='" + uname + "'");
@@ -123,75 +123,78 @@ module.exports = function (app) {
                       console.error(err);
                       res.send("Error " + err);
                     }
+                  alert("What's going on?");
                  console.log("login attempt 10");
                  //res.redirect('/');
                });
-}
-
-passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, username, password, done) => {
-
-	loginAttempt();
-  console.log("login attempt");
-	async function loginAttempt() {
 
 
-		const client = await pool.connect()
-    console.log("login attempt 2");
-		try{
-			await client.query('BEGIN')
-			var currentAccountsData = await JSON.stringify(client.query('SELECT "username", "name", "email", "password" FROM "users" WHERE "email"=$1', ['denys'], function(err, result) {
-        console.log("login attempt 3");
-				if(err) {
-					return done(err)
-				}
-        console.log("login attempt 4");
+      passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, username, password, done) => {
 
-				if(result.rows[0] == null){
-					req.flash('danger', "Oops. Incorrect login details.");
-					return done(null, false);
-				}
-				else{
-          console.log(result.rows[0]);
-          console.log(result.rows[0].password);
-          console.log(password);
-          console.log(typeof password);
-          if(password == result.rows[0].password){
-            console.log("TRUE");
-          }
-					bcrypt.compare(password, result.rows[0].password, function(err, check) {
-          //if(password == result.rows[0].password) {
-            console.log("login attempt 5");
-						if (err){
-							console.log('Error while checking password');
-							return done();
-						}
-						else if (check){
-              console.log("login attempt 6");
-              return done(null, [{email: result.rows[0].email, firstName: result.rows[0].firstName}]);
-						}
-						else{
-              console.log("login attempt 7");
-							req.flash('danger', "Oops. Incorrect login details.");
-              console.log("login attempt 15");
-							//return done(null, false);
-              //return done(null, [{ 'r': result.rows[0] }]);
-              return done(null, [{name: result.rows[0].name}]);
-						}
-					});
-				}
-			}))
-		}
+      	loginAttempt();
+        console.log("login attempt");
+      	async function loginAttempt() {
+      		const client = await pool.connect()
+          console.log("login attempt 2");
+      		try{
+      			await client.query('BEGIN')
+            console.log(username);
+      			var currentAccountsData = await JSON.stringify(client.query('SELECT "username", "name", "email", "password" FROM "users" WHERE "username"=$1', [username], function(err, result) {
+              console.log("login attempt 3");
+              console.log(currentAccountsData);
+      				if(err) {
+      					return done(err)
+      				}
+              console.log("login attempt 4");
 
-		catch(e){throw (e);}
-	};
+      				if(result.rows[0] == null){
+      					req.flash('danger', "Oops. Incorrect login details.");
+      					return done(null, false, {message: 'No user found'});
+      				}
+      				else{
+                console.log(result.rows[0]);
+                console.log(result.rows[0].password);
+                console.log(password);
+                console.log(typeof password);
+                if(password == result.rows[0].password){
+                  console.log("TRUE");
+                }
+      					bcrypt.compare(password, result.rows[0].password, function(err, isMatch) {
+                //if(password == result.rows[0].password) {
+                  console.log("login attempt 5");
+      						if (err){
+      							console.log('Error while checking password');
+      							return done();
+      						}
+      						else if (isMatch){
+                    console.log("login attempt 6");
+                    return done(null, [{username: result.rows[0].username, email: result.rows[0].email, firstName: result.rows[0].firstName}]);
+      						}
+      						else{
+                    console.log("login attempt 7");
+      							req.flash('danger', "Oops. Incorrect login details.");
+                    console.log("login attempt 15");
+      							//return done(null, false, {message: 'Wrong password'});
+                    //return done(null, [{ 'r': result.rows[0] }]);
+                    return done(null, [{name: result.rows[0].name}]);
+      						}
+      					});
+      				}
+      			}))
+      		}
 
-}
-))
+      		catch(e){throw (e);}
+      	};
 
-passport.serializeUser(function(user, done) {
-	done(null, user);
-});
+      }
+      ))
 
-passport.deserializeUser(function(user, done) {
-	done(null, user);
-});
+      passport.serializeUser(function(user, done) {
+      	done(null, user);
+      });
+
+      passport.deserializeUser(function(user, done) {
+      	done(null, user);
+      });
+
+      }

@@ -22,7 +22,7 @@ app.use(require('body-parser').urlencoded({ extended: true }))
 app.use(bodyParser.json());
 app.use(flash())
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: "bulky keyboard",
     resave: true,
     saveUninitialized: true
     }))
@@ -131,7 +131,10 @@ app.post("/profile", async (req, res) => {
     //  })
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
-app.get('/login', (req, res) => res.render('login'))
+app.get('/login', (req, res) => {
+  //alert(1);
+  res.render('login');
+  })
 //app.get('/', (req, res) => res.render('pages/index'))
 require('./routes.js')(app);
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
