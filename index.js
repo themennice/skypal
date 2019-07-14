@@ -4,6 +4,15 @@ const pool = new Pool({
   //ssl: true
 });
 const express = require('express')
+var session = require('express-session')
+var flash = require('connect-flash');
+var passport = require('passport');
+var request = require('request');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+const bcrypt = require('bcrypt'); // Julian, do we need this? -> for storing passwords in a hashed format.
+const uuidv4 = require('uuid');// uuid/v4? //used for generating universal unique IDs
+const LocalStrategy = require('passport-local').Strategy; // strategy for authenticating with a username and password
 const path = require('path')
 const PORT = process.env.PORT || 5000
 
@@ -11,11 +20,24 @@ express()
   .use(express.static(path.join(__dirname, 'public')))
   .use(express.json())
   .use(express.urlencoded({extended:false}))
+  .use(require('cookie-parser')())
+  .use(require('body-parser').urlencoded({ extended: true }))
+  .use(passport.initialize())
+  .use(passport.session())
+  .use(flash())
+  .use(session({secret: 'hedonistic touchbar'}))
+  .use(bodyParser())
+  .set('view options', { layout: false }) // may be omitted
+  //require(‘./lib/routes.js’)(app)
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
+  .get('/', (req, res, next) => { res.render('pages/index', {title: "Homepage",
+      userData: req.user, messages: {danger: req.flash('danger'),
+      warning: req.flash('warning'), success: req.flash('success')}});
+      console.log(req.user); })
   .post('/reg', async function(req, res){
     var emailAddr = req.body.email;
+    //console.log(emailAddr);
     var uName = req.body.username;
     var pass = req.body.password;
 
@@ -27,10 +49,10 @@ express()
 		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
 
 		if (result.rows[0]) {
-			res.send("User Already Exists Try Logigng in");
+			res.send('public/register.html', true);
 		} else {
         const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
-			res.render('login');
+			res.redirect('login');
 
 		}
 
