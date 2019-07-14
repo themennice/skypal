@@ -3,24 +3,23 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL
   //ssl: true
 });
+const PORT = process.env.PORT || 5000
 const express = require('express')
 var session = require('express-session')
 var flash = require('connect-flash');
 var passport = require('passport');
 var request = require('request');
 var bodyParser = require('body-parser');
-const bcrypt = require('bcrypt'); // Julian, do we need this? -> for storing passwords in a hashed format.
-const uuidv4 = require('uuid');// uuid/v4? //used for generating universal unique IDs
-const LocalStrategy = require('passport-local').Strategy; // strategy for authenticating with a username and password
 const path = require('path')
-const PORT = process.env.PORT || 5000
 
 var app = express()
+
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(require('cookie-parser')())
 app.use(require('body-parser').urlencoded({ extended: true }))
+app.use(bodyParser.json());
 app.use(flash())
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -29,28 +28,28 @@ app.use(session({
     }))
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(bodyParser())
+
 app.set('view options', { layout: false }) // may be omitted
-  //require(‘./lib/routes.js’)(app)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
 app.post('/reg', async function(req, res)
   {
     var emailAddr = req.body.email;
-    //console.log(emailAddr);
+    console.log(emailAddr);
     var uName = req.body.username;
     var pass = req.body.password;
 
     try {
         const client = await pool.connect();
 		// VALIDATE AND REDIRECT
+        console.log("message here");
         const result = await client.query("SELECT * FROM users where username='" + uName + "'");
 
 		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
 
 		if (result.rows[0]) {
-			  res.send('public/register.html', true); }
+			  res.send("User Already Exists Try Logigng in"); }
     else {
         const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
         res.redirect('login');}
