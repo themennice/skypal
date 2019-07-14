@@ -15,31 +15,27 @@ const LocalStrategy = require('passport-local').Strategy; // strategy for authen
 const path = require('path')
 const PORT = process.env.PORT || 5000
 
-express()
-  .use(express.static(path.join(__dirname, 'public')))
-  .use(express.json())
-  .use(express.urlencoded({extended:false}))
-  .use(require('cookie-parser')())
-  .use(require('body-parser').urlencoded({ extended: true }))
-  //require('./node_modules/passport/config/file')(passport)
-  .use(flash())
-  .use(session({
+var app = express()
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.json())
+app.use(express.urlencoded({extended:false}))
+app.use(require('cookie-parser')())
+app.use(require('body-parser').urlencoded({ extended: true }))
+app.use(flash())
+app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true
     }))
-  .use(passport.initialize())
-  .use(passport.session())
-  .use(bodyParser())
-  .set('view options', { layout: false }) // may be omitted
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(bodyParser())
+app.set('view options', { layout: false }) // may be omitted
   //require(‘./lib/routes.js’)(app)
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res, next) => { res.render('pages/index', {title: "Homepage",
-      userData: req.user, messages: {danger: req.flash('danger'),
-      warning: req.flash('warning'), success: req.flash('success')}});
-      console.log(req.user); })
-  .post('/reg', async function(req, res)
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+
+app.post('/reg', async function(req, res)
   {
     var emailAddr = req.body.email;
     //console.log(emailAddr);
@@ -67,7 +63,7 @@ express()
         res.send("Error " + err);
       }
     })
-    .post("/loginem", async (req, res) => { // what is loginem?
+app.post("/loginem", async (req, res) => { // what is loginem?
   	var email = req.body.key;
   	try {
           const client = await pool.connect()
@@ -82,15 +78,7 @@ express()
           res.send("Error " + err);
         }
      })
-  //    .get('/profile', function (req, res, next) {
-	// 	if(req.isAuthenticated()){
-	// 		res.render('account', {title: "Account", userData: req.user, userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});
-	// 	}
-	// 	else{
-	// 		res.redirect('/login');
-	// 	}
-	// })
-    .post("/profile", async (req, res) => {
+app.post("/profile", async (req, res) => {
   	  console.log(req.body);
   	  console.log(req.body.Username);
 
@@ -112,48 +100,7 @@ express()
         }
     })
 
-    .post('/login', passport.authenticate('local', {
-       successRedirect: '/profile',
-       failureRedirect: '/login',
-       failureFlash: true
-     }), async function(req, res) {
-         if (req.body.remember) {
-           req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // Cookie expires after 30 days
-         }
-         else {
-         req.session.cookie.expires = false; // Cookie expires at end of session
-         }
-         var uname = req.body.username;
-         var upass = req.body.password;
-         	//console.log(uname);
-
-         	try {
-                 const client = await pool.connect()
-                 const result = await client.query("SELECT * FROM users where username='" + uname + "'");
-
-         		console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
-
-         		if ( (uname != "" && upass != "") && result.rows[0]) {
-         			if (result.rows[0].password == upass) {
-         				// ** Load main page here ** //
-         				res.render('profile', { 'r': result.rows[0] });
-         				// ** ******************* ** //
-         			} else {
-         				res.send("Wrong password");
-         			}
-         		} else {
-         			res.send("User not found");
-         		}
-
-         		client.release();
-               } catch (err) {
-                 console.error(err);
-                 res.send("Error " + err);
-               }
-            //res.redirect(‘/’);
-            })
-
-    // .post("/login", async (req, res) => {
+    // app.post("/login", async (req, res) => {
   	// var uname = req.body.username;
   	// var upass = req.body.password;
   	// //console.log(uname);
@@ -182,16 +129,9 @@ express()
     //       res.send("Error " + err);
     //     }
     //  })
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/login', (req, res) => {
-      if (req.isAuthenticated()) {
-        res.redirect('/profile');}
-      else { res.render('login', {title: "Log in", userData: req.user,
-        messages: {danger: req.flash('danger'),
-        warning: req.flash('warning'), success: req.flash('success')}});
-      }
-    })
-
-  .get('/', (req, res) => res.render('pages/index'))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+app.get('/login', (req, res) => res.render('login'))
+//app.get('/', (req, res) => res.render('pages/index'))
+require('./routes.js')(app);
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
