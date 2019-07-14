@@ -64,12 +64,13 @@ app.post('/reg', async function(req, res)
     })
 app.post("/loginem", async (req, res) => { // what is loginem?
   	var email = req.body.key;
+    console.log("login attempt 12");
   	try {
           const client = await pool.connect()
           const result = await client.query("SELECT * FROM users where email='" + email + "'");
 
   		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
-
+      console.log("login attempt 14");
   		res.send(result.rows[0]);
   		client.release();
         } catch (err) {

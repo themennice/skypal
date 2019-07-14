@@ -75,9 +75,11 @@ module.exports = function (app) {
 // 	});
 //
     app.get('/login', (req, res) => {
+      console.log("login attempt 12");
       if (req.isAuthenticated()) {
+        console.log("login attempt 11");
         res.redirect('/profile');}
-      else { res.render('login'); console.log("check")}})
+      else { res.render('login'); console.log("check HERE")}})
     app.get('/logout', function(req, res){
      console.log(req.isAuthenticated());
      req.logout();
@@ -85,41 +87,44 @@ module.exports = function (app) {
      req.flash('success', "Logged out. See you soon!");
      res.redirect('/');
      })
-     app.post('/login', passport.authenticate('local', {
-            successRedirect: '/profile',
-            failureRedirect: '/login',
-            failureFlash: true}),
+     app.post('/login', passport.authenticate('local'), //, {
+            //successRedirect: '/',
+          //  failureRedirect: '/login',
+            //failureFlash: true}
             async function(req, res) {
+              console.log("login attempt 8");
               if (req.body.remember) {
                 req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // Cookie expires after 30 days
               }
               else {
-              req.session.cookie.expires = false; // Cookie expires at end of session
-              }
-              // var uname = req.body.username;
-              // var upass = req.body.password;
-              // 	//console.log(uname);
-              // 	try {
-              //         const client = await pool.connect()
-              //         const result = await client.query("SELECT * FROM users where username='" + uname + "'");
-              // 		console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
-              // 		if ( (uname != "" && upass != "") && result.rows[0]) {
-              // 			if (result.rows[0].password == upass) {
-              // 				// ** Load main page here ** //
-              // 				res.render('profile', { 'r': result.rows[0] });
-              // 				// ** ******************* ** //
-              // 			} else {
-              // 				res.send("Wrong password");
-              // 			}
-              // 		} else {
-              // 			res.send("User not found");
-              // 		}
-              // 		client.release();
-              //       } catch (err) {
-              //         console.error(err);
-              //         res.send("Error " + err);
-              //       }
-                 res.redirect('/');
+                console.log("login attempt 9");
+                req.session.cookie.expires = false; // Cookie expires at end of session
+                }
+              var uname = req.body.username;
+              var upass = req.body.password;
+              	//console.log(uname);
+              	try {
+                      const client = await pool.connect()
+                      const result = await client.query("SELECT * FROM users where username='" + uname + "'");
+              		console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
+              		if ( (uname != "" && upass != "") && result.rows[0]) {
+              			if (result.rows[0].password == upass) {
+              				// ** Load main page here ** //
+              				res.render('profile', { 'r': result.rows[0] });
+              				// ** ******************* ** //
+              			} else {
+              				res.send("Wrong password");
+              			}
+              		} else {
+              			res.send("User not found");
+              		}
+              		client.release();
+                    } catch (err) {
+                      console.error(err);
+                      res.send("Error " + err);
+                    }
+                 console.log("login attempt 10");
+                 //res.redirect('/');
                });
 }
 
@@ -134,18 +139,27 @@ passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, usern
     console.log("login attempt 2");
 		try{
 			await client.query('BEGIN')
-			var currentAccountsData = await JSON.stringify(client.query('SELECT "username", "name", "email", "password" FROM "users" WHERE "email"=$1', [username], function(err, result) {
+			var currentAccountsData = await JSON.stringify(client.query('SELECT "username", "name", "email", "password" FROM "users" WHERE "email"=$1', ['denys'], function(err, result) {
         console.log("login attempt 3");
 				if(err) {
 					return done(err)
 				}
         console.log("login attempt 4");
+
 				if(result.rows[0] == null){
 					req.flash('danger', "Oops. Incorrect login details.");
 					return done(null, false);
 				}
 				else{
+          console.log(result.rows[0]);
+          console.log(result.rows[0].password);
+          console.log(password);
+          console.log(typeof password);
+          if(password == result.rows[0].password){
+            console.log("TRUE");
+          }
 					bcrypt.compare(password, result.rows[0].password, function(err, check) {
+          //if(password == result.rows[0].password) {
             console.log("login attempt 5");
 						if (err){
 							console.log('Error while checking password');
@@ -153,12 +167,15 @@ passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, usern
 						}
 						else if (check){
               console.log("login attempt 6");
-							return done(null, [{email: result.rows[0].email, firstName: result.rows[0].firstName}]);
+              return done(null, [{email: result.rows[0].email, firstName: result.rows[0].firstName}]);
 						}
 						else{
               console.log("login attempt 7");
 							req.flash('danger', "Oops. Incorrect login details.");
-							return done(null, false);
+              console.log("login attempt 15");
+							//return done(null, false);
+              //return done(null, [{ 'r': result.rows[0] }]);
+              return done(null, [{name: result.rows[0].name}]);
 						}
 					});
 				}
