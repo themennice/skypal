@@ -74,12 +74,14 @@ module.exports = function (app) {
 // 		}
 // 	});
 //
+    app.get('/register', (req, res) => res.render('register'))
+    app.get('/add-ticket', (req, res) => res.render('add-ticket'))
     app.get('/login', (req, res) => {
-        console.log("login attempt 12");
+        console.log("Attempting to log in");
         if (req.isAuthenticated()) {
           console.log("login attempt 11");
           res.redirect('/profile');}
-        else { res.render('login'); console.log("check HERE")}})
+        else { res.render('login'); console.log("Not logged in, render the login page")}})
     app.get('/logout', function(req, res){
          console.log(req.isAuthenticated());
          req.logout();
@@ -123,7 +125,7 @@ module.exports = function (app) {
                       console.error(err);
                       res.send("Error " + err);
                     }
-                  alert("What's going on?");
+                  //alert("What's going on?");
                  console.log("login attempt 10");
                  //res.redirect('/');
                });
@@ -139,6 +141,7 @@ module.exports = function (app) {
       		try{
       			await client.query('BEGIN')
             console.log(username);
+            // currentAccountsData array is empty, see in console.log. Why?
       			var currentAccountsData = await JSON.stringify(client.query('SELECT "username", "name", "email", "password" FROM "users" WHERE "username"=$1', [username], function(err, result) {
               console.log("login attempt 3");
               console.log(currentAccountsData);
@@ -161,7 +164,7 @@ module.exports = function (app) {
                 }
       					bcrypt.compare(password, result.rows[0].password, function(err, isMatch) {
                 //if(password == result.rows[0].password) {
-                  console.log("login attempt 5");
+                  console.log("Bcrypt compare login attempt 5");
       						if (err){
       							console.log('Error while checking password');
       							return done();
@@ -176,7 +179,7 @@ module.exports = function (app) {
                     console.log("login attempt 15");
       							//return done(null, false, {message: 'Wrong password'});
                     //return done(null, [{ 'r': result.rows[0] }]);
-                    return done(null, [{name: result.rows[0].name}]);
+                    return done(null, [{username: result.rows[0].username, email: result.rows[0].email, firstName: result.rows[0].firstName}]);
       						}
       					});
       				}

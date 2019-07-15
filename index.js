@@ -5,6 +5,7 @@ const pool = new Pool({
 });
 const PORT = process.env.PORT || 5000
 const express = require('express')
+var request = require("request");
 var session = require('express-session')
 var flash = require('connect-flash');
 var passport = require('passport');
@@ -36,7 +37,7 @@ app.set('view engine', 'ejs')
 app.post('/reg', async function(req, res)
   {
     var emailAddr = req.body.email;
-    console.log(emailAddr);
+    console.log("The email address is " + emailAddr);
     var uName = req.body.username;
     var pass = req.body.password;
 
@@ -75,7 +76,7 @@ app.post("/loginem", async (req, res) => { // what is loginem?
   		client.release();
         } catch (err) {
           console.error(err);
-          res.send("Error " + err);
+          res.send("Error is " + err);
         }
      })
 app.post("/profile", async (req, res) => {
@@ -131,10 +132,10 @@ app.post("/profile", async (req, res) => {
     //  })
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
-app.get('/login', (req, res) => {
-  //alert(1);
-  res.render('login');
-  })
+// app.get('/login.ejs', (req, res) => {
+//   console.log("what's up my friends?");
+//   res.render('login');
+//   })
 //app.get('/', (req, res) => res.render('pages/index'))
 require('./routes.js')(app);
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
