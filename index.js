@@ -5,16 +5,19 @@ const pool = new Pool({
 });
 const PORT = process.env.PORT || 5000
 const express = require('express')
-var request = require("request");
-var session = require('express-session')
+
 var flash = require('connect-flash');
 var passport = require('passport');
 var request = require('request');
+var session = require('express-session')
+var request = require('request');
 var bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');
 const path = require('path')
 
 var app = express()
-
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
@@ -27,42 +30,10 @@ app.use(session({
     resave: true,
     saveUninitialized: true
     }))
-app.use(passport.initialize())
-app.use(passport.session())
-
 app.set('view options', { layout: false }) // may be omitted
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-app.post('/reg', async function(req, res)
-  {
-    var emailAddr = req.body.email;
-    console.log("The email address is " + emailAddr);
-    var uName = req.body.username;
-    var pass = req.body.password;
-
-    try {
-        const client = await pool.connect();
-		// VALIDATE AND REDIRECT
-        console.log("message here");
-        const result = await client.query("SELECT * FROM users where username='" + uName + "'");
-
-		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
-
-		if (result.rows[0]) {
-			  res.send("User Already Exists Try Logigng in"); }
-    else {
-        const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
-        res.redirect('login');}
-
-      client.release();
-      }
-      catch (err)
-      {
-        console.error(err);
-        res.send("Error " + err);
-      }
-    })
 app.post("/loginem", async (req, res) => { // what is loginem?
   	var email = req.body.key;
     console.log("login attempt 12");
@@ -101,41 +72,10 @@ app.post("/profile", async (req, res) => {
         }
     })
 
-    // app.post("/login", async (req, res) => {
-  	// var uname = req.body.username;
-  	// var upass = req.body.password;
-  	// //console.log(uname);
-    //
-  	// try {
-    //       const client = await pool.connect()
-    //       const result = await client.query("SELECT * FROM users where username='" + uname + "'");
-    //
-  	// 	console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
-    //
-  	// 	if ( (uname != "" && upass != "") && result.rows[0]) {
-  	// 		if (result.rows[0].password == upass) {
-  	// 			// ** Load main page here ** //
-  	// 			res.render('profile', { 'r': result.rows[0] });
-  	// 			// ** ******************* ** //
-  	// 		} else {
-  	// 			res.send("Wrong password");
-  	// 		}
-  	// 	} else {
-  	// 		res.send("User not found");
-  	// 	}
-    //
-  	// 	client.release();
-    //     } catch (err) {
-    //       console.error(err);
-    //       res.send("Error " + err);
-    //     }
-    //  })
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
-// app.get('/login.ejs', (req, res) => {
-//   console.log("what's up my friends?");
-//   res.render('login');
-//   })
-//app.get('/', (req, res) => res.render('pages/index'))
+app.get('*', function (req, res, next) { // universal access variable, keep working
+  res.locals.user = req.user || null;
+  next();
+})
+
 require('./routes.js')(app);
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))

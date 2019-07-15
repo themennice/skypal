@@ -1,22 +1,21 @@
 var util = require('util');
 var express = require('express');
 var app = express();
-var passport = require("passport");
+var passport = require('passport');
 
 var fs = require('fs');
 var request = require('request');
 const { Pool, Client } = require('pg')
+global.globalString = "This can be accessed anywhere!";
 const bcrypt = require('bcryptjs'); // Julian, do we need this? -> for storing passwords in a hashed format.
 const uuidv4 = require('uuid/v4');// uuid/v4? //used for generating universal unique IDs
 
 const LocalStrategy = require('passport-local').Strategy; // strategy for authenticating with a username and password
-//const connectionString = process.env.DATABASE_URL;
 
 var currentAccountsData = [];
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL
-  //ssl: true
 });
 
 module.exports = function (app) {
@@ -25,54 +24,40 @@ module.exports = function (app) {
         userData: req.user, messages: {danger: req.flash('danger'),
         warning: req.flash('warning'), success: req.flash('success')}});
         console.log("The user is "+ req.user); })
-//
-//
-// 	app.get('/join', function (req, res, next) {
-// 		res.render('join', {title: "Join", userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});
-// 	});
-//
-//
-// 	app.post('/join', async function (req, res) {
-//
-// 		try{
-// 			const client = await pool.connect()
-// 			await client.query('BEGIN')
-// 			var pwd = await bcrypt.hash(req.body.password, 5);
-// 			await JSON.stringify(client.query('SELECT id FROM "users" WHERE "email"=$1', [req.body.username], function(err, result) {
-// 				if(result.rows[0]){
-// 					req.flash('warning', "This email address is already registered. <a href='/login'>Log in!</a>");
-// 					res.redirect('/join');
-// 				}
-// 				else{
-// 					client.query('INSERT INTO users (id, "firstName", "lastName", email, password) VALUES ($1, $2, $3, $4, $5)', [uuidv4(), req.body.firstName, req.body.lastName, req.body.username, pwd], function(err, result) {
-// 						if(err){console.log(err);}
-// 						else {
-//
-// 						client.query('COMMIT')
-// 							console.log(result)
-// 							req.flash('success','User created.')
-// 							res.redirect('/login');
-// 							return;
-// 						}
-// 					});
-//
-//
-// 				}
-//
-// 			}));
-// 			client.release();
-// 		}
-// 		catch(e){throw(e)}
-// 	});
-//
-// 	app.get('/profile', function (req, res, next) {
-// 		if(req.isAuthenticated()){
-// 			res.render('account', {title: "Account", userData: req.user, userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});
-// 		}
-// 		else{
-// 			res.redirect('/login');
-// 		}
-// 	});
+
+  app.post('/register', async function(req, res)
+    {
+      var emailAddr = req.body.email;
+      console.log("The email address is " + emailAddr);
+      var uName = req.body.username;
+      var pass = req.body.password;
+
+      try {
+          const client = await pool.connect();
+          var pwd = await bcrypt.hash(req.body.password, 5);
+          console.log("The password is " + req.body.password);
+          console.log("The hashed password is " + pwd);
+          console.log(typeof(pwd));
+  		// VALIDATE AND REDIRECT
+          console.log("message here");
+          const result = await client.query("SELECT * FROM users where username='" + uName + "'");
+
+  		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
+
+  		if (result.rows[0]) {
+  			  res.send("User Already Exists Try Logigng in"); }
+      else {
+          const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pwd + "', '" + emailAddr + "')");
+          res.redirect('login');}
+
+        client.release();
+        }
+        catch (err)
+        {
+          console.error(err);
+          res.send("Error " + err);
+        }
+      })
 //
     app.get('/register', (req, res) => res.render('register'))
     app.get('/add-ticket', (req, res) => res.render('add-ticket'))
@@ -110,10 +95,8 @@ module.exports = function (app) {
                       const result = await client.query("SELECT * FROM users where username='" + uname + "'");
               		console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
               		if ( (uname != "" && upass != "") && result.rows[0]) {
-              			if (result.rows[0].password == upass) {
-              				// ** Load main page here ** //
+              			if (bcrypt.compare(upass, result.rows[0].password)) {
               				res.render('profile', { 'r': result.rows[0] });
-              				// ** ******************* ** //
               			} else {
               				res.send("Wrong password");
               			}
@@ -125,12 +108,10 @@ module.exports = function (app) {
                       console.error(err);
                       res.send("Error " + err);
                     }
-                  //alert("What's going on?");
                  console.log("login attempt 10");
-                 //res.redirect('/');
                });
 
-
+// idea for using session based login came from a medium article https://medium.com/@timtamimi/getting-started-with-authentication-in-node-js-with-passport-and-postgresql-2219664b568c
       passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, username, password, done) => {
 
       	loginAttempt();
@@ -142,53 +123,39 @@ module.exports = function (app) {
       			await client.query('BEGIN')
             console.log(username);
             // currentAccountsData array is empty, see in console.log. Why?
-      			var currentAccountsData = await JSON.stringify(client.query('SELECT "username", "name", "email", "password" FROM "users" WHERE "username"=$1', [username], function(err, result) {
+      			var currentAccountsData = await (client.query('SELECT username, name, email, password FROM users WHERE username=$1', [username], function(err, result) {
               console.log("login attempt 3");
-              console.log(currentAccountsData);
       				if(err) {
-      					return done(err)
-      				}
+      					return done(err)}
               console.log("login attempt 4");
-
       				if(result.rows[0] == null){
       					req.flash('danger', "Oops. Incorrect login details.");
-      					return done(null, false, {message: 'No user found'});
-      				}
+      					return done(null, false, {message: 'No user found'});}
       				else{
                 console.log(result.rows[0]);
-                console.log(result.rows[0].password);
-                console.log(password);
-                console.log(typeof password);
                 if(password == result.rows[0].password){
-                  console.log("TRUE");
-                }
+                  console.log("TRUE");}
       					bcrypt.compare(password, result.rows[0].password, function(err, isMatch) {
                 //if(password == result.rows[0].password) {
                   console.log("Bcrypt compare login attempt 5");
       						if (err){
       							console.log('Error while checking password');
-      							return done();
-      						}
+      							return done();}
       						else if (isMatch){
+                    console.log("Passwords matched!");
                     console.log("login attempt 6");
-                    return done(null, [{username: result.rows[0].username, email: result.rows[0].email, firstName: result.rows[0].firstName}]);
-      						}
+                    return done(null, [{email: result.rows[0].email, firstName: result.rows[0].firstName}]);}
       						else{
                     console.log("login attempt 7");
       							req.flash('danger', "Oops. Incorrect login details.");
                     console.log("login attempt 15");
-      							//return done(null, false, {message: 'Wrong password'});
-                    //return done(null, [{ 'r': result.rows[0] }]);
-                    return done(null, [{username: result.rows[0].username, email: result.rows[0].email, firstName: result.rows[0].firstName}]);
-      						}
+                    return done(null, false);}
       					});
       				}
       			}))
       		}
-
       		catch(e){throw (e);}
       	};
-
       }
       ))
 
