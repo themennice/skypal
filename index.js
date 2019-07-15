@@ -100,7 +100,7 @@ express()
       // for (i=0; i < result_ticket.rows.length; i++){
       //       //myTick += result_ticket.row[i];%>
       //       console.log(result_ticket.rows[i]);
-        }
+        //}
 
       res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] });
         //res.render('profile', { 'b': result_ticket.rows[0],'r': result.rows[0] });
