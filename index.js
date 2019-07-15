@@ -92,7 +92,19 @@ express()
 		if ( (uname != "" && upass != "") && result.rows[0]) {
 			if (result.rows[0].password == upass) {
 				// ** Load main page here ** //
-        res.render('profile', { 'b': result_ticket.rows[0],'r': result.rows[0] });
+
+
+        // console.log(result_ticket.rows[0]);
+        //   console.log(result_ticket.rows[1]);
+      //   console.log("The length of ticket result is " + result_ticket.rows.length);
+      // for (i=0; i < result_ticket.rows.length; i++){
+      //       //myTick += result_ticket.row[i];%>
+      //       console.log(result_ticket.rows[i]);
+        }
+
+      res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] });
+        //res.render('profile', { 'b': result_ticket.rows[0],'r': result.rows[0] });
+
 				//res.render('profile', { 'r': result.rows[0] });
 
 				// ** ******************* ** //
