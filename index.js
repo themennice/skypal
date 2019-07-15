@@ -15,6 +15,24 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
+  .post('/ticket',function(req,res){
+      var fname = req.body.fname;
+      var lname = req.body.lname;
+      var flightno = req.body.flightno;
+      var countryfrom = req.body.countryfrom;
+      var countryto = req.body.countryto;
+      var airline = req.body.airline;
+      var date = req.body.date;
+      var time = req.body.time;
+      pool.connect();
+      pool.query("INSERT INTO tickets (fname,lname,flightno,countryfrom,countryto,airline,date,time) VALUES '"+fname+"','"+lname+"','"+flightno+"','"+countryfrom+"','"+countryto+"','"+airline+"','"+date+"','"+time+"')", function(error,result){
+        if (error) 
+          res.send("Error " + error);
+        else
+          res.send("ticket added");
+        res.render('pages/index');
+      })
+  })
   .post('/reg', async function(req, res){
     var emailAddr = req.body.email;
     var nodemailer = require('nodemailer');
