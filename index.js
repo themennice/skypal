@@ -29,10 +29,12 @@ express()
       pool.query(sql, function(error,result){
         if (error){
           console.log(error);
-          res.render('pages/index');
+          res.redirect('/add-ticket');
+          req.send('Oops, something went wrong!');
         }
         else {
-          res.send("ticket added");
+          res.redirect('/');
+          req.send('confirm','ticket added');
         }
       })
   })
