@@ -25,17 +25,35 @@ express()
       var date = req.body.date;
       var time = req.body.time;
       pool.connect();
-      pool.query("INSERT INTO tickets (fname,lname,flightno,countryfrom,countryto,airline,date,time) VALUES '"+fname+"','"+lname+"','"+flightno+"','"+countryfrom+"','"+countryto+"','"+airline+"','"+date+"','"+time+"')", function(error,result){
-        if (error) 
-          res.send("Error " + error);
-        else
+      var sql = "INSERT INTO tickets (fname,lname,flightno,countryfrom,countryto,airline,date,time) VALUES ('"+fname+"','"+lname+"','"+flightno+"','"+countryfrom+"','"+countryto+"','"+airline+"','"+date+"','"+time+"')";
+      pool.query(sql, function(error,result){
+        if (error){
+          console.log(error);
+          res.render('pages/index');
+        }
+        else {
           res.send("ticket added");
-        res.render('pages/index');
+        }
       })
   })
   .post('/reg', async function(req, res){
     var emailAddr = req.body.email;
-    var nodemailer = require('nodemailer');
+    var uName = req.body.username;
+    var pass = req.body.password;
+
+      try {
+        const client = await pool.connect();
+		// VALIDATE AND REDIRECT
+        const result = await client.query("SELECT * FROM users where username='" + uName + "'");
+
+		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
+
+		if (result.rows[0]) {
+			res.send("User Already Exists Try Logigng in");
+		} 
+    else {
+      const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
+			var nodemailer = require('nodemailer');
         /*rand=Math.floor((Math.random() * 100) + 54);
         host=req.get('host');
         link="http://"+req.get('host')+"/verify?id="+rand;*/
@@ -61,22 +79,7 @@ express()
             console.log('Email sent: ' + info.response);
           
         });
-
-    var uName = req.body.username;
-    var pass = req.body.password;
-
-      try {
-        const client = await pool.connect();
-		// VALIDATE AND REDIRECT
-        const result = await client.query("SELECT * FROM users where username='" + uName + "'");
-
-		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
-
-		if (result.rows[0]) {
-			res.send("User Already Exists Try Logigng in");
-		} else {
-        const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pass + "', '" + emailAddr + "')");
-			res.render('login');
+      res.render('login');
 
 		}
 
