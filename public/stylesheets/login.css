@@ -23,6 +23,11 @@ img.bg {
     overflow: hidden;
     width: 100%;
 }
+label {
+  display: block;
+  padding-left: 15px;
+  text-indent: -15px;
+}
 
 .helper {
     display: table-cell;
@@ -80,9 +85,13 @@ a:visited {
 }
 
 input {
-  color: lightblue;
+  color: black;
 	font-weight: 10;
 	height:42px;
+}
+.remem {
+		margin: 1.5rem;
+		height: 11px;
 }
 
 .citation{

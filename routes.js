@@ -127,6 +127,7 @@ module.exports = function (app) {
             async function(req, res) {
               console.log("login attempt 8");
               if (req.body.remember) {
+                console.log("Checking remember is " + req.body.remember);
                 req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // Cookie expires after 30 days
               }
               else {
@@ -203,9 +204,11 @@ module.exports = function (app) {
       ))
 
       passport.serializeUser(function(user, done) {
+        console.log("serial"+user);
       	done(null, user);
       });
 
       passport.deserializeUser(function(user, done) {
+        console.log("deserial"+user);
       	done(null, user);
       });
