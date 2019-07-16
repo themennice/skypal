@@ -24,7 +24,7 @@ app.use(require('body-parser').urlencoded({ extended: true }))
 app.use(require('cookie-parser')())
 app.use(cookieParser('secretString'));
 app.use(session({
-    secret: "bulky keyboard",
+    secret: 'bulky keyboard',
     resave: true,
     cookie: { maxAge: 120000 },
     saveUninitialized: true
@@ -34,13 +34,14 @@ app.use(flash())
 app.use(function(req, res, next){
     res.locals.success_messages = req.flash('success_messages');
     res.locals.error_messages = req.flash('error_messages');
+    res.locals.warning = req.flash('warning'); // how to make it work?
     next();
 });
 
 app.set('view options', { layout: false })
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
-global.user = false;
+global.users = false;
 require('./routes.js')(app);
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))

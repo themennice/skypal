@@ -11,6 +11,9 @@
 <div class="jumbotron text-center">
   <div class="container">
     <h1>Welcome to SkyPal</h1>
+    <% if (message) { %>
+      <div class="alert alert-success"><%= message %></div>
+    <% } %>
     <p>Your platform for finding a perfect flight companion for your journey to anywhere in the world.</p>
     <!--<a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Getting Started with Node</a>
     <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/node-js-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>-->

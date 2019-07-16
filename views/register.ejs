@@ -27,6 +27,11 @@
   <br>
     <form name="registerForm" onsubmit="return validateForm()" action="/register" method="post" >
       <fieldset>
+        <% if(warning !== undefined && warning != "") { %>
+          <div class="infoBubble">
+            <%= warning %>
+          </div>
+          <% } %>
         <% if (message) { %>
           <div class="alert alert-success"><%= message %></div>
         <% } %>
