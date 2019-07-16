@@ -23,7 +23,7 @@ module.exports = function (app) {
   app.get('/', (req, res, next) => { res.render('pages/index');
         console.log("The user is "+ req.user); })
 
-  app.get('/register', (req, res) => res.render('register'))
+  app.get('/register', (req, res) => res.render('register', {message: ''}))
 
   app.get('/add-ticket', (req, res) => res.render('add-ticket'))
 
@@ -73,7 +73,7 @@ module.exports = function (app) {
   		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
 
   		if (result.rows[0]) {
-  			  res.send("User Already Exists Try Logigng in"); }
+  			  res.render('register', {message: 'User Already Exists Try Logigng In'}); }
       else {
           const emailAdded = await client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pwd + "', '" + emailAddr + "')");
           res.redirect('login');}

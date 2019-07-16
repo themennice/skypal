@@ -27,6 +27,9 @@
   <br>
     <form name="registerForm" onsubmit="return validateForm()" action="/register" method="post" >
       <fieldset>
+        <% if (message) { %>
+          <div class="alert alert-success"><%= message %></div>
+        <% } %>
         <p>
             <input type = "text" class ="Uname"
                    name = "email" placeholder="Email address" required>
