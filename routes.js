@@ -22,7 +22,7 @@ const pool = new Pool({
 module.exports = function (app) {
   console.log("The status of users is " + users);
   app.get('*', function (req, res, next) { // universal access variable, keep working
-     console.log("The user is currently " + req.user);
+     console.log("The user is currently " + req.isAuthenticated());
      res.locals.user = req.user || null;
      console.log("The locals.user is " + res.locals.user);
      next();})
@@ -35,6 +35,7 @@ module.exports = function (app) {
   app.get('/add-ticket', (req, res) => res.render('add-ticket'))
 
   app.get('/profile', function (req, res, next) {
+        console.log(req.isAuthenticated())
         if(req.isAuthenticated()){
           console.log("I am here");
           res.render('profile', {title: "Profile", userData: req.user, userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});
@@ -46,6 +47,9 @@ module.exports = function (app) {
 
   app.get('/login', (req, res, next) => {
       console.log("Attempting to log in at /login");
+      console.log("HERERERERERJEHRJHEJHRJEHRJHEJRHEJRHEJHREJRHEJ");
+      //console.log(req);
+      console.log("HERERERERERJEHRJHEJHRJEHRJHEJRHEJRHEJHREJRHEJ");
       //console.log(req.session.passport.user);
       if (req.isAuthenticated()) {
         users = true;
@@ -125,6 +129,8 @@ module.exports = function (app) {
             // failureRedirect: '/',
             // failureFlash: true}),
             async function(req, res) {
+              console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+              console.log(req.isAuthenticated())
               console.log("login attempt 8");
               if (req.body.remember) {
                 console.log("Checking remember is " + req.body.remember);
@@ -146,7 +152,8 @@ module.exports = function (app) {
                       console.log("why does not flash???");
                       req.flash('danger', "Oops. Incorrect login details.");
                       users = true;
-                      console.log("After login post user status is " + users);
+                      //console.log("After login post user status is " + users);
+                      console.log(req.isAuthenticated())
               				res.render('profile', { 'r': result.rows[0] });
               			} else {
               				res.send("Wrong password");
@@ -204,7 +211,7 @@ module.exports = function (app) {
       ))
 
       passport.serializeUser(function(user, done) {
-        console.log("serial"+user);
+        console.log(user);
       	done(null, user);
       });
 
