@@ -68,6 +68,28 @@ module.exports = function (app) {
        req.flash('success', "Logged out. See you soon!");
        res.redirect('/'); })
 
+  app.post('/ticket',function(req,res){
+           var fname = req.body.fname;
+           var lname = req.body.lname;
+           var flightno = req.body.flightno;
+           var countryfrom = req.body.countryfrom;
+           var countryto = req.body.countryto;
+           var airline = req.body.airline;
+           var date = req.body.date;
+           var time = req.body.time;
+           pool.connect();
+           var sql = "INSERT INTO tickets (fname,lname,flightno,countryfrom,countryto,airline,date,time) VALUES ('"+fname+"','"+lname+"','"+flightno+"','"+countryfrom+"','"+countryto+"','"+airline+"','"+date+"','"+time+"')";
+           pool.query(sql, function(error,result){
+             if (error){
+               console.log(error);
+             }
+             else {
+               console.log("ticket added");
+               res.redirect('/');
+             }
+           })
+       })
+
   app.post('/register', async function(req, res)
     {
       var emailAddr = req.body.email;
@@ -91,6 +113,32 @@ module.exports = function (app) {
   			  res.render('register', {message: 'User Already Exists Try Logigng In'}); }
       else {
           client.query("INSERT INTO users (username, password, email) VALUES ('" + uName + "', '" + pwd + "', '" + emailAddr + "')");
+          var nodemailer = require('nodemailer');
+            /*rand=Math.floor((Math.random() * 100) + 54);
+            host=req.get('host');
+            link="http://"+req.get('host')+"/verify?id="+rand;*/
+            var transporter = nodemailer.createTransport(
+            {
+              service: 'gmail',
+              auth: { user: 'noreply.skypal@gmail.com',pass: 'SkyPal*0*'}
+            });
+
+            var mailOptions = {
+              from: 'noreply.skypal@gmail.com',
+              to: emailAddr,
+              subject: 'Welcome to Skypal',
+              text: 'Hello!',
+              html: 'Hello, <br><br> Thank you for registring SkyPal! <br><br>Best, <br> Team SkyPal'
+            };//<a href="+link+">Click here to verify</a>
+
+            transporter.sendMail(mailOptions, function(error, info)
+            {
+              if (error)
+                console.log(error);
+              else
+                console.log('Email sent: ' + info.response);
+
+            });
           res.redirect('login');}
 
         client.release();
