@@ -162,10 +162,11 @@ module.exports = function (app) {
               const update = await client.query(test);
       		//{"Name":"Julian","Usename":"jbiedka","password":"123","email":"jbiedka@sfu.ca","Age":"19"}
       		const result = await client.query("SELECT * FROM users where username='" + req.body.Username + "'");
+          const result_ticket = await client.query("SELECT * FROM tickets where username='" + req.body.Username + "'"); // fix this so it matches username
 
       		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
 
-      		res.render('profile', { 'r': result.rows[0] } );
+      		res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] } );
 
       		client.release();
             } catch (err) {
@@ -181,7 +182,7 @@ module.exports = function (app) {
 	try {
 		const client = await pool.connect();
 		const result = await client.query("SELECT * from users where username='" + token + "'");
-		
+
 		if (result.rows[0]) {
 			res.render('profile', { 'r': result.rows[0] });
 		} else {
@@ -189,7 +190,7 @@ module.exports = function (app) {
 			const update = await client.query("SELECT * from users where username='" + token + "'");
 			res.render('profile', { 'r': update.rows[0] });
 		}
-	
+
 		client.release();
 	} catch (err) { console.log(err) }
     })
