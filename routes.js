@@ -90,7 +90,17 @@ module.exports = function (app) {
            })
        })
   app.post('/googlelogin', async function(req, res) {
-		console.log(req.body)
+		var token = req.body.idtoken //this is probably right
+		
+		const result = await client.query("SELECT * from users where username='" + idtoken + "'");
+		
+		if (result.rows[0]) {
+			res.render('profile', { 'r': result.rows[0] });
+		} else {
+			client.query("INSERT INTO users (username, password, email) VALUES ('" + idtoken + "', '', '')");
+			const update = await client.query("SELECT * from users where username='" + idtoken + "'");
+			res.render('profile', { 'r': update.rows[0] });
+		}
   })
   app.post('/register', async function(req, res)
     {
