@@ -77,8 +77,10 @@ module.exports = function (app) {
            var airline = req.body.airline;
            var date = req.body.date;
            var time = req.body.time;
+           var uname = req.body.uname;
+
            pool.connect();
-           var sql = "INSERT INTO tickets (fname,lname,flightno,countryfrom,countryto,airline,date,time) VALUES ('"+fname+"','"+lname+"','"+flightno+"','"+countryfrom+"','"+countryto+"','"+airline+"','"+date+"','"+time+"')";
+           var sql = "INSERT INTO tickets (fname,lname,flightno,countryfrom,countryto,airline,date,time,username) VALUES ('"+fname+"','"+lname+"','"+flightno+"','"+countryfrom+"','"+countryto+"','"+airline+"','"+date+"','"+time+"','"+uname+"')";
            pool.query(sql, function(error,result){
              if (error){
                console.log(error);
@@ -194,6 +196,7 @@ module.exports = function (app) {
               	try {
                       const client = await pool.connect()
                       const result = await client.query("SELECT * FROM users where username='" + uname + "'");
+                      const result_ticket = await client.query("SELECT * FROM tickets where username='" + uname + "'"); // fix this so it matches username
               		console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
               		if ( (uname != "" && upass != "") && result.rows[0]) {
               			if (bcrypt.compare(upass, result.rows[0].password)) {
@@ -202,7 +205,8 @@ module.exports = function (app) {
                       users = true;
                       //console.log("After login post user status is " + users);
                       console.log(req.isAuthenticated())
-              				res.render('profile', { 'r': result.rows[0] });
+                      res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] });
+              				//res.render('profile', { 'r': result.rows[0] });
               			} else {
               				res.send("Wrong password");
               			}

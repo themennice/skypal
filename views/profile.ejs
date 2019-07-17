@@ -16,49 +16,85 @@
 		<!-- <div class="messages">
 			<div class="alert alert-error">Wrong password</div>
 		</div> -->
-			<h1> Your Profile </h1>
-<fieldset>
-<form name="profile" action="/profile" method="post">
-	<p>
-		<label class="lbl">Name </label>
-		<input type="text" name="Name" value="<%=r.name%>">
-	</p>
-	<p>
-		<label class="lbl">Username</label>
-		<input type="text" name="Username" value="<%=r.username%>" readonly>
-	</p>
-	<p>
-		<label class="lbl">Password</label>
-		<input type="password" name="password" Value="<%=r.password%>" readonly>
-	</p>
-	<p>
-		<label class="lbl">Email Address</label>
-		<input type="text" name="email" value="<%=r.email%>" readonly>
-	</p>
-	<p>
-		<label class="lbl">Age</label>
-		<input type="text" name="Age" value="<%=r.age%>">
-	</p>
-	<p>
-		<button id="update" class="update" >Update</button>
-	</p>
-</form>
-				<p><button id="logout" class="logout" >Logout</button></p>
-				<p><button id="ViewTicket" class="ViewTicket" >ViewTicket</button></p>
-				<script type="text/javascript">
-				    document.getElementById("logout").onclick = function () {
-				        location.href = "login";
-				    };
-				</script>
+		<!-- <fieldset> -->
+		<div class = "profile" >
+			<h1> My Profile </h1>
+			<form name="profile" action="/profile" method="post">
+			<p>
+				<label class="lbl">Name </label>
+				<input type="text" name="Name" value="<%=r.name%>">
+			</p>
+			<p>
+				<label class="lbl">Username</label>
+				<input type="text" name="Username" value="<%=r.username%>" readonly>
+			</p>
+			<p>
+				<label class="lbl">Password</label>
+				<input type="password" name="password" Value="<%=r.password%>" readonly>
+			</p>
+			<p>
+				<label class="lbl">Email Address</label>
+				<input type="text" name="email" value="<%=r.email%>" readonly>
+			</p>
+			<p>
+				<label class="lbl">Age</label>
+				<input type="text" name="Age" value="<%=r.age%>">
+			</p>
+			<p>
+		</div>
 
-				<script type="text/javascript">
-						document.getElementById("ViewTicket").onclick = function () {
-								location.href = "add-ticket";
-						};
-				</script>
+		<%for (i=0; i < c.length; i++){ %>
+					<%b = c[i];%>
+		<div class = "tickets" >
+			<h2>My Ticket <h2>
 
+				<label class="lbl">flight number</label>
+				<input type="text" name="flightno" value="<%=b.flightno%>">
+			</p>
+			<p>
+				<label class="lbl">From </label>
+				<input type="text" name="countryfrom" value="<%=b.countryfrom%>">
+			</p>
+			<p>
+				<label class="lbl">To </label>
+				<input type="text" name="countryto" value="<%=b.countryto%>">
+			</p>
 
-</fieldset>
+			<p>
+				<label class="lbl">Airline </label>
+				<input type="text" name="Airline" value="<%=b.airline%>">
+			</p>
+			<p>
+				<label class="lbl">Date </label>
+				<input type="text" name="date" value="<%=b.date%>">
+			</p>
+			<p>
+				<label class="lbl">time</label>
+				<input type="text" name="time" value="<%=b.time%>">
+			</p>
+			
+		</div>
+		<% } %>
+		<div class = "actions">
+			<p>
+			<button id="update" class="update" >Update</button>
+			</p>
+		</form>
+						<p><button id="logout" class="logout" >Logout</button></p>
+						<p><button id="ViewTicket" class="ViewTicket" >ViewTicket</button></p>
+						<script type="text/javascript">
+						    document.getElementById("logout").onclick = function () {
+						        location.href = "login";
+						    };
+						</script>
+
+						<script type="text/javascript">
+								document.getElementById("ViewTicket").onclick = function () {
+										location.href = "add-ticket";
+								};
+						</script>
+		</div>
+				<!-- </fieldset> -->
 			<p class="citation">Photo by Gary Lopater on Unsplash</p>
 			<style>
 				body {text-align: center;}
@@ -102,6 +138,39 @@
 				  margin: 8px 0;
 				  box-sizing: border-box;
 					box-sizing: border-box;
+				}
+				.profile{
+					font-size:20pt;
+					font-family: "Lato";
+          width: 400px;
+          box-sizing: border-box;
+          background: rgba(230, 230, 230, 0.6);
+				  border: 20px;
+					margin:auto;
+				  margin-top: 5px;
+					text-align: center;
+					padding: 30px;
+
+				}
+
+				.tickets{
+					font-family: "Lato";
+          width: 400px;
+          box-sizing: border-box;
+				  padding: 30px;
+				  margin: 20px;
+          background: rgba(230, 230, 230, 0.6);
+				  border: 20px;
+					float: left;
+				  margin-top: 5px;
+				}
+
+				.actions{
+					font-family: "Lato";
+					width: 100px;
+					height: 300px;
+					margin:auto;
+					text-align: center;
 				}
 			</style>
 	</body>
