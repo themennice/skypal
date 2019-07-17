@@ -14,7 +14,7 @@ document.getElementById("date").setAttribute("min", today);
 document.getElementById("date").setAttribute("value", today);
 
 
-function submitForm(event)
+/*function submitForm(event)
 {
 	var countryfrom = document.getElementById("countryfrom").value;
 	var countryto = document.getElementById("countryto").value;
@@ -25,4 +25,4 @@ function submitForm(event)
 	}
 	else
 		alert("Form submitted! Thank you.")
-}
+}*/

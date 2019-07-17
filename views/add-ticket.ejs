@@ -27,12 +27,12 @@
 			</script>
 	<br>
 	<div name="form">
-	  <form name = "ticketInfo" onsubmit="alert('Form Submitted!')"> <!-- action="/ticket" method="post" !-->
+	  <form name = "ticketInfo" action="/ticket" method="post"> <!--  !-->
 	    <label for="fname">First Name on Passport</label>
-	    <input type="text" id="fname" name="firstname" placeholder="First Name" required>
+	    <input type="text" id="fname" name="fname" placeholder="First Name" required>
 
 	    <label for="lname">Last Name on Passport</label>
-	    <input type="text" id="lname" name="lastname" placeholder="Last Name" required>
+	    <input type="text" id="lname" name="lname" placeholder="Last Name" required>
 
 	    <label for="flightno">Flight Number</label>
 	    <input type="text" id="flightno" name="flightno" placeholder="Example: AX780" required>

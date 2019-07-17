@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Register</title>
     <link rel="stylesheet" href="./stylesheets/register.css" />
-    <script src="checkCriteria.js" defer></script>
+    <script type="module" src="checkCriteria.js" defer></script>
   </head>
   <body>
   <% include partials/nav.ejs %>
@@ -36,7 +36,7 @@
           <div class="alert alert-success"><%= message %></div>
         <% } %>
         <p>
-            <input type = "text" class ="Uname"
+            <input type = "email" class ="Uname"
                    name = "email" placeholder="Email address" required>
           </p>
           <p>
@@ -56,9 +56,9 @@
       <fieldset name="loginBtn">
         <button type="submit" name="login" ><h2><a href="login">I already have an account</a></h2></button>
       </fieldset>
-    </form>
-    <script src="checkCriteria.js" defer></script>
-    <p class="citation">Photo by Ross Parmly on Unsplash</p>
+    </form><
+    <!--TTEST CASE: <form action="/sendEmail" method="post"><button name="test">test email</button></form>
+    <p class="citation">Photo by Ross Parmly on Unsplash</p>!-->
 
   </body>
 
