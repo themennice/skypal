@@ -47,11 +47,7 @@ module.exports = function (app) {
         });
 
   app.get('/login', (req, res, next) => {
-      console.log("Attempting to log in at /login");
-      console.log("HERERERERERJEHRJHEJHRJEHRJHEJRHEJRHEJHREJRHEJ");
-      //console.log(req);
-      console.log("HERERERERERJEHRJHEJHRJEHRJHEJRHEJRHEJHREJRHEJ");
-      //console.log(req.session.passport.user);
+      console.log(res)
       if (req.isAuthenticated()) {
         users = true;
         console.log("Get login user status is " + users);
@@ -93,6 +89,7 @@ module.exports = function (app) {
   app.post('/googlelogin', async function(req, res) {
 	var token = req.body.idtoken //this is probably right
 	console.log(token)
+	console.log(res)
 	try {
 		const client = await pool.connect();
 		const result = await client.query("SELECT * from users where username='" + token + "'");
