@@ -32,13 +32,16 @@
     text-shadow: 2px 2px grey;
   }
   button {
-  margin-left: 420px;
+  margin-left: 42vw;
   border: none;
   background-color: inherit;
   padding: 14px 28px;
   font-size: 16px;
   cursor: pointer;
   display: inline-block;
+  color: white;
+  font-size: 36pt;
+  margin-top: 50vh;
 }
 
 button:hover {background: #eee;}
@@ -127,7 +130,7 @@ button:hover {background: #eee;}
   <% include ../partials/nav.ejs %>
   <section class="WelcomeSection">
     <h1>Welcome to SkyPal</h1>
-    <button type="button" name="button">Start your journey</button>
+    <a href="#ticketsearch"><button type="button" name="button">Start your journey</button></a>
   </section>
 
   <section class="TicketSearch">
@@ -150,7 +153,7 @@ button:hover {background: #eee;}
       </fieldset>
     </div>
     <!-- slider for differernt cards -->
-    <div class="Slider">
+    <div id="ticketsearch" class="Slider">
       <div >
         <div class="InfoCard">
           <img src="empty-avatar.png" alt="avatar" class="avatar">
