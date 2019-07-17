@@ -1,0 +1,102 @@
+html, body { height: 10%; width: 100%; margin: 0; }
+img.bg {
+		    min-height: 100%;
+		    min-width: 1024px;
+		    width: 100%;
+		    height: auto;
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    z-index: -5;
+		}
+
+@media screen and (max-width: 1024px){
+    img.bg {
+    left: 50%;
+    margin-left: -512px; }
+}
+
+.containers {
+    display: table;
+    height: 70%;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+}
+label {
+  display: block;
+  padding-left: 15px;
+  text-indent: -15px;
+}
+
+.helper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.prompt {
+  background-color: rgba(54, 53, 50, 0.7);
+  margin: 0 auto;
+	width:700px;
+	height:470px;
+	border: 2px solid #e1e5eb;
+	border-radius:42px;
+}
+
+.data {
+	margin:0 auto;
+}
+
+.separator {
+	margin: 0 20px;
+	float:left;
+	height:80%;
+	background-color:lightgrey;
+	width:2px;
+}
+
+.login, .signup {
+  color: lightblue;
+	margin: 42px;
+	text-align: middle;
+	float:left;
+}
+
+button {
+	height:40x;
+	background-color:rgba(10, 10, 10, 0.7);
+	box-shadow:3px 12px 18px grey;
+	color: lightyellow;
+	padding: 15px 32px;
+	text-align: center;
+	border:none;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+
+a{
+	text-decoration: none;
+	color: white;
+}
+
+a:visited {
+  color: white;
+}
+
+input {
+  color: black;
+	font-weight: 10;
+	height:42px;
+}
+.remem {
+		margin: 1.5rem;
+		height: 11px;
+}
+
+.citation{
+  color: lightgrey;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
