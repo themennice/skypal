@@ -90,9 +90,7 @@ module.exports = function (app) {
            })
        })
   app.post('/googlelogin', async function(req, res) {
-		console.log("please")
-	  console.log(".")
-	  res.send("success")
+		console.log(req.body)
   })
   app.post('/register', async function(req, res)
     {
