@@ -41,16 +41,13 @@ module.exports = function (app) {
           res.render('profile', {title: "Profile", userData: req.user, userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});
         }
         else{
+		  console.log("login failed")
           res.redirect('/login');
         }
         });
 
   app.get('/login', (req, res, next) => {
-      console.log("Attempting to log in at /login");
-      console.log("HERERERERERJEHRJHEJHRJEHRJHEJRHEJRHEJHREJRHEJ");
-      //console.log(req);
-      console.log("HERERERERERJEHRJHEJHRJEHRJHEJRHEJRHEJHREJRHEJ");
-      //console.log(req.session.passport.user);
+      console.log(res)
       if (req.isAuthenticated()) {
         users = true;
         console.log("Get login user status is " + users);
@@ -91,7 +88,25 @@ module.exports = function (app) {
              }
            })
        })
-
+  app.post('/googlelogin', async function(req, res) {
+	var token = req.body.idtoken //this is probably right
+	console.log(token)
+	//console.log(res)
+	try {
+		const client = await pool.connect();
+		const result = await client.query("SELECT * from users where username='" + token + "'");
+		
+		if (result.rows[0]) {
+			res.render('profile', { 'r': result.rows[0] });
+		} else {
+			client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
+			const update = await client.query("SELECT * from users where username='" + token + "'");
+			res.render('profile', { 'r': update.rows[0] });
+		}
+	
+		client.release();
+	} catch (err) { console.log(err) }
+  })
   app.post('/register', async function(req, res)
     {
       var emailAddr = req.body.email;
