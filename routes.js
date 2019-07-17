@@ -92,6 +92,7 @@ module.exports = function (app) {
   app.post('/googlelogin', async function(req, res) {
 	  console.log(req.body)
 		var token = req.body.idtoken //this is probably right
+		try {
 		const client = await pool.connect();
 		const result = await client.query("SELECT * from users where username='" + idtoken + "'");
 		
@@ -102,6 +103,7 @@ module.exports = function (app) {
 			const update = await client.query("SELECT * from users where username='" + idtoken + "'");
 			res.render('profile', { 'r': update.rows[0] });
 		}
+		} catch {}
   })
   app.post('/register', async function(req, res)
     {
