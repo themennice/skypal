@@ -94,14 +94,14 @@ module.exports = function (app) {
 		console.log(token)
 		try {
 		const client = await pool.connect();
-		const result = await client.query("SELECT * from users where username='" + idtoken + "'");
+		const result = await client.query("SELECT * from users where username='" + token + "'");
 		
 		if (result.rows[0]) {
 			res.render('profile', { 'r': result.rows[0] });
 			client.release();
 		} else {
-			client.query("INSERT INTO users (username, password, email) VALUES ('" + idtoken + "', '', '')");
-			const update = await client.query("SELECT * from users where username='" + idtoken + "'");
+			client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
+			const update = await client.query("SELECT * from users where username='" + token + "'");
 			res.render('profile', { 'r': update.rows[0] });
 			client.release();
 		}
