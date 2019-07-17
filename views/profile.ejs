@@ -13,7 +13,9 @@
 	<body>
 		<% include partials/nav.ejs %>
 		<img src="profileBG.jpg" alt="background" class="bg" />
-
+		<!-- <div class="messages">
+			<div class="alert alert-error">Wrong password</div>
+		</div> -->
 			<h1> Your Profile </h1>
 <fieldset>
 <form name="profile" action="/profile" method="post">
@@ -27,7 +29,7 @@
 	</p>
 	<p>
 		<label class="lbl">Password</label>
-		<input type="text" name="password" Value="<%=r.password%>" readonly>
+		<input type="password" name="password" Value="<%=r.password%>" readonly>
 	</p>
 	<p>
 		<label class="lbl">Email Address</label>
@@ -51,7 +53,7 @@
 
 				<script type="text/javascript">
 						document.getElementById("ViewTicket").onclick = function () {
-								location.href = "add-ticket.html";
+								location.href = "add-ticket";
 						};
 				</script>
 
