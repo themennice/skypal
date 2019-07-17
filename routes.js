@@ -89,7 +89,9 @@ module.exports = function (app) {
              }
            })
        })
-
+  app.post('/googlelogin', async function(req, res) {
+	  res.send("success")
+  })
   app.post('/register', async function(req, res)
     {
       var emailAddr = req.body.email;
