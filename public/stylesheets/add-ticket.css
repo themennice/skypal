@@ -8,6 +8,16 @@ input[type=text], select {
     box-sizing: border-box;
 }
 
+img.logo {
+  height: 12%;
+  width: 12%;
+  border-radius: 50%;
+  position: relative;
+  left: 80vw;
+  background-color: white;
+  border: 7px solid #AAAAAA;
+}
+
 button[name="submit"]{
     width: 100%;
     background-color: #4CAF50;
