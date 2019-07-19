@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include partials/header.ejs %>
+	<title>Tickets Information</title>
+  <link rel="stylesheet" href="./stylesheets/add-ticket.css" />
+
+<script src="ticket.js" defer></script>
+</head>
+<body>
+  <% include partials/nav.ejs %>
+	<img src="background_foto.jpg" alt="background" class="bg" />
+	<h1>SkyPal - Your Flight</h1>
+	<h2 style="font-family:Trebuchet MS; color:#ffffff">Please input your booked flight deails.</h2>
+	<button name="redirect" id="logout" class="logout" >Logout</button>
+	<button name="redirect" id="toMenu" class="toMenu" >Back to home</button>
+			<script type="text/javascript">
+					document.getElementById("logout").onclick = function () {
+							location.href = "register.html";
+					};
+			</script>
+
+			<script type="text/javascript">
+					document.getElementById("toMenu").onclick = function () {
+							location.href = "/";
+					};
+			</script>
+	<br>
+	<div name="form">
+	  <form name = "ticketInfo" action="/ticket" method="post"> <!--  !-->
+      <label for="uname">Username</label>
+	    <input type="text" id="uname" name="uname" placeholder="Username" required>
+      
+	    <label for="fname">First Name on Passport</label>
+	    <input type="text" id="fname" name="fname" placeholder="First Name" required>
+
+	    <label for="lname">Last Name on Passport</label>
+	    <input type="text" id="lname" name="lname" placeholder="Last Name" required>
+
+	    <label for="flightno">Flight Number</label>
+	    <input type="text" id="flightno" name="flightno" placeholder="Example: AX780" required>
+
+	    <label for="countryfrom">Departing Country</label>
+	    <select id="countryfrom" name="countryfrom" required>
+	      <option value="france">France</option>
+	      <option value="canada">Canada</option>
+	      <option value="usa">USA</option>
+	    </select>
+
+	    <label for="countryto">Destinated Country</label>
+	    <select id="countryto" name="countryto" required>
+	      <option value="france">France</option>
+	      <option value="canada">Canada</option>
+	      <option value="usa">USA</option>
+	    </select>
+
+	    <label for="airline">Airline</label>
+	    <select id="airline" name="airline" required>
+	      <option value="uairline">United Airline</option>
+	      <option value="westjet">Westjet</option>
+	      <option value="airca">Air Canada</option>
+	    </select> <br>
+
+	    <label for="date">Date of Departure</label><br>
+	    <input type="date" id="date" name="date" value="" min="" max="2021-12-31" required> <br><br>
+
+	    <label for="time">Departure Time</label><br>
+	    <input type="time" id="time" name="time" required><br>
+
+	    <button name="submit" id="submit">Submit</button>
+	  </form>
+	</div>
+	<p class="citation">Photot credit: Trip Advisor</p>
+
+</body>
+</html>

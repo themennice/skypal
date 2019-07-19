@@ -15,7 +15,8 @@ img.bg {
         margin-left: -512px; }
     }
 .jumbotron {
-  background: rgba(230, 230, 230, 0.3);
+  /*background: rgba(230, 230, 230, 0.3);*/
+  background: none;
   color: white;
   padding-bottom: 10px; }
 .jumbotron h1{
@@ -50,5 +51,10 @@ img.bg {
       max-width: 100%; }
     .row{
       	color: white;
-        text-shadow: 2px 2px grey;
+      }
+      .citation{
+        color: lightgrey;
+        position: fixed;
+        bottom: 0;
+        right: 0;
       }
