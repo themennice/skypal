@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top navbar-inverse">
+<nav class="navigationbar">
   <div class="container">
     <ul class="nav navbar-nav">
       <li class="active">
@@ -7,24 +7,47 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-plane"></span> Quick Actions <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <% if(users) {%><li><a href="/add-ticket">Add a new ticket to the system</a></li><% } %>
+            <% if(users) {%><li><a href="/add-ticket"><font color="black">Add a new ticket to the system</font></a></li><% } %>
             <li class="divider"></li>
-            <li><a href="https://www.google.com/maps">Open Google Maps</a></li>
+            <li><a href="https://www.google.com/maps"><font color="black">Open Google Maps</font></a></li>
           </ul>
       </li>
     </ul>
+    <a href="/"><img src="logo.png" class="logo"/></a>
     <ul class="nav navbar-nav navbar-right">
-      <li class="navbar-left">
-        <% if(users == false) {%><li class="navbar-right">
+      <li class="navbarleft">
+        <% if(users == false) {%><li class="navbarright">
         <a href="/register"><span class="glyphicon glyphicon-registration-mark"></span> Register </a>
       </li>
       <li>
         <a href="/login"><span class="glyphicon glyphicon-user"></span> Log in</a>
       </li> <%} else {%>
       <li>
-        <a href="/logout"><span class="glyphicon glyphicon-registration-mark"></span> Log Out </a>
+        <a href="/logout"><span class="glyphicon glyphicon-user"></span> Log Out </a>
       </li>
       <% } %>
     </ul>
   </div>
+  <style>
+
+    .dropdown li a {
+      color: black;
+    }
+    .nav.navbar-nav li a {
+      color: #6e9997;
+    }
+    .navigationbar {
+      background-color: #1b3b63;
+
+    }
+    .logo {
+      float: left;
+      margin-left: -20vw;
+      z-index: 1;
+      position: relative;
+      height: 3vw;
+      width: 3vw;
+    }
+
+  </style>
 </nav>
