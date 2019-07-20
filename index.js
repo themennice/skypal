@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const path = require('path');
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 var app = express()
 app.use(passport.initialize())
@@ -43,5 +45,21 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 global.users = false;
 require('./routes.js')(app);
+
+io.sockets.on('connection', function(socket) {
+    socket.on('username', function(username) {
+        socket.username = username;
+        io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
+    });
+
+    socket.on('disconnect', function(username) {
+        io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
+    })
+
+    socket.on('chat_message', function(message) {
+        io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
+    });
+
+});
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
