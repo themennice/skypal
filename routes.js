@@ -308,12 +308,12 @@ module.exports = function (app) {
       ))
 
       passport.serializeUser(function(user, done) {
-        //console.log(user);
+        console.log(user);
       	done(null, user);
       });
 
       passport.deserializeUser(function(user, done) {
-        //console.log("deserial"+user);
+        console.log("deserial"+user);
       	done(null, user);
       });
 
