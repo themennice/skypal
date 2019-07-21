@@ -15,7 +15,7 @@ const path = require('path');
 var app = express();
 var server = app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 const http = require('http').Server(app);
-var io = require('socket.io').listen(server);
+var io = require('socket.io').listen(server) || require('socket.io')(http)
 
 io.on('connection', function(socket) {
     console.log('Client connected.');
