@@ -9,6 +9,7 @@ const { Pool, Client } = require('pg')
 const bcrypt = require('bcryptjs');
 const uuidv4 = require('uuid/v4');
 
+
 app.use(express.static('public'));
 
 const LocalStrategy = require('passport-local').Strategy; // strategy for authenticating with a username and password
@@ -29,6 +30,10 @@ module.exports = function (app) {
 
   app.get('/', (req, res, next) => { res.render('pages/index', {title: "Home", userData: req.user, message: 'Success'});
         console.log("The user  in '/' is "+ req.user); })
+
+  app.get('/chat', function(req, res) {
+      res.render('chat');
+  });
 
   app.get('/register', (req, res) => res.render('register', {title: "Register", userData: req.user, message: ''}))
 
@@ -307,3 +312,6 @@ module.exports = function (app) {
         console.log("deserial"+user);
       	done(null, user);
       });
+
+
+
