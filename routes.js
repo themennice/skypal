@@ -52,7 +52,8 @@ module.exports = function (app) {
         });
 
   app.get('/login', (req, res, next) => {
-      console.log(res)
+      //console.log(res)
+	  console.log(typeof res)
       if (req.isAuthenticated()) {
         users = true;
         console.log("Get login user status is " + users);
@@ -97,6 +98,7 @@ module.exports = function (app) {
 	var token = req.body.idtoken //this is probably right
 	console.log(token)
 	//console.log(res)
+	console.log(typeof res)
 	try {
 		const client = await pool.connect();
 		const result = await client.query("SELECT * from users where username='" + token + "'");
