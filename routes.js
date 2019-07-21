@@ -114,7 +114,7 @@ module.exports = function (app) {
 		}
 	
 		client.release();
-	} catch (err) { //console.log(err) }
+	} catch (err) { console.log(err) }
   })
   app.post('/register', async function(req, res)
     {
@@ -216,7 +216,7 @@ module.exports = function (app) {
 		}
 
 		client.release();
-	} catch (err) { //console.log(err) }
+	} catch (err) { console.log(err) }
     })
 
      app.post('/login', passport.authenticate('local'),//, {
