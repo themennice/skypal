@@ -204,8 +204,10 @@ module.exports = function (app) {
 		const result = await client.query("SELECT * from users where username='" + token + "'");
 
 		if (result.rows[0]) {
+			console.log("test with user")
 			res.render('profile', { 'c': [], 'r': result.rows[0] });
 		} else {
+			console.log("test with new user")
 			client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
 			const update = await client.query("SELECT * from users where username='" + token + "'");
 			res.render('profile', { 'c': [], 'r': update.rows[0] });
