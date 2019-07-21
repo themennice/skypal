@@ -204,11 +204,11 @@ module.exports = function (app) {
 		const result = await client.query("SELECT * from users where username='" + token + "'");
 
 		if (result.rows[0]) {
-			res.render('profile', { 'r': result.rows[0] });
+			res.render('profile', { 'c': [], 'r': result.rows[0] });
 		} else {
 			client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
 			const update = await client.query("SELECT * from users where username='" + token + "'");
-			res.render('profile', { 'r': update.rows[0] });
+			res.render('profile', { 'c': [], 'r': update.rows[0] });
 		}
 
 		client.release();
