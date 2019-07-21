@@ -23,13 +23,13 @@ const pool = new Pool({
 module.exports = function (app) {
   console.log("The status of users is " + users);
   app.get('*', function (req, res, next) { // universal access variable, keep working
-     //console.log("The user is currently " + req.isAuthenticated());
+     console.log("The user is currently " + req.isAuthenticated());
      res.locals.user = req.user || null;
-     //console.log("The locals.user is " + res.locals.user);
+     console.log("The locals.user is " + res.locals.user);
      next();})
 
   app.get('/', (req, res, next) => { res.render('pages/index', {title: "Home", userData: req.user, message: 'Success'});
-        //console.log("The user  in '/' is "+ req.user); })
+        console.log("The user  in '/' is "+ req.user); })
 
   app.get('/chat', function(req, res) {
       res.render('chat');
@@ -42,32 +42,31 @@ module.exports = function (app) {
   app.get('/profile', function (req, res, next) {
         console.log(req.isAuthenticated())
         if(req.isAuthenticated()){
-          //console.log("I am here");
+          console.log("I am here");
           res.render('profile', {title: "Profile", userData: req.user, userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});
         }
         else{
-		  //console.log("login failed")
+		  console.log("login failed")
           res.redirect('/login');
         }
         });
 
   app.get('/login', (req, res, next) => {
-      //console.log(res)
-	  //console.log(typeof res)
+      console.log(res)
       if (req.isAuthenticated()) {
         users = true;
-        //console.log("Get login user status is " + users);
-        //console.log("login attempt 11");
+        console.log("Get login user status is " + users);
+        console.log("login attempt 11");
         res.redirect('/profile');}
       else { res.render('login', {title: "Log in", userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});
-        //console.log("Not logged in, render the login page")}})
+        console.log("Not logged in, render the login page")}})
 
   app.get('/logout', function(req, res){
        users = false;
-       //console.log("Upon logout user status is " + users);
-       //console.log(req.isAuthenticated());
+       console.log("Upon logout user status is " + users);
+       console.log(req.isAuthenticated());
        req.logout();
-       //console.log(req.isAuthenticated());
+       console.log(req.isAuthenticated());
        req.flash('success', "Logged out. See you soon!");
        res.redirect('/'); })
 
@@ -98,7 +97,6 @@ module.exports = function (app) {
 	var token = req.body.idtoken //this is probably right
 	console.log(token)
 	//console.log(res)
-	console.log(typeof res)
 	try {
 		const client = await pool.connect();
 		const result = await client.query("SELECT * from users where username='" + token + "'");
