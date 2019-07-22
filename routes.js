@@ -117,6 +117,7 @@ module.exports = function (app) {
 			//var baseUrl = window.location.origin
 			//var c = []
 			//var r = result.rows[0]
+			console.log(sendOBJ);
 			res.send(sendOBJ);
 			//res.redirect('/googlelogin:' + c + '&:' + r);
 		} else {
