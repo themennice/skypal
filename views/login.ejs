@@ -80,8 +80,8 @@
 						xhr.open('POST', '/googlelogin', true)
 						xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
 						xhr.onload = function () {
-							var responseOBJ = JSON.parse(this.responseText);
-							console.log(responseOBJ);
+							//var responseOBJ = JSON.parse(this.responseText);
+							//console.log(responseOBJ);
 							
 							var baseUrl = window.location.origin
 							window.location.replace('/googlelogin:' + this.responseText);
