@@ -61,13 +61,15 @@
 						xhr.send('idtoken=' + id_token);						
 						*/
 
-						var number = {
-							token: id_token
+						const xhr = new XMLHttpRequest()
+						xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+						xhr.onload = function () {
+							var responseOBJ = JSON.parse(this.responseText);
+							console.log(responseOBJ);
 						}
-						var xhr = new window.XMLHttpRequest()
+						
 						xhr.open('POST', '/googlelogin', true)
-						xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-						xhr.send(JSON.stringify(number))
+						xhr.send('idtoken=' + id_token)
 					}
 					</script>
 				</div>
