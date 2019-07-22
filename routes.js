@@ -115,7 +115,7 @@ module.exports = function (app) {
 			var baseUrl = window.location.origin
 			var c = []
 			var r = result.rows[0]
-			window.location.replace(baseUrl + '/googlelogin:' + c + '&:' + r);
+			res.redirect('/googlelogin:' + c + '&:' + r);
 		} else {
 			console.log("4")
 			client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
