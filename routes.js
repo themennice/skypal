@@ -105,7 +105,7 @@ module.exports = function (app) {
 		
 		if (result.rows[0]) {
 			console.log("3")
-			res.render('profile', { 'c' : [], 'r': result.rows[0] });
+			return res.render('profile', { 'c' : [], 'r': result.rows[0] });
 		} else {
 			console.log("4")
 			client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
