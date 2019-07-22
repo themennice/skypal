@@ -97,10 +97,9 @@ module.exports = function (app) {
 	app.get('/googlelogin:t', async function(req, res) {
 		const token = req.params.t
 		const client = await pool.connect();
-		const result = await client.query("SELECT * from users where username='" + token + "'");
-		res.render('profile', { 'c' : [], 'r': result.rows[0] });
-		
-		
+		await client.query("SELECT * from users where username='" + token + "'", function(error, result) {
+			res.render('profile', { 'c' : [], 'r': result.rows[0] });
+		})
 		//res.render('profile', { 'c' : [], 'r': update.rows[0] });
 	})
     app.post('/googlelogin', async function(req, res) {
@@ -110,25 +109,25 @@ module.exports = function (app) {
 	try {
 		console.log("2")
 		const client = await pool.connect();
-		const result = await client.query("SELECT * from users where username='" + token + "'");
+		await client.query("SELECT * from users where username='" + token + "'", function (error, result) {
+			if (result.rows[0]) {
+				console.log("3")
+				//var sendOBJ = JSON.stringify({ 'c' : [], 'r': result.rows[0] });
+				//res.render('profile', { 'c' : [], 'r': result.rows[0] });
+				//var baseUrl = window.location.origin
+				//var c = []
+				//var r = result.rows[0]
+				//console.log(sendOBJ);
+				res.send(token);
+				//res.redirect('/googlelogin:' + c + '&:' + r);
+			} else {
+				console.log("4")
+				client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
+				res.send(token);
+				//res.render('profile', { 'c' : [], 'r': update.rows[0] });
+			}
+		})
 		
-		
-		if (result.rows[0]) {
-			console.log("3")
-			//var sendOBJ = JSON.stringify({ 'c' : [], 'r': result.rows[0] });
-			//res.render('profile', { 'c' : [], 'r': result.rows[0] });
-			//var baseUrl = window.location.origin
-			//var c = []
-			//var r = result.rows[0]
-			//console.log(sendOBJ);
-			res.send(token);
-			//res.redirect('/googlelogin:' + c + '&:' + r);
-		} else {
-			console.log("4")
-			client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
-			res.send(token);
-			//res.render('profile', { 'c' : [], 'r': update.rows[0] });
-		}
 		console.log("5")
 		client.release();
 	} catch (err) { console.log(err) }
