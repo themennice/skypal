@@ -120,17 +120,19 @@ module.exports = function (app) {
 				//var r = result.rows[0]
 				//console.log(sendOBJ);
 				res.send(token);
+				client.release();
+
 				//res.redirect('/googlelogin:' + c + '&:' + r);
 			} else {
 				console.log("4")
 				client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
 				res.send(token);
+				client.release();
 				//res.render('profile', { 'c' : [], 'r': update.rows[0] });
 			}
 		})
 		
 		console.log("5")
-		client.release();
 	} catch (err) { console.log(err) }
 	console.log("6")
   })
