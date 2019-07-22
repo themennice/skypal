@@ -97,6 +97,7 @@ module.exports = function (app) {
 	app.get('/googlelogin:c&:r', function(req, res) {
 		console.log(req.params.c);
 		console.log(req.params.r);
+		res.send(req.params);
 		//res.render('profile', { 'c' : [], 'r': update.rows[0] });
 	})
     app.post('/googlelogin', async function(req, res) {
