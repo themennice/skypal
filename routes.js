@@ -98,7 +98,7 @@ module.exports = function (app) {
 		console.log(req.params.c);
 		console.log(req.params.r);
 		//res.render('profile', { 'c' : [], 'r': update.rows[0] });
-	}
+	})
     app.post('/googlelogin', async function(req, res) {
 	var token = req.body.idtoken //this is probably right
 	//console.log(token)
