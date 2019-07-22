@@ -120,7 +120,7 @@ module.exports = function (app) {
 			//var baseUrl = window.location.origin
 			//var c = []
 			//var r = result.rows[0]
-			console.log(sendOBJ);
+			//console.log(sendOBJ);
 			res.send(token);
 			//res.redirect('/googlelogin:' + c + '&:' + r);
 		} else {
