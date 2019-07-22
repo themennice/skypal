@@ -93,7 +93,13 @@ module.exports = function (app) {
              }
            })
        })
-  app.post('/googlelogin', async function(req, res) {
+
+	app.get('/googlelogin:c&:r', function(req, res) {
+		console.log(req.params.c);
+		console.log(req.params.r);
+		//res.render('profile', { 'c' : [], 'r': update.rows[0] });
+	}
+    app.post('/googlelogin', async function(req, res) {
 	var token = req.body.idtoken //this is probably right
 	//console.log(token)
 	//console.log(res)
@@ -105,12 +111,16 @@ module.exports = function (app) {
 		
 		if (result.rows[0]) {
 			console.log("3")
-			return res.render('profile', { 'c' : [], 'r': result.rows[0] });
+			//res.render('profile', { 'c' : [], 'r': result.rows[0] });
+			var baseUrl = window.location.origin
+			var c = []
+			var r = result.rows[0]
+			window.location.replace(baseUrl + '/googlelogin:' + c + '&:' + r);
 		} else {
 			console.log("4")
 			client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
 			const update = await client.query("SELECT * from users where username='" + token + "'");
-			res.render('profile', { 'c' : [], 'r': update.rows[0] });
+			//res.render('profile', { 'c' : [], 'r': update.rows[0] });
 		}
 		console.log("5")
 		client.release();
