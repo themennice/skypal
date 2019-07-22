@@ -109,6 +109,7 @@ module.exports = function (app) {
 		const client = await pool.connect();
 		const result = await client.query("SELECT * from users where username='" + token + "'");
 		
+		
 		if (result.rows[0]) {
 			console.log("3")
 			var sendOBJ = JSON.stringify({ 'c' : [], 'r': result.rows[0] });
