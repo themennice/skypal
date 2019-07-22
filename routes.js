@@ -95,7 +95,7 @@ module.exports = function (app) {
        })
   app.post('/googlelogin', async function(req, res) {
 	var token = req.body.idtoken //this is probably right
-	console.log(token)
+	//console.log(token)
 	//console.log(res)
 	try {
 		const client = await pool.connect();
