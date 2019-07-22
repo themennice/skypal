@@ -196,7 +196,7 @@ module.exports = function (app) {
         })
 
     app.post('/googlelogin', async function(req, res) {
-	var token = req.body.idtoken //this is probably right
+	var token = req.body.token //this is probably right
 	console.log(" good to go ")
 	//console.log(token)
 	//console.log(res)
