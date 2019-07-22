@@ -98,6 +98,7 @@ module.exports = function (app) {
 		const token = req.params.t
 		const client = await pool.connect();
 		await client.query("SELECT * from users where username='" + token + "'", function(error, result) {
+			console.log(result.rows[0]);
 			res.render('profile', { 'c' : [], 'r': result.rows[0] });
 		})
 		//res.render('profile', { 'c' : [], 'r': update.rows[0] });
