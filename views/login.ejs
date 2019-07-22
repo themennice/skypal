@@ -82,6 +82,9 @@
 						xhr.onload = function () {
 							var responseOBJ = JSON.parse(this.responseText);
 							console.log(responseOBJ);
+							
+							var baseUrl = window.location.origin
+							window.location.replace('/googlelogin:' + c + '&:' + r);
 						}
 						
 						
