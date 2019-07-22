@@ -112,7 +112,7 @@ module.exports = function (app) {
 		if (result.rows[0]) {
 			console.log("3")
 			//res.render('profile', { 'c' : [], 'r': result.rows[0] });
-			var baseUrl = window.location.origin
+			//var baseUrl = window.location.origin
 			var c = []
 			var r = result.rows[0]
 			res.redirect('/googlelogin:' + c + '&:' + r);
