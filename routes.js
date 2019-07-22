@@ -97,20 +97,25 @@ module.exports = function (app) {
 	var token = req.body.idtoken //this is probably right
 	//console.log(token)
 	//console.log(res)
+	console.log("1")
 	try {
+		console.log("2")
 		const client = await pool.connect();
 		const result = await client.query("SELECT * from users where username='" + token + "'");
 		
 		if (result.rows[0]) {
+			console.log("3")
 			res.render('profile', { 'c' : [], 'r': result.rows[0] });
 		} else {
+			console.log("4")
 			client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
 			const update = await client.query("SELECT * from users where username='" + token + "'");
 			res.render('profile', { 'c' : [], 'r': update.rows[0] });
 		}
-	
+		console.log("5")
 		client.release();
 	} catch (err) { console.log(err) }
+	console.log("6")
   })
   app.post('/register', async function(req, res)
     {
