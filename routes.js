@@ -11,9 +11,7 @@ const request = require('request');
 const { Pool, Client } = require('pg')
 const bcrypt = require('bcryptjs');
 const uuidv4 = require('uuid/v4');
-
-
-app.use(express.static('public'));
+const path = require('path');
 
 const LocalStrategy = require('passport-local').Strategy; // strategy for authenticating with a username and password
 
@@ -24,6 +22,16 @@ const pool = new Pool({
 });
 
 module.exports = function (app) {
+  app.use(express.static(path.join(__dirname, 'public')))
+  app.use(express.json())
+  app.use(express.urlencoded({extended:false}))
+  app.use(bodyParser.json());
+  app.use(require('cookie-parser')())
+  app.use(require('body-parser').urlencoded({ extended: true }))
+
+  app.use(cookieParser('secretString'));
+
+
   app.use(session({
       secret: 'bulky keyboard',
       resave: true,
@@ -62,7 +70,8 @@ module.exports = function (app) {
   app.get('/add-ticket', (req, res) => res.render('add-ticket'))
 
   app.get('/profile', async function (req, res, next) {
-        console.log(req.user);
+        console.log("GOOOOOOOOOOOOOD?");
+        console.log(req.user.username); // WHY IS THIS UNDEFINED???
         if(req.isAuthenticated()){
           console.log("I am here");
           try {
