@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 const passport = require('passport');
 const flash = require('connect-flash');
+const session = require('express-session')
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const fs = require('fs');
 const request = require('request');
 const { Pool, Client } = require('pg')
@@ -21,18 +24,36 @@ const pool = new Pool({
 });
 
 module.exports = function (app) {
-  console.log("The status of users is " + users);
+  app.use(session({
+      secret: 'bulky keyboard',
+      resave: true,
+      cookie: { maxAge: 120000 },
+      saveUninitialized: true
+      }))
+  app.use(passport.initialize())
+  app.use(passport.session())
+  app.use(flash())
+
+  app.use(function(req, res, next){
+      res.locals.success_messages = req.flash('success_messages');
+      res.locals.error_messages = req.flash('error_messages');
+      res.locals.warning = req.flash('warning'); // how to make it work?
+      next();
+  });
+
   app.get('*', function (req, res, next) { // universal access variable, keep working
-     console.log("The user is currently " + req.isAuthenticated());
-     console.log("The user is currently passport " + req.session.passport);
+     console.log("THE USER IS currently " + req.isAuthenticated());
+     //console.log(req.session.passport.user);
+     //console.log(req.user.username);
      res.locals.user = req.user || null;
-     console.log("The locals.user is " + res.locals.user);
+     if(res.locals.user != null){console.log(res.locals.user);}
      next();})
 
   app.get('/', (req, res, next) => { res.render('pages/index', {title: "Home", userData: req.user, message: 'Success'});
-        console.log("The user  in '/' is "+ req.user); })
+        console.log(req.user); })
 
   app.get('/chat', function(req, res) {
+      console.log(req.user);
       res.render('chat');
   });
 
@@ -40,11 +61,21 @@ module.exports = function (app) {
 
   app.get('/add-ticket', (req, res) => res.render('add-ticket'))
 
-  app.get('/profile', function (req, res, next) {
-        console.log(req.isAuthenticated())
+  app.get('/profile', async function (req, res, next) {
+        console.log(req.user);
         if(req.isAuthenticated()){
           console.log("I am here");
-          res.render('profile', {title: "Profile", userData: req.user, userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});
+          try {
+              const client = await pool.connect()
+          		const result = await client.query("SELECT * FROM users where username='" + "DENYS" + "'");
+              const result_ticket = await client.query("SELECT * FROM tickets where username='" + "DENYS" + "'"); // fix this so it matches username
+          		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
+          		res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] } );
+          		client.release();
+            } catch (err) {
+              console.error(err);
+              res.send("Error " + err);
+            }
         }
         else{
 		  console.log("login failed")
@@ -53,22 +84,18 @@ module.exports = function (app) {
         });
 
   app.get('/login', (req, res, next) => {
-      console.log(res)
       if (req.isAuthenticated()) {
-        users = true;
-        console.log("Get login user status is " + users);
-        console.log("login attempt 11");
+        users = req.isAuthenticated();
+        console.log("isAuthenticated returned true");
         res.redirect('/profile');}
       else { res.render('login', {title: "Log in", userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});
         console.log("Not logged in, render the login page")}})
 
   app.get('/logout', function(req, res){
-       users = false;
-       console.log("Upon logout user status is " + users);
-       console.log(req.isAuthenticated());
+       req.isAuthenticated();
        req.logout();
-       console.log(req.isAuthenticated());
-       req.flash('success', "Logged out. See you soon!");
+       users = req.isAuthenticated();
+       console.log("Upon logout user status is " + users);
        res.redirect('/'); })
 
   app.post('/ticket',function(req,res){
@@ -122,11 +149,7 @@ module.exports = function (app) {
       try {
           const client = await pool.connect();
           var pwd = await bcrypt.hash(req.body.password, 5);
-          // console.log("The password is " + req.body.password);
-          // console.log("The hashed password is " + pwd);
-          // console.log(typeof(pwd));
-  		// VALIDATE AND REDIRECT
-          // console.log("message here");
+
           const result = await client.query("SELECT * FROM users where username='" + uName + "'");
 
   		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
@@ -221,21 +244,17 @@ module.exports = function (app) {
             // failureRedirect: '/',
             // failureFlash: true}),
             async function(req, res) {
-              console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
               console.log(req.isAuthenticated());
-              //console.log("The user is currently " + req.session.passport.user);
-              console.log("login attempt 8");
+              console.log("The user is currently " + req.session.passport.user);
               if (req.body.remember) {
-                console.log("Checking remember is " + req.body.remember);
                 req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // Cookie expires after 30 days
               }
               else {
-                console.log("login attempt 9");
                 req.session.cookie.expires = false; // Cookie expires at end of session
                 }
+              console.log(req.body.username);
               var uname = req.body.username;
               var upass = req.body.password;
-              	console.log(uname);
               	try {
                       const client = await pool.connect()
                       const result = await client.query("SELECT * FROM users where username='" + uname + "'");
@@ -243,14 +262,8 @@ module.exports = function (app) {
               		console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
               		if ( (uname != "" && upass != "") && result.rows[0]) {
               			if (bcrypt.compare(upass, result.rows[0].password)) {
-                      console.log("why does not flash???");
-                      req.flash('danger', "Oops. Incorrect login details.");
-                      users = true;
-                      //console.log("After login post user status is " + users);
-                      console.log(req.isAuthenticated())
-                      //res.redirect('/logout');
+                      users = req.isAuthenticated();
                       res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] });
-              				//res.render('profile', { 'r': result.rows[0] });
               			} else {
               				res.send("Wrong password");
               			}
@@ -262,8 +275,6 @@ module.exports = function (app) {
                       console.error(err);
                       res.send("Error " + err);
                     }
-
-                 console.log("login attempt 10");
                });
 }
 
@@ -271,7 +282,6 @@ module.exports = function (app) {
       passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, username, password, done) => {
 
       	loginAttempt();
-        console.log("login attempt");
       	async function loginAttempt() {
       		const client = await pool.connect()
       		try{
@@ -285,16 +295,12 @@ module.exports = function (app) {
       					req.flash('danger', "Oops. Incorrect login details.");
       					return done(null, false, {message: 'No user found'});}
       				else{
-                console.log("INSIDE BCRYPT");
-                console.log(result.rows[0]);
       					bcrypt.compare(password, result.rows[0].password, function(err, isMatch) {
-                  console.log("Bcrypt compare login attempt");
       						if (err) throw err;
       						else if (isMatch){
                     console.log("Passwords matched!");
                     return done(null, [{email: result.rows[0].email, name: result.rows[0].name, username: result.rows[0].username}]);}
       						else{
-                    console.log("login attempt 7");
       							req.flash('danger', "Oops. Incorrect login details.");
                     return done(null, false);}
       					});
@@ -307,14 +313,11 @@ module.exports = function (app) {
       ))
 
       passport.serializeUser(function(user, done) {
-        console.log(user);
+        //console.log(user);
       	done(null, user);
       });
 
       passport.deserializeUser(function(user, done) {
-        console.log("deserial"+user);
+        //console.log("deserial" + user);
       	done(null, user);
       });
-
-
-
