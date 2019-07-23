@@ -22,7 +22,7 @@
 						<form action="">
 							<h2 style="font-family:sans-serif;">Sign Up</h2>
 							<h3 style="font-family:sans-serif; font-style:italic;">Don't have an account?</h3>
-							<a href="https://docs.google.com/document/u/0/"><button name="signup" value="signup">Sign Up</button></a>
+							<a href="/register"><button name="signup" value="signup"><a href="/register">Sign Up</a></button></a>
 							<br>
 							<br>
 							<br>
@@ -35,6 +35,9 @@
 					<div class="login">
 						<form class="data" action="/login" method="post">
 							<h2 style="font-family:sans-serif;">Log in</h2>
+							<% if (message) { %>
+			          <div class="alert alert-danger"><%= message %></div>
+			        <% } %>
 							<h3 style="font-family:sans-serif;">Username:</h3>
 							<input type="text" name="username" value="" required/>
 							<h3 style="font-family:sans-serif;">Password:</h3>
@@ -49,7 +52,7 @@
 					function onSignIn(googleUser) {
 						/*var profile = googleUser.getBasicProfile();
 						console.log("Email: " + profile.getEmail());*/
-						
+
 						var id_token = googleUser.getAuthResponse().id_token;
 						/*
 						var xhr = new XMLHttpRequest();
@@ -58,9 +61,9 @@
 						xhr.onload = function() {
 						  console.log('Signed in as: ' + xhr.responseText);
 						};
-						xhr.send('idtoken=' + id_token);						
+						xhr.send('idtoken=' + id_token);
 						*/
-						
+
 						/*
 						*/
 						var number = {
@@ -70,24 +73,24 @@
 						xhr.open('POST', '/googlelogin', true)
 						xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
 						xhr.send(JSON.stringify(number))
-						
+
 						*/
 
-						
+
 						console.log("starting post");
-						
+
 						const xhr = new XMLHttpRequest()
 						xhr.open('POST', '/googlelogin', true)
 						xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
 						xhr.onload = function () {
 							//var responseOBJ = JSON.parse(this.responseText);
 							//console.log(responseOBJ);
-							
+
 							var baseUrl = window.location.origin
 							window.location.replace('/googlelogin:' + this.responseText);
 						}
-						
-						
+
+
 						xhr.send(JSON.stringify(number))
 					}
 					</script>

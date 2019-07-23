@@ -49,6 +49,16 @@ module.exports = function (app) {
       next();
   });
 
+  //Access Control
+  function authcheck(req, res, next){
+    if(req.isAuthenticated()){
+      return next();
+    }
+    else {
+      res.render('login', {message: 'Not authorized, redirect to login'});
+    }
+  }
+
   app.get('*', function (req, res, next) { // universal access variable, keep working
      console.log("THE USER IS currently " + req.isAuthenticated());
      //console.log(req.session.passport.user);
@@ -60,16 +70,16 @@ module.exports = function (app) {
   app.get('/', (req, res, next) => { res.render('pages/index', {title: "Home", userData: req.user, message: 'Success'});
         console.log(req.user); })
 
-  app.get('/chat', function(req, res) {
+  app.get('/chat', authcheck, function(req, res) {
       console.log(req.user);
       res.render('chat');
   });
 
   app.get('/register', (req, res) => res.render('register', {title: "Register", userData: req.user, message: ''}))
 
-  app.get('/add-ticket', (req, res) => res.render('add-ticket'))
+  app.get('/add-ticket', authcheck, (req, res) => res.render('add-ticket'))
 
-  app.get('/profile', async function (req, res, next) {
+  app.get('/profile', authcheck, async function (req, res, next) {
         console.log("GOOOOOOOOOOOOOD?");
         console.log(req.user.username); // WHY IS THIS UNDEFINED???
         if(req.isAuthenticated()){
@@ -93,14 +103,15 @@ module.exports = function (app) {
         });
 
   app.get('/login', (req, res, next) => {
+
       if (req.isAuthenticated()) {
         users = req.isAuthenticated();
         console.log("isAuthenticated returned true");
         res.redirect('/profile');}
-      else { res.render('login', {title: "Log in", userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});
+      else { res.render('login', {title: "Log in", userData: req.user, message: req.message});
         console.log("Not logged in, render the login page")}})
 
-  app.get('/logout', function(req, res){
+  app.get('/logout', authcheck, function(req, res){
        req.isAuthenticated();
        req.logout();
        users = req.isAuthenticated();
