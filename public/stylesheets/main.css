@@ -1,60 +1,6 @@
-img.bg {
-        min-height: 100%;
-        min-width: 1024px;
-        width: 100%;
-        height: auto;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -5;
-    }
-
-    @media screen and (max-width: 1024px){
-        img.bg {
-        left: 50%;
-        margin-left: -512px; }
-    }
-.jumbotron {
-  /*background: rgba(230, 230, 230, 0.3);*/
-  background: none;
-  color: white;
-  padding-bottom: 10px; }
-.jumbotron h1{
-  text-shadow: 2px 2px grey;
+.citation{
+    color: lightgrey;
+    position: fixed;
+    bottom: 0;
+    right: 0;
 }
-  .jumbotron .btn-primary {
-    background: #845ac7;
-    border-color: #845ac7; }
-    .jumbotron .btn-primary:hover {
-      background: #46c1bb; }
-  .jumbotron p {
-    color: Black;
-    max-width: 75%;
-    margin: 1em auto 2em; }
-  .wrapper {
-      text-align: center;
-      position:relative;
-      margin-top:10%;
-  }
-  .navbar + .jumbotron {
-    margin-top: -40px; }
-  .jumbotron .lang-logo {
-    display: block;
-    background: #B01302;
-    border-radius: 50%;
-    overflow: hidden;
-    width: 100px;
-    height: 100px;
-    margin: auto;
-    border: 2px solid white; }
-    .jumbotron .lang-logo img {
-      max-width: 100%; }
-    .row{
-      	color: white;
-      }
-      .citation{
-        color: lightgrey;
-        position: fixed;
-        bottom: 0;
-        right: 0;
-      }

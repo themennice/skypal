@@ -23,6 +23,7 @@ module.exports = function (app) {
   console.log("The status of users is " + users);
   app.get('*', function (req, res, next) { // universal access variable, keep working
      console.log("The user is currently " + req.isAuthenticated());
+     console.log("The user is currently passport " + req.session.passport);
      res.locals.user = req.user || null;
      console.log("The locals.user is " + res.locals.user);
      next();})
@@ -95,7 +96,7 @@ module.exports = function (app) {
 	try {
 		const client = await pool.connect();
 		const result = await client.query("SELECT * from users where username='" + token + "'");
-		
+
 		if (result.rows[0]) {
 			res.render('profile', { 'r': result.rows[0] });
 		} else {
@@ -103,7 +104,7 @@ module.exports = function (app) {
 			const update = await client.query("SELECT * from users where username='" + token + "'");
 			res.render('profile', { 'r': update.rows[0] });
 		}
-	
+
 		client.release();
 	} catch (err) { console.log(err) }
   })
@@ -216,7 +217,8 @@ module.exports = function (app) {
             // failureFlash: true}),
             async function(req, res) {
               console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-              console.log(req.isAuthenticated())
+              console.log(req.isAuthenticated());
+              //console.log("The user is currently " + req.session.passport.user);
               console.log("login attempt 8");
               if (req.body.remember) {
                 console.log("Checking remember is " + req.body.remember);
@@ -241,6 +243,7 @@ module.exports = function (app) {
                       users = true;
                       //console.log("After login post user status is " + users);
                       console.log(req.isAuthenticated())
+                      //res.redirect('/logout');
                       res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] });
               				//res.render('profile', { 'r': result.rows[0] });
               			} else {
