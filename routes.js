@@ -67,7 +67,7 @@ module.exports = function (app) {
           console.log("I am here");
           try {
               const client = await pool.connect()
-          		const result = await client.query("SELECT * FROM users where username='" + "DENYS" + "'");
+          		const result = await client.query("SELECT * FROM users where username='" + "DENYS" + "'"); // CANNOT ACCESS req.user.username and can get req.user as an object, cannot get specific features within the object
               const result_ticket = await client.query("SELECT * FROM tickets where username='" + "DENYS" + "'"); // fix this so it matches username
           		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
           		res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] } );
