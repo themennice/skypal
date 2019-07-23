@@ -46,20 +46,50 @@
 						</form>
 					</div>
 					<script>
-					  function onSignIn(googleUser) {
+					function onSignIn(googleUser) {
 						/*var profile = googleUser.getBasicProfile();
 						console.log("Email: " + profile.getEmail());*/
 						
 						var id_token = googleUser.getAuthResponse().id_token;
-						
+						/*
 						var xhr = new XMLHttpRequest();
 						xhr.open('POST', '/googlelogin');
 						xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 						xhr.onload = function() {
 						  console.log('Signed in as: ' + xhr.responseText);
 						};
-						xhr.send('idtoken=' + id_token);
-					  }
+						xhr.send('idtoken=' + id_token);						
+						*/
+						
+						/*
+						*/
+						var number = {
+							'token' : id_token
+						}/*
+						var xhr = new window.XMLHttpRequest()
+						xhr.open('POST', '/googlelogin', true)
+						xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+						xhr.send(JSON.stringify(number))
+						
+						*/
+
+						
+						console.log("starting post");
+						
+						const xhr = new XMLHttpRequest()
+						xhr.open('POST', '/googlelogin', true)
+						xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+						xhr.onload = function () {
+							//var responseOBJ = JSON.parse(this.responseText);
+							//console.log(responseOBJ);
+							
+							var baseUrl = window.location.origin
+							window.location.replace('/googlelogin:' + this.responseText);
+						}
+						
+						
+						xhr.send(JSON.stringify(number))
+					}
 					</script>
 				</div>
 			</div>
