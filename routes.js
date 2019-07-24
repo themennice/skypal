@@ -61,6 +61,9 @@ module.exports = function (app) {
 
   app.get('*', function (req, res, next) { // universal access variable, keep working
      console.log("THE USER IS currently " + req.isAuthenticated());
+     global.uname = null;
+     if(req.user){
+     uname = req.user[0].username;}
      //console.log(req.session.passport.user);
      //console.log(req.user.username);
      res.locals.user = req.user || null;
@@ -81,13 +84,14 @@ module.exports = function (app) {
 
   app.get('/profile', authcheck, async function (req, res, next) {
         console.log("GOOOOOOOOOOOOOD?");
-        console.log(req.user.username); // WHY IS THIS UNDEFINED???
+        console.log(req.user);
+        console.log(req.user[0].username); // WHY IS THIS UNDEFINED???
         if(req.isAuthenticated()){
           console.log("I am here");
           try {
               const client = await pool.connect()
-          		const result = await client.query("SELECT * FROM users where username='" + "DENYS" + "'"); // CANNOT ACCESS req.user.username and can get req.user as an object, cannot get specific features within the object
-              const result_ticket = await client.query("SELECT * FROM tickets where username='" + "DENYS" + "'"); // fix this so it matches username
+          		const result = await client.query("SELECT * FROM users where username='" + req.user[0].username + "'"); // CANNOT ACCESS req.user.username and can get req.user as an object, cannot get specific features within the object
+              const result_ticket = await client.query("SELECT * FROM tickets where username='" + req.user[0].username + "'"); // fix this so it matches username
           		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
           		res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] } );
           		client.release();
