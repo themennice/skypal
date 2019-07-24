@@ -30,7 +30,33 @@ module.exports = function (app) {
 
   app.get('/', (req, res, next) => { res.render('pages/index', {title: "Home", userData: req.user, message: 'Success'});
         console.log("The user  in '/' is "+ req.user); })
+//Search & Display Tickets
+  app.post('/', async(req, res) =>{
+    var initialLocation = req.body.origin;
+    var destinationLocation = req.body.destination;
+    var day = req.body.date;
+    try{
+      const client = await pool.connect();
+      await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", function(err, res){
+        if (result.rows[0]) {
+          console.log(result.rows);
+          res.render('index', { 'n': res.rows} );
+        }
+        else {
+          req.flash('warning', "Sadly we have no registered users with on your route. Try again later");
+          res.render('/', {message: 'no tickets found'});
+        }
+        client.release();
+      });
 
+    }
+    catch(err)
+    {
+      console.error(err);
+      res.send("Error " + err);
+    }
+  }
+)
   app.get('/chat', function(req, res) {
       res.render('chat');
   });
@@ -100,7 +126,7 @@ module.exports = function (app) {
 	try {
 		const client = await pool.connect();
 		const result = await client.query("SELECT * from users where username='" + token + "'");
-		
+
 		if (result.rows[0]) {
 			res.render('profile', { 'r': result.rows[0] });
 		} else {
@@ -108,7 +134,7 @@ module.exports = function (app) {
 			const update = await client.query("SELECT * from users where username='" + token + "'");
 			res.render('profile', { 'r': update.rows[0] });
 		}
-	
+
 		client.release();
 	} catch (err) { console.log(err) }
   })
@@ -312,6 +338,3 @@ module.exports = function (app) {
         console.log("deserial"+user);
       	done(null, user);
       });
-
-
-
