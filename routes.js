@@ -100,7 +100,7 @@ module.exports = function (app) {
 	try {
 		const client = await pool.connect();
 		const result = await client.query("SELECT * from users where username='" + token + "'");
-		
+
 		if (result.rows[0]) {
 			res.render('profile', { 'r': result.rows[0] });
 		} else {
@@ -108,7 +108,7 @@ module.exports = function (app) {
 			const update = await client.query("SELECT * from users where username='" + token + "'");
 			res.render('profile', { 'r': update.rows[0] });
 		}
-	
+
 		client.release();
 	} catch (err) { console.log(err) }
   })
@@ -175,10 +175,11 @@ module.exports = function (app) {
     app.post("/profile", async (req, res) => {
       	  console.log(req.body);
       	  console.log(req.body.Username);
+          console.log("kk"+req.body.pic);
 
       	  try {
               const client = await pool.connect()
-      		var test = "update users set name = '"+ req.body.Name + "', email = '"+ req.body.email + "', age = '"+ req.body.Age + "'where username = '" + req.body.Username + "'";
+      		var test = "update users set name = '"+ req.body.Name + "', email = '"+ req.body.email + "', age = '"+ req.body.Age +"', description = '" + req.body.description +"', pic = '" + req.body.pic + "'where username = '" + req.body.Username + "'";
               const update = await client.query(test);
       		//{"Name":"Julian","Usename":"jbiedka","password":"123","email":"jbiedka@sfu.ca","Age":"19"}
       		const result = await client.query("SELECT * FROM users where username='" + req.body.Username + "'");
@@ -194,6 +195,7 @@ module.exports = function (app) {
               res.send("Error " + err);
             }
         })
+
 
     app.post('/googlelogin', async function(req, res) {
 	var token = req.body.idtoken //this is probably right
@@ -312,6 +314,3 @@ module.exports = function (app) {
         console.log("deserial"+user);
       	done(null, user);
       });
-
-
-
