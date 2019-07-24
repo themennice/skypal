@@ -28,8 +28,10 @@ module.exports = function (app) {
      console.log("The locals.user is " + res.locals.user);
      next();})
 
-  app.get('/', (req, res, next) => { res.render('pages/index', {title: "Home", userData: req.user, message: 'Success'});
-        console.log("The user  in '/' is "+ req.user); })
+  app.get('/', (req, res, next) => {
+    dummy_array = [];
+    res.render('pages/index', {title: "Home", userData: req.user, message: 'Success', n: dummy_array});
+    console.log("The user  in '/' is "+ req.user); })
 //Search & Display Tickets
   app.post('/', async(req, res) =>{
     var initialLocation = req.body.origin;
