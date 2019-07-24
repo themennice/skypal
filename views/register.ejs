@@ -32,9 +32,9 @@
             <%= warning %>
           </div>
           <% } %>
-        <% if (message) { %>
+        <a href="/login"><% if (message) { %>
           <div class="alert alert-success"><%= message %></div>
-        <% } %>
+        <% } %></a>
         <p>
             <input type = "email" class ="Uname"
                    name = "email" placeholder="Email address" required>
