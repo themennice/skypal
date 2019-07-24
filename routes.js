@@ -126,7 +126,7 @@ module.exports = function (app) {
 			} else {
 				console.log("4")
 				client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
-				res.send(token);
+				//res.send(token);
 				client.release();
 				//res.render('profile', { 'c' : [], 'r': update.rows[0] });
 			}
