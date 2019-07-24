@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <% include partials/header.ejs %>
     <title>SkyPal Chatroom</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,6 +17,7 @@
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
   </head>
   <body>
+    <% include partials/nav.ejs %>
     <ul id="messages"></ul>
     <form action="" id="chatForm">
       <input id="txt" autocomplete="off" autofocus="on" oninput="isTyping()" placeholder="type your message here..." /><button>Send</button>
@@ -23,7 +25,7 @@
     <script>
             var socket = io.connect();
             // ask username
-            var username = prompt('Please tell me your name');
+            var username = prompt('Please tell me your chat name');
             socket.emit('username', username);
             // submit text message without reload/refresh the page
             $('form').submit(function(e){
