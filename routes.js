@@ -151,6 +151,7 @@ module.exports = function (app) {
 		console.warn("a")
 		console.warn(token)
 		console.warn("b")
+		try {
 		const client = await pool.connect();
 		await client.query("SELECT * from users where username='" + token + "'", async function(error, result) {
 			if (result.rows[0]) {
@@ -168,6 +169,10 @@ module.exports = function (app) {
 			//console.log(result.rows[0]);
 		})
 		client.release();
+		} catch (e) {
+			console.error(e)
+			res.send(e)
+		}
 		//res.render('profile', { 'c' : [], 'r': update.rows[0] });
 	})
 	var token = req.body.token //this is probably right
