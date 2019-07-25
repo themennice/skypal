@@ -148,6 +148,7 @@ module.exports = function (app) {
 
 	app.get('/googlelogin:t', async function(req, res) {
 		const token = req.params.t
+		console.log(token)
 		const client = await pool.connect();
 		await client.query("SELECT * from users where username='" + token + "'", async function(error, result) {
 			if (result.rows[0]) {
