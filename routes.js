@@ -148,16 +148,16 @@ module.exports = function (app) {
 
 	app.get('/googlelogin:t', async function(req, res) {
 		var token = req.params.t
-		console.log("a")
-		console.log(token)
-		console.log("b")
+		console.warn("a")
+		console.warn(token)
+		console.warn("b")
 		const client = await pool.connect();
 		await client.query("SELECT * from users where username='" + token + "'", async function(error, result) {
 			if (result.rows[0]) {
-				console.log("In DB")
+				console.warn("In DB")
 				 res.render('profile', { 'c' : [], 'r': result.rows[0] });
 			} else {
-				console.log("Not in DB")
+				console.warn("Not in DB")
 				await client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
 				await client.query("SELECT * from users where username='" + token + "'", async function(err, update) {
 					 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
