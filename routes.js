@@ -146,18 +146,18 @@ module.exports = function (app) {
            })
        })
 
-	app.get('/googlelogin:t', async function(req, res) {
+	app.get('/googlelogin:t', function(req, res) {
 		const token = req.params.t
-		const client = await pool.connect();
-		await client.query("SELECT * from users where username='" + token + "'", async function(error, result) {
+		const client = pool.connect();
+		client.query("SELECT * from users where username='" + token + "'", function(error, result) {
 			if (result.rows[0]) {
 				console.log("In DB")
 				res.render('profile', { 'c' : [], 'r': result.rows[0] });
 				client.release();
 			} else {
 				console.log("Not in DB")
-				await client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
-				await client.query("SELECT * from users where username='" + token + "'", async function(err, update) {
+				client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
+				client.query("SELECT * from users where username='" + token + "'", function(err, update) {
 					res.render('profile', { 'c' : [], 'r' : update.rows[0] });
 				});
 				//res.send(token);
