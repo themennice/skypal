@@ -146,7 +146,7 @@ module.exports = function (app) {
            })
        })
 
-	app.get('/googlelogin:t', async function(req, res) {
+ app.get('/googlelogin:t', async function(req, res) {
 		var token = req.params.t
 		console.warn("a")
 		console.warn(token)
@@ -175,38 +175,6 @@ module.exports = function (app) {
 		}
 		//res.render('profile', { 'c' : [], 'r': update.rows[0] });
 	})
-	var token = req.body.token //this is probably right
-	//console.log(res)
-	console.log("1")
-	try {
-		console.log("2")
-		const client = await pool.connect();
-		await client.query("SELECT * from users where username='" + token + "'", function (error, result) {
-			if (result.rows[0]) {
-				console.log("3")
-				//var sendOBJ = JSON.stringify({ 'c' : [], 'r': result.rows[0] });
-				//res.render('profile', { 'c' : [], 'r': result.rows[0] });
-				//var baseUrl = window.location.origin
-				//var c = []
-				//var r = result.rows[0]
-				//console.log(sendOBJ);
-				res.send(token);
-				client.release();
-
-				//res.redirect('/googlelogin:' + c + '&:' + r);
-			} else {
-				console.log("4")
-				client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
-				//res.send(token);
-				client.release();
-				//res.render('profile', { 'c' : [], 'r': update.rows[0] });
-			}
-		})
-
-		console.log("5")
-	} catch (err) { console.log(err) }
-	console.log("6")
-  })
   app.post('/register', async function(req, res)
     {
       var emailAddr = req.body.email;
