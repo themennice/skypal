@@ -155,12 +155,12 @@ module.exports = function (app) {
 		await client.query("SELECT * from users where username='" + token + "'", async function(error, result) {
 			if (result.rows[0]) {
 				console.log("In DB")
-				await res.render('profile', { 'c' : [], 'r': result.rows[0] });
+				 res.render('profile', { 'c' : [], 'r': result.rows[0] });
 			} else {
 				console.log("Not in DB")
 				await client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
 				await client.query("SELECT * from users where username='" + token + "'", async function(err, update) {
-					await res.render('profile', { 'c' : [], 'r' : update.rows[0] });
+					 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
 				});
 				//res.send(token);
 				//res.render('profile', { 'c' : [], 'r': update.rows[0] });
