@@ -147,26 +147,27 @@ module.exports = function (app) {
        })
 
 	app.get('/googlelogin:t', async function(req, res) {
-		const token = req.params.t
+		var token = req.params.t
+		console.log("a")
 		console.log(token)
+		console.log("b")
 		const client = await pool.connect();
 		await client.query("SELECT * from users where username='" + token + "'", async function(error, result) {
 			if (result.rows[0]) {
 				console.log("In DB")
-				res.render('profile', { 'c' : [], 'r': result.rows[0] });
-				client.release();
+				await res.render('profile', { 'c' : [], 'r': result.rows[0] });
 			} else {
 				console.log("Not in DB")
 				await client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
 				await client.query("SELECT * from users where username='" + token + "'", async function(err, update) {
-					res.render('profile', { 'c' : [], 'r' : update.rows[0] });
-					client.release();
+					await res.render('profile', { 'c' : [], 'r' : update.rows[0] });
 				});
 				//res.send(token);
 				//res.render('profile', { 'c' : [], 'r': update.rows[0] });
 			}
 			//console.log(result.rows[0]);
 		})
+		client.release();
 		//res.render('profile', { 'c' : [], 'r': update.rows[0] });
 	})
 	var token = req.body.token //this is probably right
