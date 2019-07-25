@@ -153,7 +153,7 @@ module.exports = function (app) {
 		console.warn("b")
 		try {
 		const client = await pool.connect();
-		await client.query("SELECT * from users where username='" + token + "'", async function(error, result) {
+		await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
 			if (result.rows[0]) {
 				console.warn("In DB")
 				 res.render('profile', { 'c' : [], 'r': result.rows[0] });
