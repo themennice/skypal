@@ -18,30 +18,19 @@
 		</div> -->
 		<!-- <fieldset> -->
 		<div class = "profile" >
-
 			<h1> My Profile </h1>
-			<form name="profile" action="/profile" method="post" >
+			<form name="profile" action="/profile" method="post">
 			<p>
 				<label class="lbl">Name </label>
 				<input type="text" name="Name" value="<%=r.name%>">
 			</p>
 			<p>
-				<label class="lbl">What's on your mind</label>
-				<textarea class="text" name="description" value="<%=r.description%>" rows="4" cols="25">
-
-				</textarea>
-				<label class="lbl">Your description</label>
-				<input class="text" name="description" value="<%=r.description%>">
-
+				<label class="lbl">Description </label>
+				<input type="text" name="description" value="<%=r.description%>">
 			</p>
 			<p>
 				<label class="lbl">Picture </label>
 				<input type="file" name="pic" accept="image/*" value ="<%=r.pic%>" >
-
-
-
-
-
 			</p>
 
 
@@ -60,10 +49,6 @@
 			<p>
 				<label class="lbl">Age</label>
 				<input type="text" name="Age" value="<%=r.age%>">
-				<div class="popup" onclick="myFunction()">click here for details
-
-  			<span class="popuptext" id="myPopup">You must be over 18!</span>
-				</div>
 			</p>
 			<p>
 		</div>
@@ -121,16 +106,6 @@
 		</div>
 				<!-- </fieldset> -->
 			<p class="citation">Photo by Gary Lopater on Unsplash</p>
-
-
-			<script>
-			// When the user clicks on div, open the popup
-			function myFunction() {
-			  var popup = document.getElementById("myPopup");
-			  popup.classList.toggle("show");
-			}
-			</script>
-
 			<style>
 				body {text-align: center;}
 				h1   {color: Black; font-size-adjust: auto;
@@ -165,8 +140,6 @@
 				label.lbl{
 					float: left;
 				}
-
-
 				input{
 					font-family: "Lato";
 					font-size: 16pt;
@@ -174,6 +147,7 @@
 				  padding: 12px 20px;
 				  margin: 8px 0;
 				  box-sizing: border-box;
+					box-sizing: border-box;
 				}
 				.profile{
 					font-size:20pt;
@@ -185,7 +159,7 @@
 					margin:auto;
 				  margin-top: 5px;
 					text-align: center;
-					padding: 10px;
+					padding: 30px;
 
 				}
 
@@ -208,64 +182,6 @@
 					margin:auto;
 					text-align: center;
 				}
-
-				.popup {
-				  position: relative;
-				  display: inline-block;
-				  cursor: pointer;
-				  -webkit-user-select: none;
-				  -moz-user-select: none;
-				  -ms-user-select: none;
-				  user-select: none;
-				}
-
-				/* The actual popup */
-				.popup .popuptext {
-				  visibility: hidden;
-				  width: 160px;
-				  background-color: #555;
-				  color: #fff;
-				  text-align: center;
-				  border-radius: 6px;
-				  padding: 8px 0;
-				  position: absolute;
-				  z-index: 1;
-				  bottom: 125%;
-				  left: 50%;
-				  margin-left: -80px;
-				}
-
-				/* Popup arrow */
-				.popup .popuptext::after {
-				  content: "";
-				  position: absolute;
-				  top: 100%;
-				  left: 50%;
-				  margin-left: -5px;
-				  border-width: 5px;
-				  border-style: solid;
-				  border-color: #555 transparent transparent transparent;
-				}
-
-				/* Toggle this class - hide and show the popup */
-				.popup .show {
-				  visibility: visible;
-				  -webkit-animation: fadeIn 1s;
-				  animation: fadeIn 1s;
-				}
-
-				/* Add animation (fade in the popup) */
-				@-webkit-keyframes fadeIn {
-				  from {opacity: 0;}
-				  to {opacity: 1;}
-				}
-
-				@keyframes fadeIn {
-				  from {opacity: 0;}
-				  to {opacity:1 ;}
-				}
-
-
 			</style>
 	</body>
 </html>
