@@ -148,6 +148,8 @@ module.exports = function (app) {
 
  app.get('/googlelogin:t', async function(req, res) {
 		var token = req.params.t
+		res.send(req.params.t)
+		/*
 		console.warn("a")
 		console.warn(token)
 		console.warn("b")
@@ -160,20 +162,17 @@ module.exports = function (app) {
 			} else {
 				console.warn("Not in DB")
 				await client.query("INSERT INTO users (username, password, email, name) VALUES ('" + token + "', '', '', 'Add your name!')");
-				await client.query("SELECT * from users where username='" + token + "'", async function(err, update) {
+				await client.query("SELECT * from users where username='" + token.toString() + "'", async function(err, update) {
 					 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
 				});
-				//res.send(token);
-				//res.render('profile', { 'c' : [], 'r': update.rows[0] });
 			}
-			//console.log(result.rows[0]);
 		})
 		client.release();
 		} catch (e) {
 			console.error(e)
 			res.send(e)
 		}
-		//res.render('profile', { 'c' : [], 'r': update.rows[0] });
+		*/
 	})
   app.post('/register', async function(req, res)
     {
