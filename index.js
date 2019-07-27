@@ -143,7 +143,8 @@ const pool = new Pool({
         users = req.isAuthenticated();
         console.log("isAuthenticated returned true");
         res.redirect('/profile');}
-      else { res.render('login', {title: "Log in", userData: req.user, message: req.message});
+      else { res.render('login', {title: "Log in", userData: req.user, message: req.session.success});
+        //delete res.session.success;
         console.log("Not logged in, render the login page")}})
 
   app.get('/logout', authcheck, function(req, res){
@@ -264,6 +265,7 @@ const pool = new Pool({
                 console.log('Email sent: ' + info.response);
 
             });
+          req.session.success = "Registered successfully, log in"
           res.redirect('login');}
 
         client.release();
