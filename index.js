@@ -101,8 +101,37 @@ const pool = new Pool({
      if(res.locals.user != null){console.log(res.locals.user);}
      next();})
 
-  app.get('/', (req, res, next) => { res.render('pages/index', {title: "Home", userData: req.user, message: 'Success'});
-        console.log(req.user); })
+     app.get('/', (req, res, next) => {
+       dummy_array = [];
+       res.render('pages/index', {title: "Home", userData: req.user, message: 'Success', n: dummy_array});
+       console.log("The user  in '/' is "+ req.user); })
+   //Search & Display Tickets
+     app.post('/', async(req, res) =>{
+       var initialLocation = req.body.origin;
+       var destinationLocation = req.body.destination;
+       var day = req.body.date;
+       try{
+         const client = await pool.connect();
+         await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", function(err, res){
+           if (result.rows[0]) {
+             console.log(result.rows);
+             res.render('index', { 'n': res.rows} );
+           }
+           else {
+             req.flash('warning', "Sadly we have no registered users with on your route. Try again later");
+             res.render('/', {message: 'no tickets found'});
+           }
+           client.release();
+         });
+
+       }
+       catch(err)
+       {
+         console.error(err);
+         res.send("Error " + err);
+       }
+     }
+   )
 
   app.get('/chat', authcheck, function(req, res) {
       console.log(req.user);
