@@ -1,3 +1,121 @@
+body {
+margin: 0;
+margin-top: 0;
+height: 1000px;
+font-family: Arial, Helvetica, sans-serif;
+}
+/*section 1*/
+.WelcomeSection {
+background-image:url("/Main-pageBG.jpg");
+height: 1000px; /* You must set a specified height */
+background-position: center; /* Center the image */
+background-repeat: no-repeat; /* Do not repeat the image */
+background-size: cover; /* Resize the background image to cover the entire container */
+}
+h1{
+  margin-top: 0;
+  font-size: 50pt;
+  font-family: "Lato";
+  color: rgba(230, 230, 230, 0.7);
+  padding-top: 200px;
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px grey;
+}
+button {
+/* margin-left: 42vw; */
+border: none;
+background-color: inherit;
+/* padding: 14px 28px; */
+font-size: 16px;
+cursor: pointer;
+/* display: inline-block; */
+color: white;
+font-size: 36pt;
+/* margin-top: 50vh; */
+}
+
+button:hover {background: #1b3b63;}
+/*section 2*/
+.topMargin{
+padding-top: 250px;
+}
+.TicketSearch{
+background-image: url("/SearchBG.jpg");
+height: 1000px;
+background-position: center;
+background-size: cover;
+border: none;
+}
+.TransparentBar{
+margin: auto;
+background-image: linear-gradient(rgba(200, 200, 200, 0.5), rgba(165, 156, 109, 0.7));
+border: none;
+border-radius: 15px;
+height: 150px;
+width: 1000px;
+}
+.topLeftLbl{
+color: rgb(32, 49, 10);
+font-size: 22pt;
+font-style: bold;
+box-sizing: border-box;
+}
+::placeholder{
+color: white;
+}
+.MedInput{
+margin-top: 20px;
+width: 90%;
+box-sizing: border-box;
+background-color: rgba(68, 95, 31, 0.5);
+border-radius: 8px;
+border: none;
+height: 50px;
+text-align: center;
+font-size: 12pt;
+color: white;
+}
+.inpuGrp{
+float: left;
+margin-left: 50px;
+}
+.avatar{
+margin-top: 30px;
+width: 8rem;
+height: 8rem;
+border-radius: 4rem;
+}
+.slider{
+overflow: auto;
+white-space: nowrap;
+}
+.InfoCard{
+display: inline-block;
+
+background-image: linear-gradient(rgba(43, 100, 100, 0.5), rgba(255, 255, 255, 0.3), rgba(65, 95, 31, 0.7));
+text-align: center;
+border-radius: 15px;
+width: 210px;
+height: 450px;
+margin: auto;
+margin-top: 100px;
+margin-left: 50px;
+
+font-size: 14pt;
+color: white;
+padding:20px;
+float: left;
+}
+.DynamicSubmitBtn{
+background-color: rgba(20, 52, 71, 0.9);
+margin: bottom;
+width: 170px;
+height: 80px;
+border-radius: 15px;
+font-size: 14pt;
+color: rgba(240, 217, 230, 1);
+}
 .citation{
     color: lightgrey;
     position: fixed;
