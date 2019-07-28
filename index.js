@@ -209,7 +209,8 @@ const pool = new Pool({
        })
 
 	app.get('/googlelogin:t', async function(req, res) {
-		var token = req.params.t.toString().slice(0);
+		var token = req.params.t.toString();
+		token = token.replace(':', '');
 		console.warn(token);
 		const CLIENT_ID = "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com";
 		const client = new OAuth2Client(CLIENT_ID);
