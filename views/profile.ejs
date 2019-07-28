@@ -19,6 +19,7 @@
 		<!-- <fieldset> -->
 		<div class = "profile" >
 			<h1> My Profile </h1>
+				<img src="empty-avatar.png" alt="avatar" class="avatar">
 			<form name="profile" action="/profile" method="post">
 			<p>
 				<label class="lbl">Name </label>
@@ -31,6 +32,8 @@
 			<p>
 				<label class="lbl">Picture </label>
 				<input type="file" name="pic" accept="image/*" value ="<%=r.pic%>" >
+
+
 			</p>
 
 
@@ -162,6 +165,14 @@
 					padding: 30px;
 
 				}
+				.avatar{
+				  margin-top: 30px;
+				  width: 8rem;
+				  height: 8rem;
+				  border-radius: 4rem;
+				}
+
+
 
 				.tickets{
 					font-family: "Lato";
