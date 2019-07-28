@@ -208,47 +208,31 @@ const pool = new Pool({
        })
 
 	app.get('/googlelogin:t', async function(req, res) {
-		const token = req.params.t
-		const client = await pool.connect();
-		await client.query("SELECT * from users where username='" + token + "'", function(error, result) {
-			console.log(result.rows[0]);
-			res.render('profile', { 'c' : [], 'r': result.rows[0] });
-		})
-		//res.render('profile', { 'c' : [], 'r': update.rows[0] });
-	})
-    app.post('/googlelogin', async function(req, res) {
-	var token = req.body.token //this is probably right
-	//console.log(res)
-	console.log("1")
-	try {
-		console.log("2")
-		const client = await pool.connect();
-		await client.query("SELECT * from users where username='" + token + "'", function (error, result) {
-			if (result.rows[0]) {
-				console.log("3")
-				//var sendOBJ = JSON.stringify({ 'c' : [], 'r': result.rows[0] });
-				//res.render('profile', { 'c' : [], 'r': result.rows[0] });
-				//var baseUrl = window.location.origin
-				//var c = []
-				//var r = result.rows[0]
-				//console.log(sendOBJ);
-				res.send(token);
-				client.release();
+		var token = req.params.t
 
-				//res.redirect('/googlelogin:' + c + '&:' + r);
+		console.warn("a")
+		console.warn(token)
+		console.warn("b")
+		try {
+		const client = await pool.connect();
+		await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
+			if (result.rows[0]) {
+				console.warn("In DB")
+				 res.render('profile', { 'c' : [], 'r': result.rows[0] });
 			} else {
-				console.log("4")
-				client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
-				res.send(token);
-				client.release();
-				//res.render('profile', { 'c' : [], 'r': update.rows[0] });
+				console.warn("Not in DB")
+				await client.query("INSERT INTO users (username, password, email, name) VALUES ('" + token + "', '', '', 'Add your name!')");
+				await client.query("SELECT * from users where username='" + token.toString() + "'", async function(err, update) {
+					 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
+				});
 			}
 		})
-
-		console.log("5")
-	} catch (err) { console.log(err) }
-	console.log("6")
-  })
+		client.release();
+		} catch (e) {
+			console.error(e)
+			res.send(e)
+		}
+	})
   app.post('/register', async function(req, res)
     {
       var emailAddr = req.body.email;
