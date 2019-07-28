@@ -216,7 +216,7 @@ const pool = new Pool({
 				if (result.rows[0]) {
 					// Google user already exists:
 					
-					req.session.passport.user = true;
+					//req.session.passport.user = true;
 					
 					console.warn("In DB")
 					const result_ticket = await client.query("SELECT * FROM tickets where username='" + token.toString() + "'");
