@@ -1,4 +1,5 @@
 const PORT = process.env.PORT || 5000
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const {OAuth2Client} = require('google-auth-library');
 const express = require('express')
 const request = require('request');
