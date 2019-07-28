@@ -242,16 +242,27 @@ const pool = new Pool({
 			//alert(`Done, got ${xhr.response.length} bytes`); // responseText is the server
 			//res.send(xhr.responseText);
 			const responseObject = JSON.parse(xhr.responseText);
-			/*
-			{ "iss": "accounts.google.com", "azp": "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com", "aud": "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com",
-			"sub": "108849826102045814723", "email": "awsomej9@gmail.com", "email_verified": "true", "at_hash": "OYbgPrY4qjDjajFDiATP4g", "name": "julian biedka",
-			"picture": "https://lh3.googleusercontent.com/-lvZwz02At3U/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rd_hQqrr0qCcgxjzedATTsAlBGYOA/s96-c/photo.jpg",
-			"given_name": "julian", "family_name": "biedka", "locale": "en", "iat": "1564356924", "exp": "1564360524", "jti": "0ff182a6e08570e7ae598a6e755211e471e1cb78",
-			"alg": "RS256", "kid": "df3758908b792293ad977a0b991d98a77f4eeecd", "typ": "JWT" }
-			*/
 			if (responseObject.email_verified) {
-				var sqlString = "(username, password, email, name) VALUES ('" + responseObject.email + "', '' ,'" + responseObject.email + "', '" + responseObject.name + "')";
-				res.send(sqlString);
+
+				const client = await pool.connect();
+				await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
+					if (result.rows[0]) {
+						// Google user already exists:
+						
+						console.warn("In DB")
+						const result_ticket = await client.query("SELECT * FROM tickets where username='GOOGLE#AUTH#USER:" + responseObject.email + "'");
+						res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
+					} else {
+						// Signing in with google for the first time:
+						
+						var sqlString = "(username, password, email, name) VALUES ('GOOGLE#AUTH#USER:" + responseObject.email + "', '' ,'" + responseObject.email + "', '" + responseObject.name + "')";
+						console.warn("Not in DB")
+						await client.query("INSERT INTO users " + sqlString);
+						await client.query("SELECT * from users where username='" + token.toString() + "'", async function(err, update) {
+							 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
+						});
+					}
+				})
 			}
 		  }
 		};
@@ -306,7 +317,7 @@ const pool = new Pool({
 
   		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
 
-  		if (result.rows[0]) {
+  		if (result.rows[0] || uName.includes("GOOGLE#AUTH#USER:")) {
           req.flash('warning', "This email address is already registered. <a href='/login'>Log in!</a>");
   			  res.render('register', {message: 'User Already Exists Try Logigng In'}); }
       else {
