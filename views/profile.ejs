@@ -55,6 +55,19 @@
 			</p>
 			<p>
 		</div>
+		<div class = "actions">
+			<p>
+			<button id="update" class="update" >Update</button>
+			</p>
+		</form>
+						<p><button id="logout" class="logout" >Logout</button></p>
+						<p><button id="ViewTicket" class="ViewTicket" >Add Ticket</button></p>
+						<script type="text/javascript">
+								document.getElementById("logout").onclick = function () {
+										location.href = "logout";
+								};
+						</script>
+
 
 		<%for (i=0; i < c.length; i++){ %>
 					<%b = c[i];%>
@@ -62,33 +75,33 @@
 			<h2>My Ticket <h2>
 
 				<label class="lbl">flight number</label>
-				<input type="text" name="flightno" value="<%=b.flightno%>">
+				<input type="text" name="flightno" value="<%=b.flightno%>"readonly>
 			</p>
 			<p>
 				<label class="lbl">From </label>
-				<input type="text" name="countryfrom" value="<%=b.countryfrom%>">
+				<input type="text" name="countryfrom" value="<%=b.countryfrom%>"readonly>
 			</p>
 			<p>
 				<label class="lbl">To </label>
-				<input type="text" name="countryto" value="<%=b.countryto%>">
+				<input type="text" name="countryto" value="<%=b.countryto%>"readonly>
 			</p>
 
 			<p>
 				<label class="lbl">Airline </label>
-				<input type="text" name="Airline" value="<%=b.airline%>">
+				<input type="text" name="Airline" value="<%=b.airline%>"readonly>
 			</p>
 			<p>
 				<label class="lbl">Date </label>
-				<input type="text" name="date" value="<%=b.date%>">
+				<input type="text" name="date" value="<%=b.date%>"readonly>
 			</p>
 			<p>
 				<label class="lbl">time</label>
-				<input type="text" name="time" value="<%=b.time%>">
+				<input type="text" name="time" value="<%=b.time%>"readonly>
 			</p>
 
 		</div>
 		<% } %>
-		<div class = "actions">
+		<!-- <div class = "actions">
 			<p>
 			<button id="update" class="update" >Update</button>
 			</p>
@@ -106,7 +119,7 @@
 										location.href = "add-ticket";
 								};
 						</script>
-		</div>
+		</div> -->
 				<!-- </fieldset> -->
 			<p class="citation">Photo by Gary Lopater on Unsplash</p>
 			<style>
@@ -167,8 +180,8 @@
 				}
 				.avatar{
 				  margin-top: 30px;
-				  width: 8rem;
-				  height: 8rem;
+				  width: 13rem;
+				  height: 13rem;
 				  border-radius: 4rem;
 				}
 
