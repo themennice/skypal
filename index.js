@@ -1,4 +1,5 @@
 const PORT = process.env.PORT || 5000
+const {OAuth2Client} = require('google-auth-library');
 const express = require('express')
 const request = require('request');
 const passport = require('passport');
@@ -208,11 +209,9 @@ const pool = new Pool({
        })
 
 	app.get('/googlelogin:t', async function(req, res) {
-		var token = req.params.t;
+		var token = req.params.t.slice(0);
 		console.warn(token);
 		const CLIENT_ID = "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com";
-		
-		const {OAuth2Client} = require('google-auth-library');
 		const client = new OAuth2Client(CLIENT_ID);
 		async function verify() {
 		  const ticket = await client.verifyIdToken({
@@ -225,7 +224,7 @@ const pool = new Pool({
 		  //const domain = payload['hd'];
 		}
 		verify().catch(console.error);
-		
+		res.send(token);
 		
 		/*
 		
