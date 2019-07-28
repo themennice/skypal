@@ -46,7 +46,7 @@ button:hover {background: #1b3b63;}
   background-position: center;
   background-size: cover;
   border: none;
-  overflow: scroll;
+
 }
 .TransparentBar{
   margin: auto;
@@ -100,6 +100,7 @@ button:hover {background: #1b3b63;}
   height: 450px;
   width: 100vw;
   white-space: nowrap;
+  overflow: auto;
 }
 .InfoCard{
   display: inline-block;
