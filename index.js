@@ -221,11 +221,32 @@ const pool = new Pool({
 		  });
 		  const payload = ticket.getPayload();
 		  const userid = payload['sub'];
-		  // If request specified a G Suite domain:
-		  //const domain = payload['hd'];
 		}
 		verify().catch(console.error);
-		res.send(token);
+		//res.send(token);
+		
+		let xhr = new XMLHttpRequest();
+
+		// 2. Configure it: GET-request for the URL /article/.../load
+		xhr.open('GET', 'https://oauth2.googleapis.com/tokeninfo?id_token=' + token);
+
+		// 3. Send the request over the network
+		xhr.send();
+
+		// 4. This will be called after the response is received
+		xhr.onload = function() {
+		  if (xhr.status != 200) { // analyze HTTP status of the response
+			alert(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
+		  } else { // show the result
+			alert(`Done, got ${xhr.response.length} bytes`); // responseText is the server
+			res.send(xhr.responseText);
+		  }
+		};
+
+		xhr.onerror = function() {
+		  alert("Request failed");
+		};
+		
 		
 		/*
 		
