@@ -240,7 +240,7 @@ const pool = new Pool({
 			console.error("Error: " + xhr.status + ": " + xhr.statusText) // e.g. 404: Not Found
 		  } else { // show the result
 			//alert(`Done, got ${xhr.response.length} bytes`); // responseText is the server
-			res.send(xhr.responseText);
+			//res.send(xhr.responseText);
 			const responseObject = JSON.parse(xhr.responseText);
 			/*
 			{ "iss": "accounts.google.com", "azp": "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com", "aud": "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com",
