@@ -111,7 +111,7 @@ const pool = new Pool({
 
   app.get('/register', (req, res) => res.render('register', {title: "Register", userData: req.user, message: ''}))
 
-  app.get('/add-ticket', authcheck, (req, res) => res.render('add-ticket'))
+  app.get('/add-ticket', authcheck, (req, res) => res.render('add-ticket', {username: req.user[0].username}))
 
   app.get('/profile', authcheck, async function (req, res, next) {
         console.log("GOOOOOOOOOOOOOD?");
