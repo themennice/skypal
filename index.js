@@ -103,7 +103,7 @@ const pool = new Pool({
 
      app.get('/', (req, res, next) => {
        dummy_array = [];
-       res.render('pages/index', {title: "Home", userData: req.user, n: dummy_array, message:false});
+       res.render('pages/index', {title: "Home", userData: req.user, n: dummy_array, message: ""});
        console.log("The user  in '/' is "+ req.user); })
    //Search & Display Tickets
      app.post('/', async(req, res) =>{
@@ -116,7 +116,7 @@ const pool = new Pool({
          await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", function(err, resul){
            if (resul.rows[0]) {
              console.log(resul.rows);
-             res.render('pages/index', { 'n': resul.rows, message:false} );
+             res.render('pages/index', { 'n': resul.rows, message: "Success"} );
            }
            else {
              res.render('pages/index', {message: 'no tickets found', n: dummy_array});

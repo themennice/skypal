@@ -162,13 +162,13 @@ button:hover {background: #eee;}
 
       </fieldset>
     </div>
-
+    <%if(message){%>
+      <h1><%=message%></h1>
+      <%}%>
     <%for (i=0; i < n.length; i++){ %>
 					<% m = n[i];%>
     <!-- slider for differernt cards -->
-    <%if(message){%>
-      <p><%message%></p>
-      <%}%>
+
     <div id="ticketsearch" class="Slider">
       <div >
         <div class="InfoCard">
