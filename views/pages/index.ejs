@@ -31,19 +31,19 @@
     text-shadow: 2px 2px grey;
   }
   button {
-  margin-left: 42vw;
+  /* margin-left: 42vw; */
   border: none;
   background-color: inherit;
-  padding: 14px 28px;
+  /* padding: 14px 28px; */
   font-size: 16px;
   cursor: pointer;
-  display: inline-block;
+  /* display: inline-block; */
   color: white;
   font-size: 36pt;
-  margin-top: 50vh;
+  /* margin-top: 50vh; */
 }
 
-button:hover {background: #eee;}
+button:hover {background: #1b3b63;}
 /*section 2*/
 .topMargin{
   padding-top: 250px;
@@ -118,9 +118,10 @@ button:hover {background: #eee;}
 .DynamicSubmitBtn{
   background-color: rgba(20, 52, 71, 0.7);
   margin: bottom;
-  width: 210px;
-  height: 40px;
+  width: 170px;
+  height: 80px;
   border-radius: 15px;
+  font-size: 14pt;
   color: rgba(240, 217, 230, 1);
 }
   </style>
@@ -176,9 +177,10 @@ button:hover {background: #eee;}
           <p><%=m.fname%></p>
           <p>I'm a Cheff at a good resturant</p> <br>
           <p>Flying First Class via <%=m.airline%></p>
+          <button class="DynamicSubmitBtn">book a flight with <%=m.fname%></button>
         </div>
-        <div class="DynamicSubmitBtn">
-          <p>book a flight with <%=m.fname%></p>
+        <div>
+
         </div>
       </div>
       <% } %>
