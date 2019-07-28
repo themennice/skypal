@@ -235,15 +235,13 @@ const pool = new Pool({
 		xhr.send();
 
 		// 4. This will be called after the response is received
-		xhr.onload = function() {
+		xhr.onload = async function() {
 		  if (xhr.status != 200) { // analyze HTTP status of the response
 			console.error("Error: " + xhr.status + ": " + xhr.statusText) // e.g. 404: Not Found
-		  } else { // show the result
-			//alert(`Done, got ${xhr.response.length} bytes`); // responseText is the server
-			//res.send(xhr.responseText);
+		  } else {
+			  
 			const responseObject = JSON.parse(xhr.responseText);
 			if (responseObject.email_verified) {
-
 				const client = await pool.connect();
 				await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
 					if (result.rows[0]) {
