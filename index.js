@@ -208,17 +208,15 @@ const pool = new Pool({
        })
 
 	app.get('/googlelogin:t', async function(req, res) {
-		var token = req.params.t
-
-		console.warn("a")
-		console.warn(token)
-		console.warn("b")
+		var token = req.params.t;
+		console.warn(token);
 		try {
 			const client = await pool.connect();
 			await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
 				if (result.rows[0]) {
 					// Google user already exists:
 					
+					req.session.passport.user = true;
 					
 					console.warn("In DB")
 					const result_ticket = await client.query("SELECT * FROM tickets where username='" + token.toString() + "'");
