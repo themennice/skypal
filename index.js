@@ -140,7 +140,7 @@ const pool = new Pool({
 
   app.get('/register', (req, res) => res.render('register', {title: "Register", userData: req.user, message: ''}))
 
-  app.get('/add-ticket', authcheck, (req, res) => res.render('add-ticket'))
+  app.get('/add-ticket', authcheck, (req, res) => res.render('add-ticket', {username: req.user[0].username}))
 
   app.get('/profile', authcheck, async function (req, res, next) {
         console.log("GOOOOOOOOOOOOOD?");
@@ -172,7 +172,8 @@ const pool = new Pool({
         users = req.isAuthenticated();
         console.log("isAuthenticated returned true");
         res.redirect('/profile');}
-      else { res.render('login', {title: "Log in", userData: req.user, message: req.message});
+      else { res.render('login', {title: "Log in", userData: req.user, message: req.session.success});
+        //delete res.session.success;
         console.log("Not logged in, render the login page")}})
 
   app.get('/logout', authcheck, function(req, res){
@@ -207,33 +208,47 @@ const pool = new Pool({
        })
 
 	app.get('/googlelogin:t', async function(req, res) {
-		var token = req.params.t
-		//res.send(req.params.t)
-		
-		console.warn("a")
-		console.warn(token)
-		console.warn("b")
-		try {
+		const token = req.params.t
 		const client = await pool.connect();
-		await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
+		await client.query("SELECT * from users where username='" + token + "'", function(error, result) {
+			console.log(result.rows[0]);
+			res.render('profile', { 'c' : [], 'r': result.rows[0] });
+		})
+		//res.render('profile', { 'c' : [], 'r': update.rows[0] });
+	})
+    app.post('/googlelogin', async function(req, res) {
+	var token = req.body.token //this is probably right
+	//console.log(res)
+	console.log("1")
+	try {
+		console.log("2")
+		const client = await pool.connect();
+		await client.query("SELECT * from users where username='" + token + "'", function (error, result) {
 			if (result.rows[0]) {
-				console.warn("In DB")
-				 res.render('profile', { 'c' : [], 'r': result.rows[0] });
+				console.log("3")
+				//var sendOBJ = JSON.stringify({ 'c' : [], 'r': result.rows[0] });
+				//res.render('profile', { 'c' : [], 'r': result.rows[0] });
+				//var baseUrl = window.location.origin
+				//var c = []
+				//var r = result.rows[0]
+				//console.log(sendOBJ);
+				res.send(token);
+				client.release();
+
+				//res.redirect('/googlelogin:' + c + '&:' + r);
 			} else {
-				console.warn("Not in DB")
-				await client.query("INSERT INTO users (username, password, email, name) VALUES ('" + token + "', '', '', 'Add your name!')");
-				await client.query("SELECT * from users where username='" + token.toString() + "'", async function(err, update) {
-					 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
-				});
+				console.log("4")
+				client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
+				res.send(token);
+				client.release();
+				//res.render('profile', { 'c' : [], 'r': update.rows[0] });
 			}
 		})
-		client.release();
-		} catch (e) {
-			console.error(e)
-			res.send(e)
-		}
-		
-	})
+
+		console.log("5")
+	} catch (err) { console.log(err) }
+	console.log("6")
+  })
   app.post('/register', async function(req, res)
     {
       var emailAddr = req.body.email;
@@ -279,6 +294,7 @@ const pool = new Pool({
                 console.log('Email sent: ' + info.response);
 
             });
+          req.session.success = "Registered successfully, log in"
           res.redirect('login');}
 
         client.release();
@@ -337,42 +353,42 @@ const pool = new Pool({
     })
 
      app.post('/login', passport.authenticate('local'),//, {
-            // successRedirect: '/profile',
-            // failureRedirect: '/',
-            // failureFlash: true}),
-            async function(req, res) {
-              console.log(req.isAuthenticated());
-              console.log("The user is currently " + req.session.passport.user);
-              if (req.body.remember) {
-                req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // Cookie expires after 30 days
-              }
-              else {
-                req.session.cookie.expires = false; // Cookie expires at end of session
-                }
-              console.log(req.body.username);
-              var uname = req.body.username;
-              var upass = req.body.password;
-              	try {
-                      const client = await pool.connect()
-                      const result = await client.query("SELECT * FROM users where username='" + uname + "'");
-                      const result_ticket = await client.query("SELECT * FROM tickets where username='" + uname + "'"); // fix this so it matches username
-              		console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
-              		if ( (uname != "" && upass != "") && result.rows[0]) {
-              			if (bcrypt.compare(upass, result.rows[0].password)) {
-                      users = req.isAuthenticated();
-                      res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] });
-              			} else {
-              				res.send("Wrong password");
-              			}
-              		} else {
-              			res.send("User not found");
-              		}
-              		client.release();
-                    } catch (err) {
-                      console.error(err);
-                      res.send("Error " + err);
-                    }
-               });
+    // successRedirect: '/profile',
+    // failureRedirect: '/',
+    // failureFlash: true}),
+    async function(req, res) {
+      console.log(req.isAuthenticated());
+      console.log("The user is currently " + req.session.passport.user);
+      if (req.body.remember) {
+        req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // Cookie expires after 30 days
+      }
+      else {
+        req.session.cookie.expires = false; // Cookie expires at end of session
+        }
+      console.log(req.body.username);
+      var uname = req.body.username;
+      var upass = req.body.password;
+      	try {
+              const client = await pool.connect()
+              const result = await client.query("SELECT * FROM users where username='" + uname + "'");
+              const result_ticket = await client.query("SELECT * FROM tickets where username='" + uname + "'"); // fix this so it matches username
+      		console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
+      		if ( (uname != "" && upass != "") && result.rows[0]) {
+      			if (bcrypt.compare(upass, result.rows[0].password)) {
+              users = req.isAuthenticated();
+              res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] });
+      			} else {
+      				res.send("Wrong password");
+      			}
+      		} else {
+      			res.send("User not found");
+      		}
+      		client.release();
+            } catch (err) {
+              console.error(err);
+              res.send("Error " + err);
+            }
+       });
 
 // idea for using session based login came from a medium article https://medium.com/@timtamimi/getting-started-with-authentication-in-node-js-with-passport-and-postgresql-2219664b568c
       passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, username, password, done) => {

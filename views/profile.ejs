@@ -19,6 +19,7 @@
 		<!-- <fieldset> -->
 		<div class = "profile" >
 			<h1> My Profile </h1>
+				<img src="empty-avatar.png" alt="avatar" class="avatar">
 			<form name="profile" action="/profile" method="post">
 			<p>
 				<label class="lbl">Name </label>
@@ -28,20 +29,22 @@
 				<label class="lbl">Description </label>
 				<input type="text" name="description" value="<%=r.description%>">
 			</p>
-			<p>
+			<!-- <p>
 				<label class="lbl">Picture </label>
 				<input type="file" name="pic" accept="image/*" value ="<%=r.pic%>" >
-			</p>
+
+
+			</p> -->
 
 
 			<p>
 				<label class="lbl">Username</label>
 				<input type="text" name="Username" value="<%=r.username%>" readonly>
 			</p>
-			<p>
+			<!-- <p>
 				<label class="lbl">Password</label>
 				<input type="password" name="password" Value="<%=r.password%>" readonly>
-			</p>
+			</p> -->
 			<p>
 				<label class="lbl">Email Address</label>
 				<input type="text" name="email" value="<%=r.email%>" readonly>
@@ -52,40 +55,58 @@
 			</p>
 			<p>
 		</div>
+		<div class = "actions">
+			<p>
+			<button id="update" class="update" >Update</button>
+			</p>
+		</form>
+						<p><button id="logout" class="logout" >Logout</button></p>
+						<p><button id="ViewTicket" class="ViewTicket" >Add Ticket</button></p>
+						<script type="text/javascript">
+								document.getElementById("logout").onclick = function () {
+										location.href = "logout";
+								};
+						</script>
+						<script type="text/javascript">
+								document.getElementById("ViewTicket").onclick = function () {
+										location.href = "add-ticket";
+								};
+						</script>
 
+					</div>
 		<%for (i=0; i < c.length; i++){ %>
 					<%b = c[i];%>
 		<div class = "tickets" >
 			<h2>My Ticket <h2>
 
 				<label class="lbl">flight number</label>
-				<input type="text" name="flightno" value="<%=b.flightno%>">
+				<input type="text" name="flightno" value="<%=b.flightno%>"readonly>
 			</p>
 			<p>
 				<label class="lbl">From </label>
-				<input type="text" name="countryfrom" value="<%=b.countryfrom%>">
+				<input type="text" name="countryfrom" value="<%=b.countryfrom%>"readonly>
 			</p>
 			<p>
 				<label class="lbl">To </label>
-				<input type="text" name="countryto" value="<%=b.countryto%>">
+				<input type="text" name="countryto" value="<%=b.countryto%>"readonly>
 			</p>
 
 			<p>
 				<label class="lbl">Airline </label>
-				<input type="text" name="Airline" value="<%=b.airline%>">
+				<input type="text" name="Airline" value="<%=b.airline%>"readonly>
 			</p>
 			<p>
 				<label class="lbl">Date </label>
-				<input type="text" name="date" value="<%=b.date%>">
+				<input type="text" name="date" value="<%=b.date%>"readonly>
 			</p>
 			<p>
 				<label class="lbl">time</label>
-				<input type="text" name="time" value="<%=b.time%>">
+				<input type="text" name="time" value="<%=b.time%>"readonly>
 			</p>
 
 		</div>
 		<% } %>
-		<div class = "actions">
+		<!-- <div class = "actions">
 			<p>
 			<button id="update" class="update" >Update</button>
 			</p>
@@ -103,8 +124,8 @@
 										location.href = "add-ticket";
 								};
 						</script>
-		</div>
-				<!-- </fieldset> -->
+		</div> -->
+			<!-- </fieldset> -->
 			<p class="citation">Photo by Gary Lopater on Unsplash</p>
 			<style>
 				body {text-align: center;}
@@ -162,6 +183,14 @@
 					padding: 30px;
 
 				}
+				.avatar{
+				  margin-top: 30px;
+				  width: 13rem;
+				  height: 13rem;
+				  border-radius: 4rem;
+				}
+
+
 
 				.tickets{
 					font-family: "Lato";
