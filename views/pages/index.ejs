@@ -139,17 +139,26 @@ button:hover {background: #eee;}
         <form action="/" method="post" >
           <p class="inpuGrp">
           <label class="topLeftLbl">From</label>
-          <input type="text" name="origin" class="MedInput" placeholder="City or town">
+          <select type="text" name="origin" class="MedInput" placeholder="City or town">
+    	      <option value="france">France</option>
+    	      <option value="canada">Canada</option>
+    	      <option value="usa">USA</option>
+    	    </select>
           </p>
           <p class="inpuGrp">
           <label class="topLeftLbl">To</label>
-          <input type="text" name="destination" class="MedInput" placeholder="City or town">
+          <select type="text" name="destination" class="MedInput" placeholder="City or town">
+    	      <option value="france">France</option>
+    	      <option value="canada">Canada</option>
+    	      <option value="usa">USA</option>
+    	    </select>
           </p>
           <p class="inpuGrp">
           <label class="topLeftLbl">DepartureDate</label>
           <input type="date" name="date" class="MedInput" placeholder="date">
           </p>
         </form>
+        <button type="submit" name="submit"><h2>submit </h2></button>
       </fieldset>
     </div>
 
