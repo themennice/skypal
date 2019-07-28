@@ -237,15 +237,27 @@ const pool = new Pool({
 		// 4. This will be called after the response is received
 		xhr.onload = function() {
 		  if (xhr.status != 200) { // analyze HTTP status of the response
-			//alert(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
+			console.error("Error: " + xhr.status + ": " + xhr.statusText) // e.g. 404: Not Found
 		  } else { // show the result
 			//alert(`Done, got ${xhr.response.length} bytes`); // responseText is the server
 			res.send(xhr.responseText);
+			const responseObject = JSON.parse(xhr.responseText);
+			/*
+			{ "iss": "accounts.google.com", "azp": "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com", "aud": "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com",
+			"sub": "108849826102045814723", "email": "awsomej9@gmail.com", "email_verified": "true", "at_hash": "OYbgPrY4qjDjajFDiATP4g", "name": "julian biedka",
+			"picture": "https://lh3.googleusercontent.com/-lvZwz02At3U/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rd_hQqrr0qCcgxjzedATTsAlBGYOA/s96-c/photo.jpg",
+			"given_name": "julian", "family_name": "biedka", "locale": "en", "iat": "1564356924", "exp": "1564360524", "jti": "0ff182a6e08570e7ae598a6e755211e471e1cb78",
+			"alg": "RS256", "kid": "df3758908b792293ad977a0b991d98a77f4eeecd", "typ": "JWT" }
+			*/
+			if (responseObject.email_verified) {
+				var sqlString = "(username, password, email, name) VALUES ('" + responseObject.email + "', '' ,'" + responseObject.email + "', '" + responseObject.name + "')";
+				res.send(sqlString);
+			}
 		  }
 		};
 
 		xhr.onerror = function() {
-		  //alert("Request failed");
+		  console.error("Request failed");
 		};
 		
 		
