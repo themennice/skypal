@@ -48,9 +48,8 @@
     <%for (i=0; i < n.length; i++){ %>
 					<% m = n[i];%>
     <!-- slider for differernt cards -->
-
     <div class="Slider">
-      <div >
+      <div class="Slider">
         <div class="InfoCard">
           <img src="empty-avatar.png" alt="avatar" class="avatar">
           <p><%=m.fname%></p>
@@ -58,10 +57,8 @@
           <p>Flying Economy Class via <%=m.airline%></p>
           <button class="DynamicSubmitBtn">book a flight with <%=m.fname%></button>
         </div>
-        <div>
-
-        </div>
       </div>
+    </div>
       <% } %>
 <!--
       <div >
