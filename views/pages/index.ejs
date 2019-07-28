@@ -14,7 +14,6 @@
   }
   /*section 1*/
   .WelcomeSection {
-
   background-image:url("Main-pageBG.jpg");
   height: 1000px; /* You must set a specified height */
   background-position: center; /* Center the image */
@@ -137,35 +136,52 @@ button:hover {background: #eee;}
   <section class="TicketSearch">
     <div class="topMargin">
       <fieldset class="TransparentBar">
-        <form action="index.html" method="post">
+        <form action="/" method="post" >
           <p class="inpuGrp">
           <label class="topLeftLbl">From</label>
-          <input type="text" class="MedInput" placeholder="City or town">
+          <select type="text" name="origin" class="MedInput" placeholder="City or town">
+    	      <option value="france">France</option>
+    	      <option value="canada">Canada</option>
+    	      <option value="usa">USA</option>
+    	    </select>
           </p>
           <p class="inpuGrp">
           <label class="topLeftLbl">To</label>
-          <input type="text" class="MedInput" placeholder="City or town">
+          <select type="text" name="destination" class="MedInput" placeholder="City or town">
+    	      <option value="france">France</option>
+    	      <option value="canada">Canada</option>
+    	      <option value="usa">USA</option>
+    	    </select>
           </p>
           <p class="inpuGrp">
           <label class="topLeftLbl">DepartureDate</label>
-          <input type="date" class="MedInput" placeholder="date">
+          <input type="date" name="date" class="MedInput" placeholder="date">
           </p>
+          <button type="submit" name="submit"><h2>submit </h2></button>
         </form>
+
       </fieldset>
     </div>
+    <%if(message){%>
+      <h1><%=message%></h1>
+      <%}%>
+    <%for (i=0; i < n.length; i++){ %>
+					<% m = n[i];%>
     <!-- slider for differernt cards -->
+
     <div id="ticketsearch" class="Slider">
       <div >
         <div class="InfoCard">
           <img src="empty-avatar.png" alt="avatar" class="avatar">
-          <p>Alex</p>
+          <p><%=m.fname%></p>
           <p>I'm a Cheff at a good resturant</p> <br>
-          <p>Flying First Class via Air Canada</p>
+          <p>Flying First Class via <%=m.airline%></p>
         </div>
         <div class="DynamicSubmitBtn">
-          <p>book a flight with Alex</p>
+          <p>book a flight with <%=m.fname%></p>
         </div>
       </div>
+      <% } %>
 <!--
       <div >
         <div class="InfoCard">
