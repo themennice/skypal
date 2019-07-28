@@ -210,6 +210,26 @@ const pool = new Pool({
 	app.get('/googlelogin:t', async function(req, res) {
 		var token = req.params.t;
 		console.warn(token);
+		const CLIENT_ID = "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com";
+		
+		const {OAuth2Client} = require('google-auth-library');
+		const client = new OAuth2Client(CLIENT_ID);
+		async function verify() {
+		  const ticket = await client.verifyIdToken({
+			  idToken: token,
+			  audience: CLIENT_ID
+		  });
+		  const payload = ticket.getPayload();
+		  const userid = payload['sub'];
+		  // If request specified a G Suite domain:
+		  //const domain = payload['hd'];
+		}
+		verify().catch(console.error);
+		
+		
+		/*
+		
+		
 		try {
 			const client = await pool.connect();
 			await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
@@ -236,7 +256,7 @@ const pool = new Pool({
 		} catch (e) {
 			console.error(e)
 			res.send(e)
-		}
+		}*/
 	})
   app.post('/register', async function(req, res)
     {
