@@ -5,17 +5,16 @@
 <head>
   <% include ../partials/header.ejs %>
   <meta charset="UTF-8"/>
-
+  <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
 </head>
 <body>
   <% include ../partials/nav.ejs %>
   <section class="WelcomeSection">
     <h1>Welcome to SkyPal</h1>
-    <a href="#ticketsearch"><button type="button" name="button">Start your journey</button></a>
-    <a href="/chat"><button name="chatbutton">Chat with other users</button></a>
+    <a href="#ticketsearch"><button type="button" name="button" class="textButton">Start your journey</button></a>
   </section>
 
-  <section class="TicketSearch">
+  <section id="ticketsearch" class="TicketSearch">
     <div class="topMargin">
       <fieldset class="TransparentBar">
         <form action="/" method="post" >
@@ -38,10 +37,9 @@
           <p class="inpuGrp">
           <label class="topLeftLbl">DepartureDate</label>
           <input type="date" name="date" class="MedInput" placeholder="date">
+          <button type="submit" name="submit" class="inBoxBtn">submit </button>
           </p>
-          <button type="submit" name="submit"><h2>submit </h2></button>
         </form>
-
       </fieldset>
     </div>
     <%if(message){%>
@@ -50,9 +48,8 @@
     <%for (i=0; i < n.length; i++){ %>
 					<% m = n[i];%>
     <!-- slider for differernt cards -->
-
-    <div id="ticketsearch" class="Slider">
-      <div style="height: 500px;">
+    <div class="Slider">
+      <div class="Slider">
         <div class="InfoCard">
           <img src="empty-avatar.png" alt="avatar" class="avatar">
           <p><%=m.fname%></p>
@@ -61,6 +58,7 @@
           <button class="DynamicSubmitBtn">book a flight with <%=m.fname%></button>
         </div>
       </div>
+    </div>
       <% } %>
     </div>
   </section>

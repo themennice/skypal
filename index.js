@@ -119,7 +119,7 @@ const pool = new Pool({
              res.render('pages/index', { 'n': resul.rows, message: false} );
            }
            else {
-             res.render('pages/index#ticketsearch', {message: 'no tickets found', n: dummy_array});
+             res.render('pages/index', {message: 'no tickets found', n: dummy_array});
            }
            client.release();
          });
