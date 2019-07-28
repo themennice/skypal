@@ -87,7 +87,7 @@ height: 8rem;
 border-radius: 4rem;
 }
 .slider{
-overflow: hidden;
+overflow: auto;
 white-space: nowrap;
 }
 .InfoCard{
