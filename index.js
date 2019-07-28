@@ -112,6 +112,7 @@ const pool = new Pool({
        var day = req.body.date;
        try{
          const client = await pool.connect();
+         dummy_array = [];
          await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", function(err, resul){
            if (resul.rows[0]) {
              console.log(resul.rows);
@@ -119,7 +120,7 @@ const pool = new Pool({
            }
            else {
              req.flash('warning', "Sadly we have no registered users with on your route. Try again later");
-             res.render('/', {message: 'no tickets found'});
+             res.render('pages/index', {message: 'no tickets found', n: dummy_array});
            }
            client.release();
          });
