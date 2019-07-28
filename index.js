@@ -214,27 +214,27 @@ const pool = new Pool({
 		console.warn(token)
 		console.warn("b")
 		try {
-		const client = await pool.connect();
-		await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
-			if (result.rows[0]) {
-				// Google user already exists:
-				
-				
-				console.warn("In DB")
-				const result_ticket = await client.query("SELECT * FROM tickets where username='" + token.toString() + "'");
-				res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
-			} else {
-				// Signing in with google for the first time:
-				
-				
-				console.warn("Not in DB")
-				await client.query("INSERT INTO users (username, password, email, name) VALUES ('" + token + "', '', '', 'Add your name!')");
-				await client.query("SELECT * from users where username='" + token.toString() + "'", async function(err, update) {
-					 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
-				});
-			}
-		})
-		client.release();
+			const client = await pool.connect();
+			await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
+				if (result.rows[0]) {
+					// Google user already exists:
+					
+					
+					console.warn("In DB")
+					const result_ticket = await client.query("SELECT * FROM tickets where username='" + token.toString() + "'");
+					res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
+				} else {
+					// Signing in with google for the first time:
+					
+					
+					console.warn("Not in DB")
+					await client.query("INSERT INTO users (username, password, email, name) VALUES ('" + token + "', '', '', 'Add your name!')");
+					await client.query("SELECT * from users where username='" + token.toString() + "'", async function(err, update) {
+						 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
+					});
+				}
+			})
+			client.release();
 		} catch (e) {
 			console.error(e)
 			res.send(e)
