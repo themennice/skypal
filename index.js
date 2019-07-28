@@ -324,42 +324,42 @@ const pool = new Pool({
     })
 
      app.post('/login', passport.authenticate('local'),//, {
-            // successRedirect: '/profile',
-            // failureRedirect: '/',
-            // failureFlash: true}),
-            async function(req, res) {
-              console.log(req.isAuthenticated());
-              console.log("The user is currently " + req.session.passport.user);
-              if (req.body.remember) {
-                req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // Cookie expires after 30 days
-              }
-              else {
-                req.session.cookie.expires = false; // Cookie expires at end of session
-                }
-              console.log(req.body.username);
-              var uname = req.body.username;
-              var upass = req.body.password;
-              	try {
-                      const client = await pool.connect()
-                      const result = await client.query("SELECT * FROM users where username='" + uname + "'");
-                      const result_ticket = await client.query("SELECT * FROM tickets where username='" + uname + "'"); // fix this so it matches username
-              		console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
-              		if ( (uname != "" && upass != "") && result.rows[0]) {
-              			if (bcrypt.compare(upass, result.rows[0].password)) {
-                      users = req.isAuthenticated();
-                      res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] });
-              			} else {
-              				res.send("Wrong password");
-              			}
-              		} else {
-              			res.send("User not found");
-              		}
-              		client.release();
-                    } catch (err) {
-                      console.error(err);
-                      res.send("Error " + err);
-                    }
-               });
+    // successRedirect: '/profile',
+    // failureRedirect: '/',
+    // failureFlash: true}),
+    async function(req, res) {
+      console.log(req.isAuthenticated());
+      console.log("The user is currently " + req.session.passport.user);
+      if (req.body.remember) {
+        req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // Cookie expires after 30 days
+      }
+      else {
+        req.session.cookie.expires = false; // Cookie expires at end of session
+        }
+      console.log(req.body.username);
+      var uname = req.body.username;
+      var upass = req.body.password;
+      	try {
+              const client = await pool.connect()
+              const result = await client.query("SELECT * FROM users where username='" + uname + "'");
+              const result_ticket = await client.query("SELECT * FROM tickets where username='" + uname + "'"); // fix this so it matches username
+      		console.assert( uname != "" && upass != "", { username: uname, password: upass, error : "username and password can't be empty" } );
+      		if ( (uname != "" && upass != "") && result.rows[0]) {
+      			if (bcrypt.compare(upass, result.rows[0].password)) {
+              users = req.isAuthenticated();
+              res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] });
+      			} else {
+      				res.send("Wrong password");
+      			}
+      		} else {
+      			res.send("User not found");
+      		}
+      		client.release();
+            } catch (err) {
+              console.error(err);
+              res.send("Error " + err);
+            }
+       });
 
 // idea for using session based login came from a medium article https://medium.com/@timtamimi/getting-started-with-authentication-in-node-js-with-passport-and-postgresql-2219664b568c
       passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, username, password, done) => {
