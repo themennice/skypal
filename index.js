@@ -212,7 +212,7 @@ const pool = new Pool({
 	app.get('/googlelogin:t', async function(req, res) {
 		var token = req.params.t.toString();
 		token = token.replace(':', '');
-		
+
 		const CLIENT_ID = "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com";
 		const client = new OAuth2Client(CLIENT_ID);
 		async function verify() {
@@ -225,7 +225,7 @@ const pool = new Pool({
 		}
 		verify().catch(console.error);
 		//res.send(token);
-		
+
 		// 1. Send HTTP request to google for verification
 		let xhr = new XMLHttpRequest();
 
@@ -425,7 +425,7 @@ const pool = new Pool({
 			if (username.toString().includes("GOOGLE#AUTH#USER:")) {
 				return done(null, false);
 			}
-			
+
       		const client = await pool.connect()
       		try{
       			await client.query('BEGIN')
