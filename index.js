@@ -1,4 +1,6 @@
 const PORT = process.env.PORT || 5000
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const {OAuth2Client} = require('google-auth-library');
 const express = require('express')
 const request = require('request');
 const passport = require('passport');
@@ -208,37 +210,64 @@ const pool = new Pool({
        })
 
 	app.get('/googlelogin:t', async function(req, res) {
-		var token = req.params.t
-
-		console.warn("a")
-		console.warn(token)
-		console.warn("b")
-		try {
-			const client = await pool.connect();
-			await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
-				if (result.rows[0]) {
-					// Google user already exists:
-
-
-					console.warn("In DB")
-					const result_ticket = await client.query("SELECT * FROM tickets where username='" + token.toString() + "'");
-					res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
-				} else {
-					// Signing in with google for the first time:
-
-
-					console.warn("Not in DB")
-					await client.query("INSERT INTO users (username, password, email, name) VALUES ('" + token + "', '', '', 'Add your name!')");
-					await client.query("SELECT * from users where username='" + token.toString() + "'", async function(err, update) {
-						 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
-					});
-				}
-			})
-			client.release();
-		} catch (e) {
-			console.error(e)
-			res.send(e)
+		var token = req.params.t.toString();
+		token = token.replace(':', '');
+		console.warn(token);
+		const CLIENT_ID = "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com";
+		const client = new OAuth2Client(CLIENT_ID);
+		async function verify() {
+		  const ticket = await client.verifyIdToken({
+			  idToken: token,
+			  audience: CLIENT_ID
+		  });
+		  const payload = ticket.getPayload();
+		  const userid = payload['sub'];
 		}
+		verify().catch(console.error);
+		//res.send(token);
+
+		let xhr = new XMLHttpRequest();
+
+		// 2. Configure it: GET-request for the URL /article/.../load
+		xhr.open('GET', 'https://oauth2.googleapis.com/tokeninfo?id_token=' + token);
+
+		// 3. Send the request over the network
+		xhr.send();
+
+		// 4. This will be called after the response is received
+		xhr.onload = async function() {
+		  if (xhr.status != 200) { // analyze HTTP status of the response
+			console.error("Error: " + xhr.status + ": " + xhr.statusText) // e.g. 404: Not Found
+		  } else {
+
+			const responseObject = JSON.parse(xhr.responseText);
+			if (responseObject.email_verified) {
+				const client = await pool.connect();
+				await client.query("SELECT * from users where username='GOOGLE#AUTH#USER:" + responseObject.email + "'", async function(error, result) {
+					if (result.rows[0]) {
+						// Google user already exists:
+
+						console.warn("In DB")
+						const result_ticket = await client.query("SELECT * FROM tickets where username='GOOGLE#AUTH#USER:" + responseObject.email + "'");
+						res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
+					} else {
+						// Signing in with google for the first time:
+
+						var sqlString = "(username, password, email, name) VALUES ('GOOGLE#AUTH#USER:" + responseObject.email + "', '' ,'" + responseObject.email + "', '" + responseObject.name + "')";
+						console.warn("Not in DB")
+						await client.query("INSERT INTO users " + sqlString);
+						await client.query("SELECT * from users where username='GOOGLE#AUTH#USER:" + responseObject.email + "'", async function(err, update) {
+							 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
+						});
+					}
+				})
+			}
+		  }
+		};
+
+		xhr.onerror = function() {
+		  console.error("Request failed");
+		};
 	})
   app.post('/register', async function(req, res)
     {
@@ -254,7 +283,7 @@ const pool = new Pool({
 
   		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
 
-  		if (result.rows[0]) {
+  		if (result.rows[0] || uName.includes("GOOGLE#AUTH#USER:")) {
           req.flash('warning', "This email address is already registered. <a href='/login'>Log in!</a>");
   			  res.render('register', {message: 'User Already Exists Try Logigng In'}); }
       else {
@@ -365,6 +394,11 @@ const pool = new Pool({
     // failureRedirect: '/',
     // failureFlash: true}),
     async function(req, res) {
+		if (req.body.username.toString().includes("GOOGLE#AUTH#USER:")) {
+			  res.send("Error with google authentication");
+			  return "error with google auth";
+		}
+
       console.log(req.isAuthenticated());
       console.log("The user is currently " + req.session.passport.user);
       if (req.body.remember) {
