@@ -212,7 +212,7 @@ const pool = new Pool({
 	app.get('/googlelogin:t', async function(req, res) {
 		var token = req.params.t.toString();
 		token = token.replace(':', '');
-		console.warn(token);
+		
 		const CLIENT_ID = "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com";
 		const client = new OAuth2Client(CLIENT_ID);
 		async function verify() {
@@ -226,6 +226,7 @@ const pool = new Pool({
 		verify().catch(console.error);
 		//res.send(token);
 		
+		// 1. Send HTTP request to google for verification
 		let xhr = new XMLHttpRequest();
 
 		// 2. Configure it: GET-request for the URL /article/.../load
@@ -245,37 +246,24 @@ const pool = new Pool({
 				const client = await pool.connect();
 				await client.query("SELECT * from users where username='GOOGLE#AUTH#USER:" + responseObject.email + "'", async function(error, result) {
 					if (result.rows[0]) {
-						// Google user already exists:
-						
+						// Google user already exists:			
 						console.warn("In DB")
-						const result_ticket = await client.query("SELECT * FROM tickets where username='GOOGLE#AUTH#USER:" + responseObject.email + "'");
-						//users = req.isAuthenticated();
-						//passport.authenticate('local'),
-						
-						
-						//res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
-						//res.redirect('/profile');
-						
 						console.warn("About to try login");
 						var v = [{'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}]
-						
-						//var user = User.findOrCreate(v);
-						// … your authentication or whatever
 						req.login(v, function(err){
 							if(err) return err;
 							res.redirect('/profile');
 						});
 					} else {
 						// Signing in with google for the first time:
-						
 						var sqlString = "(username, password, email, name) VALUES ('GOOGLE#AUTH#USER:" + responseObject.email + "', '' ,'" + responseObject.email + "', '" + responseObject.name + "')";
 						console.warn("Not in DB")
 						await client.query("INSERT INTO users " + sqlString);
-						await client.query("SELECT * from users where username='GOOGLE#AUTH#USER:" + responseObject.email + "'", async function(err, update) {
-							 //users = req.isAuthenticated();
-							 //passport.authenticate('local'),
-							 //res.render('profile', { 'c' : [], 'r' : update.rows[0] });
-							 //res.redirect('/profile');
+						console.warn("About to try login");
+						var v = [{'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}]
+						req.login(v, function(err){
+							if(err) return err;
+							res.redirect('/profile');
 						});
 					}
 				})
@@ -417,6 +405,10 @@ const pool = new Pool({
 
       	loginAttempt();
       	async function loginAttempt() {
+			if (username.toString().includes("GOOGLE#AUTH#USER:")) {
+				return done(null, false);}
+			}
+			
       		const client = await pool.connect()
       		try{
       			await client.query('BEGIN')
