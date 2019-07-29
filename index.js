@@ -248,10 +248,10 @@ const pool = new Pool({
 						// Google user already exists:
 						
 						console.warn("In DB")
-						const result_ticket = await client.query("SELECT * FROM tickets where username='GOOGLE#AUTH#USER:" + responseObject.email + "'");
+						//const result_ticket = await client.query("SELECT * FROM tickets where username='GOOGLE#AUTH#USER:" + responseObject.email + "'");
 						//users = req.isAuthenticated();
-						passport.authenticate('local'),
-						res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
+						//passport.authenticate('local'),
+						//res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
 						//res.redirect('/profile');
 					} else {
 						// Signing in with google for the first time:
@@ -261,8 +261,8 @@ const pool = new Pool({
 						await client.query("INSERT INTO users " + sqlString);
 						await client.query("SELECT * from users where username='GOOGLE#AUTH#USER:" + responseObject.email + "'", async function(err, update) {
 							 //users = req.isAuthenticated();
-							 passport.authenticate('local'),
-							 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
+							 //passport.authenticate('local'),
+							 //res.render('profile', { 'c' : [], 'r' : update.rows[0] });
 							 //res.redirect('/profile');
 						});
 					}
