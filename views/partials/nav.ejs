@@ -29,7 +29,15 @@
         <a href="/profile"><span class="glyphicon glyphicon-user"></span> My profile </a>
       </li>
       <li>
-        <a href="/logout"><span class="glyphicon glyphicon-remove-sign"></span> Log Out </a>
+		<script>
+		  function signOut() {
+			var auth2 = gapi.auth2.getAuthInstance();
+			auth2.signOut().then(function () {
+			  console.log('User signed out.');
+			});
+		  }
+		</script>
+        <a href="/logout" onclick="signOut();"><span class="glyphicon glyphicon-remove-sign"></span> Log Out </a>
       </li>
       <% } %>
       <li>
