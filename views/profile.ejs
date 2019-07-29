@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="profile.css"/ type="text/css">
 		<meta name="google-signin-scope" content="profile email">
 		<meta name="google-signin-client_id" content="915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com">
-		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 	</head>
 
 	<body>
@@ -82,18 +82,17 @@
 					height:40px;" id="logout" class="logout">Logout</button>
 					<button id="ViewTicket" class="ViewTicket" >Add Ticket</button>
 					<script type="text/javascript">
-							function initiate() {
-								gapi.load('auth2', function() {
-								gapi.auth2.init();
-								});
-								signOut();
-							}
-									
 							function signOut() {
-								var auth2 = gapi.auth2.getAuthInstance();
-								auth2.signOut().then(function () {
-									console.log('User signed out.');
-								});
+							  var auth2 = gapi.auth2.getAuthInstance();
+							  auth2.signOut().then(function () {
+								console.log('User signed out.');
+							  });
+							}
+
+							function onLoad() {
+							  gapi.load('auth2', function() {
+								gapi.auth2.init();
+							  });
 							}
 					
 							document.getElementById("logout").onclick = function () {
