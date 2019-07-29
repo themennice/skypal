@@ -280,7 +280,7 @@ const pool = new Pool({
 					
 					
 						console.warn("About to try login");
-						var v = {'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}
+						var v = [{'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}]
 						
 						var user = User.findOrCreate(v);
 						// … your authentication or whatever
