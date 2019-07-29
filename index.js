@@ -257,7 +257,7 @@ const pool = new Pool({
 						//res.redirect('/profile');
 						
 						console.warn("About to try login");
-						var v = {'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}
+						var v = [{'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}]
 						
 						//var user = User.findOrCreate(v);
 						// … your authentication or whatever
@@ -276,17 +276,6 @@ const pool = new Pool({
 							 //passport.authenticate('local'),
 							 //res.render('profile', { 'c' : [], 'r' : update.rows[0] });
 							 //res.redirect('/profile');
-						});
-					
-					
-						console.warn("About to try login");
-						var v = [{'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}]
-						
-						var user = User.findOrCreate(v);
-						// … your authentication or whatever
-						req.login(user, function(err){
-							if(err) return err;
-							res.redirect('/profile');
 						});
 					}
 				})
