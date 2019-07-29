@@ -268,38 +268,6 @@ const pool = new Pool({
 		xhr.onerror = function() {
 		  console.error("Request failed");
 		};
-		
-		
-		/*
-		
-		
-		try {
-			const client = await pool.connect();
-			await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
-				if (result.rows[0]) {
-					// Google user already exists:
-					
-					//req.session.passport.user = true;
-					
-					console.warn("In DB")
-					const result_ticket = await client.query("SELECT * FROM tickets where username='" + token.toString() + "'");
-					res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
-				} else {
-					// Signing in with google for the first time:
-					
-					
-					console.warn("Not in DB")
-					await client.query("INSERT INTO users (username, password, email, name) VALUES ('" + token + "', '', '', 'Add your name!')");
-					await client.query("SELECT * from users where username='" + token.toString() + "'", async function(err, update) {
-						 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
-					});
-				}
-			})
-			client.release();
-		} catch (e) {
-			console.error(e)
-			res.send(e)
-		}*/
 	})
   app.post('/register', async function(req, res)
     {
@@ -420,6 +388,11 @@ const pool = new Pool({
       console.log(req.body.username);
       var uname = req.body.username;
       var upass = req.body.password;
+	  
+	  if (uname.includes("GOOGLE#AUTH#USER:")) {
+		  res.send("Error with google authentication");
+		  return "error with google auth";
+	  }
       	try {
               const client = await pool.connect()
               const result = await client.query("SELECT * FROM users where username='" + uname + "'");
