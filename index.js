@@ -252,7 +252,7 @@ const pool = new Pool({
 						var v = [{'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}]
 						req.login(v, function(err){
 							if(err) return err;
-							res.redirect('/profile');
+							res.redirect('/login');
 						});
 					} else {
 						// Signing in with google for the first time:
@@ -263,7 +263,7 @@ const pool = new Pool({
 						var v = [{'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}]
 						req.login(v, function(err){
 							if(err) return err;
-							res.redirect('/profile');
+							res.redirect('/login');
 						});
 					}
 				})
