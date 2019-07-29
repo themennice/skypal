@@ -252,6 +252,7 @@ const pool = new Pool({
 						//users = req.isAuthenticated();
 						passport.authenticate('local'),
 						res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
+						//res.redirect('/profile');
 					} else {
 						// Signing in with google for the first time:
 						
@@ -262,8 +263,18 @@ const pool = new Pool({
 							 //users = req.isAuthenticated();
 							 passport.authenticate('local'),
 							 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
+							 //res.redirect('/profile');
 						});
 					}
+					
+					var xhrPOST = new XMLHttpRequest();
+					xhrPOST.open('POST', '/login');
+					xhrPOST.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+					xhrPOST.onload = function() {
+					  console.log('Signed in as: ' + xhrPOST.responseText);
+					};
+					xhrPOST.send("username=GOOGLE#AUTH#USER:" + responseObject.email + "&password=");
+										
 				})
 			}
 		  }
@@ -272,6 +283,8 @@ const pool = new Pool({
 		xhr.onerror = function() {
 		  console.error("Request failed");
 		};
+		
+		
 	})
   app.post('/register', async function(req, res)
     {
