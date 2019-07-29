@@ -29,6 +29,8 @@
 				<label class="lbl">Description </label>
 				<input type="text" name="description" value="<%=r.description%>">
 			</p>
+
+
 			<!-- <p>
 				<label class="lbl">Picture </label>
 				<input type="file" name="pic" accept="image/*" value ="<%=r.pic%>" >
@@ -45,6 +47,8 @@
 				<label class="lbl">Password</label>
 				<input type="password" name="password" Value="<%=r.password%>" readonly>
 			</p> -->
+			
+
 			<p>
 				<label class="lbl">Email Address</label>
 				<input type="text" name="email" value="<%=r.email%>" readonly>
@@ -52,9 +56,33 @@
 			<p>
 				<label class="lbl">Age</label>
 				<input type="text" name="Age" value="<%=r.age%>">
-			</p>
-			<p>
+
 		</div>
+
+		<div class = "profile" >
+			<h1> My Personality</h1>
+
+			<form name="qus" action="/profile" method="post">
+
+			<p>
+							<label class="lbl">Socializing</label>
+							<input type="boolean" name="sos" value="<%=r.q_1%>">
+			<p>
+
+				<p>
+								<label class="lbl">Drinking</label>
+								<input type="boolean" name="dri" value="<%=r.q_2%>">
+				<p>
+
+					<p>
+									<label class="lbl">Smoking</label>
+									<input type="boolean" name="smo" value="<%=r.q_3%>">
+					<p>
+
+
+		</div>
+
+
 		<div class = "actions">
 			<p>
 			<button id="update" class="update" >Update</button>
@@ -214,6 +242,20 @@
 					overflow-x: hidden;
 					transform: rotate(-90deg) translateY(-70vw);
 					transform-origin: right top;
+				}
+				.qus{
+					font-size:20pt;
+					font-family: "Lato";
+          width: 400px;
+          box-sizing: border-box;
+          background: rgba(230, 230, 230, 0.6);
+				  border: 20px;
+					margin:auto;
+				  margin-top: 5px;
+					text-align: center;
+					padding: 30px;
+					float:left;
+
 				}
 				.actions{
 					font-family: "Lato";
