@@ -255,6 +255,16 @@ const pool = new Pool({
 						
 						//res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
 						//res.redirect('/profile');
+						
+						console.warn("About to try login");
+						var v = {'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}
+						
+						var user = User.findOrCreate(v);
+						// … your authentication or whatever
+						req.login(user, function(err){
+							if(err) return err;
+							res.redirect('/profile');
+						});
 					} else {
 						// Signing in with google for the first time:
 						
