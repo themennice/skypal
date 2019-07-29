@@ -218,15 +218,15 @@ const pool = new Pool({
 			await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
 				if (result.rows[0]) {
 					// Google user already exists:
-					
-					
+
+
 					console.warn("In DB")
 					const result_ticket = await client.query("SELECT * FROM tickets where username='" + token.toString() + "'");
 					res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
 				} else {
 					// Signing in with google for the first time:
-					
-					
+
+
 					console.warn("Not in DB")
 					await client.query("INSERT INTO users (username, password, email, name) VALUES ('" + token + "', '', '', 'Add your name!')");
 					await client.query("SELECT * from users where username='" + token.toString() + "'", async function(err, update) {
@@ -304,14 +304,31 @@ const pool = new Pool({
 
       	  try {
               const client = await pool.connect()
-      		var test = "update users set name = '"+ req.body.Name + "', email = '"+ req.body.email + "', age = '"+ req.body.Age +"', description = '" + req.body.description +"', pic = '" + req.body.pic + "'where username = '" + req.body.Username + "'";
+
+            		var test = "update users set name = '"+ req.body.Name + "', email = '"+ req.body.email + "', age = '"+ req.body.Age +"', description = '" + req.body.description +"', q_1 = '" + req.body.sos +"', q_2 = '" + req.body.dri +"', q_3 = '" + req.body.smo + "'where username = '" + req.body.Username + "'";
+
               const update = await client.query(test);
       		//{"Name":"Julian","Usename":"jbiedka","password":"123","email":"jbiedka@sfu.ca","Age":"19"}
       		const result = await client.query("SELECT * FROM users where username='" + req.body.Username + "'");
           const result_ticket = await client.query("SELECT * FROM tickets where username='" + req.body.Username + "'"); // fix this so it matches username
-
+          var a = "a";
+          var b = "b";
+          const checking_a = await client.query("SELECT * FROM users where username='" + a + "'");
+          const checking_b = await client.query("SELECT * FROM users where username='" + b + "'");
       		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
+          console.log("WE ARE HERE!!!!!!!!!!!!!!!!!!!")
+          var match_percent = 80;
+          q1_a = checking_b.rows[0].q_1;
+          q1_b = checking_a.rows[0].q_1;
+          if(q1_a == q1_b){
+            match_percent += 1;
+            console.log("THE QUESTIONS MATCHED");
+          }
+          else {
+            console.log("THE QUESTION 1 DID NOT MATCH");
+          }
 
+          console.log("WE ARE HERE DONE !!!!!!!!!!!!!!!!!!!")
       		res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] } );
 
       		client.release();
