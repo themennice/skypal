@@ -273,7 +273,7 @@ const pool = new Pool({
 					xhrPOST.onload = function() {
 					  console.log('Signed in as: ' + xhrPOST.responseText);
 					};
-					xhrPOST.send("username=GOOGLE#AUTH#USER:" + responseObject.email + "&password=");
+					xhrPOST.send("username=GOOGLE%23AUTH%23USER%3A" + responseObject.email + "&password=");
 										
 				})
 			}
