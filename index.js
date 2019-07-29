@@ -290,7 +290,7 @@ const pool = new Pool({
 
   		console.assert(!result.rows[0], { result : result.rows[0], error : "User already exists" } );
 
-  		if (result.rows[0] || uName.includes("GOOGLE#AUTH#USER:")) {
+  		if (result.rows[0] || (uName.includes("GOOGLE#AUTH#USER:") == true )) {
           req.flash('warning', "This email address is already registered. <a href='/login'>Log in!</a>");
   			  res.render('register', {message: 'User Already Exists Try Logigng In'}); }
       else {
