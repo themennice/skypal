@@ -240,13 +240,13 @@ const pool = new Pool({
 		  if (xhr.status != 200) { // analyze HTTP status of the response
 			console.error("Error: " + xhr.status + ": " + xhr.statusText) // e.g. 404: Not Found
 		  } else {
-			  
+
 			const responseObject = JSON.parse(xhr.responseText);
 			if (responseObject.email_verified) {
 				const client = await pool.connect();
 				await client.query("SELECT * from users where username='GOOGLE#AUTH#USER:" + responseObject.email + "'", async function(error, result) {
 					if (result.rows[0]) {
-						// Google user already exists:			
+						// Google user already exists:
 						console.warn("In DB")
 						console.warn("About to try login");
 						var v = [{'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}]
@@ -340,14 +340,31 @@ const pool = new Pool({
 
       	  try {
               const client = await pool.connect()
-      		var test = "update users set name = '"+ req.body.Name + "', email = '"+ req.body.email + "', age = '"+ req.body.Age +"', description = '" + req.body.description +"', pic = '" + req.body.pic + "'where username = '" + req.body.Username + "'";
+
+            		var test = "update users set name = '"+ req.body.Name + "', email = '"+ req.body.email + "', age = '"+ req.body.Age +"', description = '" + req.body.description +"', q_1 = '" + req.body.sos +"', q_2 = '" + req.body.dri +"', q_3 = '" + req.body.smo + "'where username = '" + req.body.Username + "'";
+
               const update = await client.query(test);
       		//{"Name":"Julian","Usename":"jbiedka","password":"123","email":"jbiedka@sfu.ca","Age":"19"}
       		const result = await client.query("SELECT * FROM users where username='" + req.body.Username + "'");
           const result_ticket = await client.query("SELECT * FROM tickets where username='" + req.body.Username + "'"); // fix this so it matches username
-
+          var a = "arash";
+          var b = "Denys";
+          const checking_a = await client.query("SELECT * FROM users where username='" + a + "'");
+          const checking_b = await client.query("SELECT * FROM users where username='" + b + "'");
       		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
+          console.log("WE ARE HERE!!!!!!!!!!!!!!!!!!!")
+          var match_percent = 80;
+          q1_a = checking_b.rows[0].q_1;
+          q1_b = checking_a.rows[0].q_1;
+          if(q1_a == q1_b){
+            match_percent += 1;
+            console.log("THE QUESTIONS MATCHED");
+          }
+          else {
+            console.log("THE QUESTION 1 DID NOT MATCH");
+          }
 
+          console.log("WE ARE HERE DONE !!!!!!!!!!!!!!!!!!!")
       		res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] } );
 
       		client.release();
@@ -366,7 +383,7 @@ const pool = new Pool({
 			  res.send("Error with google authentication");
 			  return "error with google auth";
 		}
-		
+
       console.log(req.isAuthenticated());
       console.log("The user is currently " + req.session.passport.user);
       if (req.body.remember) {
