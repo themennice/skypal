@@ -272,7 +272,7 @@ const pool = new Pool({
 						var user = {'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}
 						// … your authentication or whatever
 						req.login(user, function(err){
-							if(err) return next(err);
+							if(err) return err;
 							res.redirect('/profile');
 						});
 					}
