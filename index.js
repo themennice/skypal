@@ -340,8 +340,8 @@ const pool = new Pool({
       		//{"Name":"Julian","Usename":"jbiedka","password":"123","email":"jbiedka@sfu.ca","Age":"19"}
       		const result = await client.query("SELECT * FROM users where username='" + req.body.Username + "'");
           const result_ticket = await client.query("SELECT * FROM tickets where username='" + req.body.Username + "'"); // fix this so it matches username
-          var a = "a";
-          var b = "b";
+          var a = "arash";
+          var b = "Denys";
           const checking_a = await client.query("SELECT * FROM users where username='" + a + "'");
           const checking_b = await client.query("SELECT * FROM users where username='" + b + "'");
       		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
