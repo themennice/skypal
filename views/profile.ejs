@@ -51,149 +51,162 @@
 				<input type="text" name="Age" value="<%=r.age%>">
 			</p>
 			<p>
+
+			<div class = "actions">
+				<button id="update" class="update">Update</button>
+			</form>
+							<button style="background-color:#1b3b63;color:white;
+height:40px;" id="logout" class="logout">Logout</button>
+							<button id="ViewTicket" class="ViewTicket" >Add Ticket</button>
+							<script type="text/javascript">
+							    document.getElementById("logout").onclick = function () {
+							        location.href = "logout";
+							    };
+							</script>
+
+							<script type="text/javascript">
+									document.getElementById("ViewTicket").onclick = function () {
+											location.href = "add-ticket";
+									};
+							</script>
+			</div>
 		</div>
+
+
 
 		<div class="horizantalSlider">
+			<%for (i=0; i < c.length; i++){ %>
+						<%b = c[i];%>
+			<div class = "tickets" >
+				<h2>My Ticket <h2>
 
-		<%for (i=0; i < c.length; i++){ %>
-					<%b = c[i];%>
-		<div class = "tickets" >
-			<h2>My Ticket <h2>
+					<label class="lbl">Flight Number</label>
+					<input type="text" name="flightno" value="<%=b.flightno%>">
+				</p>
+				<p>
+					<label class="lbl">From </label>
+					<input type="text" name="countryfrom" value="<%=b.countryfrom%>">
+				</p>
+				<p>
+					<label class="lbl">To </label>
+					<input type="text" name="countryto" value="<%=b.countryto%>">
+				</p>
 
-				<label class="lbl">flight number</label>
-				<input type="text" name="flightno" value="<%=b.flightno%>">
-			</p>
-			<p>
-				<label class="lbl">From </label>
-				<input type="text" name="countryfrom" value="<%=b.countryfrom%>">
-			</p>
-			<p>
-				<label class="lbl">To </label>
-				<input type="text" name="countryto" value="<%=b.countryto%>">
-			</p>
-
-			<p>
-				<label class="lbl">Airline </label>
-				<input type="text" name="Airline" value="<%=b.airline%>">
-			</p>
-			<p>
-				<label class="lbl">Date </label>
-				<input type="text" name="date" value="<%=b.date%>">
-			</p>
-			<p>
-				<label class="lbl">time</label>
-				<input type="text" name="time" value="<%=b.time%>">
-			</p>
-
+				<p>
+					<label class="lbl">Airline </label>
+					<input type="text" name="Airline" value="<%=b.airline%>">
+				</p>
+				<p>
+					<label class="lbl">Date </label>
+					<input type="text" name="date" value="<%=b.date%>">
+				</p>
+				<p>
+					<label class="lbl">Time</label>
+					<input type="text" name="time" value="<%=b.time%>">
+				</p>
+			</div>
+			<% } %>
 		</div>
-		<% } %>
-		</div>
-		<div class = "actions">
-			<p>
-			<button id="update" class="update" >Update</button>
-			</p>
-		</form>
-						<p><button id="logout" class="logout" >Logout</button></p>
-						<p><button id="ViewTicket" class="ViewTicket" >Add Ticket</button></p>
-						<script type="text/javascript">
-						    document.getElementById("logout").onclick = function () {
-						        location.href = "logout";
-						    };
-						</script>
 
-						<script type="text/javascript">
-								document.getElementById("ViewTicket").onclick = function () {
-										location.href = "add-ticket";
-								};
-						</script>
-		</div>
+
 				<!-- </fieldset> -->
-			<p class="citation">Photo by Gary Lopater on Unsplash</p>
-			<style>
-				body {text-align: center;}
-				h1   {color: Black; font-size-adjust: auto;
-			  font-family: "Lato";text-align: center; margin-top: 20px;}
+		<p class="citation">Photo by Gary Lopater on Unsplash</p>
+		<style>
+			body {text-align: center;}
+			h1   {color: Black; font-size-adjust: auto;
+		  font-family: "Lato";text-align: center; margin-top: 20px;}
 
-				img.bg {
-				    min-height: 100%;
-				    min-width: 1024px;
-				    width: 100%;
-				    height: auto;
-				    position: fixed;
-				    top: 0;
-				    left: 0;
-				    z-index: -5;
-				}
-				fieldset{
-					font-family: "Lato";
-          width: 400px;
-          box-sizing: border-box;
-          background: rgba(230, 230, 230, 0.6);
-				  border: 20px;
-				  margin:auto;
-				  margin-top: 5px;
-				}
+			img.bg {
+			    min-height: 100%;
+			    min-width: 1024px;
+			    width: 100%;
+			    height: auto;
+			    position: fixed;
+			    top: 0;
+			    left: 0;
+			    z-index: -5;
+			}
+			fieldset{
+				font-family: "Lato";
+        width: 400px;
+        box-sizing: border-box;
+        background: rgba(230, 230, 230, 0.6);
+			  border: 20px;
+			  margin:auto;
+			  margin-top: 5px;
+			}
 
-				.citation{
-				  color: lightgrey;
-				  position: fixed;
-				  bottom: 0;
-				  right: 0;
-				}
-				label.lbl{
-					float: left;
-				}
-				input{
-					font-family: "Lato";
-					font-size: 16pt;
-					width: 100%;
-				  padding: 12px 20px;
-				  margin: 8px 0;
-				  box-sizing: border-box;
-					box-sizing: border-box;
-				}
-				.profile{
-					font-size:20pt;
-					font-family: "Lato";
-          width: 400px;
-          box-sizing: border-box;
-          background: rgba(230, 230, 230, 0.6);
-				  border: 20px;
-					margin:auto;
-				  margin-top: 5px;
-					text-align: center;
-					padding: 30px;
+			.citation{
+			  color: lightgrey;
+			  position: fixed;
+			  bottom: 0;
+			  right: 0;
+			}
+			label.lbl{
+				float: left;
+			}
+			.actions button {
+				width: 100px;
+				background-color: #4CAF50;
+				border: none;
+			  color: white;
+			  padding: 1px 3px;
+			  text-align: center;
+			  text-decoration: none;
+			  display: inline-block;
+			  font-size: 18px;
+			}
+			input{
+				font-family: "Lato";
+				font-size: 16pt;
+				width: 100%;
+			  padding: 12px 20px;
+			  margin: 8px 0;
+			  box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			.profile{
+				font-size:20pt;
+				font-family: "Lato";
+        width: 400px;
+        box-sizing: border-box;
+        background: rgba(230, 230, 230, 0.6);
+			  border: 20px;
+				margin-left: 100px;
+			  margin-top: 5px;
+				text-align: center;
+				padding: 30px;
 
-				}
+			}
 
-				.tickets{
-					font-family: "Lato";
-          width: 400px;
-          box-sizing: border-box;
-				  padding: 30px;
-				  margin: 20px;
-          background: rgba(230, 230, 230, 0.6);
-				  border: 20px;
-					float: left;
-				  margin-left: 90px;
-					transform: rotate(90deg);
-					transform-origin: right-top;
-				}
-				.horizantalSlider{
-					width: 1000px;
-					height: 100vw;
-					overflow-y: auto;
-					overflow-x: hidden;
-					transform: rotate(-90deg) translateY(-70vw);
-					transform-origin: right top;
-				}
-				.actions{
-					font-family: "Lato";
-					width: 100px;
-					height: 300px;
-					margin:auto;
-					text-align: center;
-				}
-			</style>
+			.tickets{
+				font-family: "Lato";
+        width: 400px;
+        box-sizing: border-box;
+			  padding: 30px;
+			  margin: -101px;
+        background: rgba(230, 230, 230, 0.6);
+				float: left;
+			  margin-left: 250px;
+				transform: rotate(90deg);
+				transform-origin: right-top;
+			}
+			.horizantalSlider{
+
+				width: 90vh;
+				height: 80vw;
+				overflow-y: auto;
+				overflow-x: auto;
+				transform: rotate(-90deg) translateY(-40vw);
+				transform-origin: right top;
+			}
+			.actions{
+				font-family: "Lato";
+				width: 100px;
+				height: 100px;
+				margin:auto;
+				text-align: top;
+			}
+		</style>
 	</body>
 </html>
