@@ -406,7 +406,7 @@ const pool = new Pool({
       	loginAttempt();
       	async function loginAttempt() {
 			if (username.toString().includes("GOOGLE#AUTH#USER:")) {
-				return done(null, false);}
+				return done(null, false);
 			}
 			
       		const client = await pool.connect()
