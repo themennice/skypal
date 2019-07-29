@@ -152,11 +152,11 @@ const pool = new Pool({
           console.log("I am here");
           try {
               const client = await pool.connect()
-          		const result = await client.query("SELECT * FROM users where username='" + req.user[0].username + "'"); // CANNOT ACCESS req.user.username and can get req.user as an object, cannot get specific features within the object
+          	  const result = await client.query("SELECT * FROM users where username='" + req.user[0].username + "'"); // CANNOT ACCESS req.user.username and can get req.user as an object, cannot get specific features within the object
               const result_ticket = await client.query("SELECT * FROM tickets where username='" + req.user[0].username + "'"); // fix this so it matches username
-          		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
-          		res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] } );
-          		client.release();
+          	  console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
+          	  res.render('profile', { 'c': result_ticket.rows,'r': result.rows[0] } );
+          	  client.release();
             } catch (err) {
               console.error(err);
               res.send("Error " + err);
@@ -212,7 +212,7 @@ const pool = new Pool({
 	app.get('/googlelogin:t', async function(req, res) {
 		var token = req.params.t.toString();
 		token = token.replace(':', '');
-		console.warn(token);
+
 		const CLIENT_ID = "915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com";
 		const client = new OAuth2Client(CLIENT_ID);
 		async function verify() {
@@ -226,6 +226,7 @@ const pool = new Pool({
 		verify().catch(console.error);
 		//res.send(token);
 
+		// 1. Send HTTP request to google for verification
 		let xhr = new XMLHttpRequest();
 
 		// 2. Configure it: GET-request for the URL /article/.../load
@@ -246,21 +247,27 @@ const pool = new Pool({
 				await client.query("SELECT * from users where username='GOOGLE#AUTH#USER:" + responseObject.email + "'", async function(error, result) {
 					if (result.rows[0]) {
 						// Google user already exists:
-
 						console.warn("In DB")
-						const result_ticket = await client.query("SELECT * FROM tickets where username='GOOGLE#AUTH#USER:" + responseObject.email + "'");
-						res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
+						console.warn("About to try login");
+						var v = [{'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}]
+						req.login(v, function(err){
+							if(err) return err;
+							res.redirect('/profile');
+						});
 					} else {
 						// Signing in with google for the first time:
-
 						var sqlString = "(username, password, email, name) VALUES ('GOOGLE#AUTH#USER:" + responseObject.email + "', '' ,'" + responseObject.email + "', '" + responseObject.name + "')";
 						console.warn("Not in DB")
 						await client.query("INSERT INTO users " + sqlString);
-						await client.query("SELECT * from users where username='GOOGLE#AUTH#USER:" + responseObject.email + "'", async function(err, update) {
-							 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
+						console.warn("About to try login");
+						var v = [{'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}]
+						req.login(v, function(err){
+							if(err) return err;
+							res.redirect('/profile');
 						});
 					}
 				})
+				client.release();
 			}
 		  }
 		};
@@ -367,28 +374,6 @@ const pool = new Pool({
             }
         })
 
-
-    app.post('/googlelogin', async function(req, res) {
-	var token = req.body.token //this is probably right
-	console.log(" good to go ")
-	//console.log(token)
-	//console.log(res)
-	try {
-		const client = await pool.connect();
-		const result = await client.query("SELECT * from users where username='" + token + "'");
-
-		if (result.rows[0]) {
-			res.render('profile', { 'c': [], 'r': result.rows[0] });
-		} else {
-			client.query("INSERT INTO users (username, password, email) VALUES ('" + token + "', '', '')");
-			const update = await client.query("SELECT * from users where username='" + token + "'");
-			res.render('profile', { 'c': [], 'r': update.rows[0] });
-		}
-
-		client.release();
-	} catch (err) { console.log(err) }
-    })
-
      app.post('/login', passport.authenticate('local'),//, {
     // successRedirect: '/profile',
     // failureRedirect: '/',
@@ -437,6 +422,10 @@ const pool = new Pool({
 
       	loginAttempt();
       	async function loginAttempt() {
+			if (username.toString().includes("GOOGLE#AUTH#USER:")) {
+				return done(null, false);
+			}
+
       		const client = await pool.connect()
       		try{
       			await client.query('BEGIN')
