@@ -377,6 +377,11 @@ const pool = new Pool({
     // failureRedirect: '/',
     // failureFlash: true}),
     async function(req, res) {
+		if (req.body.username.toString().includes("GOOGLE#AUTH#USER:")) {
+			  res.send("Error with google authentication");
+			  return "error with google auth";
+		}
+		
       console.log(req.isAuthenticated());
       console.log("The user is currently " + req.session.passport.user);
       if (req.body.remember) {
@@ -388,11 +393,6 @@ const pool = new Pool({
       console.log(req.body.username);
       var uname = req.body.username;
       var upass = req.body.password;
-	  
-	  if (uname.includes("GOOGLE#AUTH#USER:")) {
-		  res.send("Error with google authentication");
-		  return "error with google auth";
-	  }
       	try {
               const client = await pool.connect()
               const result = await client.query("SELECT * FROM users where username='" + uname + "'");
