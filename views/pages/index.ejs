@@ -21,17 +21,39 @@
           <p class="inpuGrp">
           <label class="topLeftLbl">From</label>
           <select type="text" name="origin" class="MedInput" placeholder="City or town">
-    	      <option value="france">France</option>
-    	      <option value="canada">Canada</option>
-    	      <option value="usa">USA</option>
+            <option value="YVR">Vancouver (YVR)</option>
+    	      <option value="KBP">Kyiv (KBP)</option>
+    	      <option value="YYC">Calgary (YYC)</option>
+            <option value="YYZ">Toronto (YYZ)</option>
+            <option value="SEA">Seattle (SEA)</option>
+            <option value="LHR">London (LHR)</option>
+            <option value="SVO">Moscow (SVO)</option>
+            <option value="JFK">New York (JFK)</option>
+            <option value="LAX">Los Angeles (LAX)</option>
+            <option value="DEN">Denver (DEN)</option>
+            <option value="OSL">Oslo (OSL)</option>
+            <option value="TXL">Berlin (TXL)</option>
+            <option value="AMS">Amsterdam (AMS)</option>
+            <option value="Yul">Montreal (YUL)</option>
     	    </select>
           </p>
           <p class="inpuGrp">
           <label class="topLeftLbl">To</label>
           <select type="text" name="destination" class="MedInput" placeholder="City or town">
-    	      <option value="france">France</option>
-    	      <option value="canada">Canada</option>
-    	      <option value="usa">USA</option>
+            <option value="YVR">Vancouver (YVR)</option>
+    	      <option value="KBP">Kyiv (KBP)</option>
+    	      <option value="YYC">Calgary (YYC)</option>
+            <option value="YYZ">Toronto (YYZ)</option>
+            <option value="SEA">Seattle (SEA)</option>
+            <option value="LHR">London (LHR)</option>
+            <option value="SVO">Moscow (SVO)</option>
+            <option value="JFK">New York (JFK)</option>
+            <option value="LAX">Los Angeles (LAX)</option>
+            <option value="DEN">Denver (DEN)</option>
+            <option value="OSL">Oslo (OSL)</option>
+            <option value="TXL">Berlin (TXL)</option>
+            <option value="AMS">Amsterdam (AMS)</option>
+            <option value="Yul">Montreal (YUL)</option>
     	    </select>
           </p>
           <p class="inpuGrp">
@@ -55,7 +77,13 @@
           <p><%=m.fname%></p>
           <p>I'm a Cheff at a good resturant</p> <br>
           <p>Flying Economy Class via <%=m.airline%></p>
-          <button class="DynamicSubmitBtn">book a flight with <%=m.fname%></button>
+          <a target="_blanc" href="https://www.google.com/flights#flt=YVR.KBP.2019-11-11;c:CAD;e:1;sd:1;t:f;tt:o"><button id="DynamicSubmitBtn" class="DynamicSubmitBtn">book a flight with <%=m.fname%></button></a>
+          <script type="text/javascript">
+    					document.getElementById("DynamicSubmitBtn").onclick = function () {
+                var url="https://www.google.com/flights#flt="+<%=m.countryfrom%>+"." + <%=m.countryto%>+"."+<%=m.date%>+" "
+    						location.href = "login";
+    					};
+    			</script>
         </div>
       </div>
     </div>
