@@ -268,8 +268,10 @@ const pool = new Pool({
 							 //res.redirect('/profile');
 						});
 					
-					
-						var user = {'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}
+						
+						var v = {'email' : responseObject.email, 'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}
+						
+						var user = User.findOrCreate(v);
 						// … your authentication or whatever
 						req.login(user, function(err){
 							if(err) return err;
