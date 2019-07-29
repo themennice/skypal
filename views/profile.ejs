@@ -72,8 +72,9 @@
 										location.href = "add-ticket";
 								};
 						</script>
-
 					</div>
+		<div class="horizantalSlider">
+
 		<%for (i=0; i < c.length; i++){ %>
 					<%b = c[i];%>
 		<div class = "tickets" >
@@ -106,7 +107,8 @@
 
 		</div>
 		<% } %>
-		<!-- <div class = "actions">
+		</div>
+		<div class = "actions">
 			<p>
 			<button id="update" class="update" >Update</button>
 			</p>
@@ -201,9 +203,18 @@
           background: rgba(230, 230, 230, 0.6);
 				  border: 20px;
 					float: left;
-				  margin-top: 5px;
+				  margin-left: 90px;
+					transform: rotate(90deg);
+					transform-origin: right-top;
 				}
-
+				.horizantalSlider{
+					width: 1000px;
+					height: 100vw;
+					overflow-y: auto;
+					overflow-x: hidden;
+					transform: rotate(-90deg) translateY(-70vw);
+					transform-origin: right top;
+				}
 				.actions{
 					font-family: "Lato";
 					width: 100px;
