@@ -243,7 +243,7 @@ const pool = new Pool({
 			const responseObject = JSON.parse(xhr.responseText);
 			if (responseObject.email_verified) {
 				const client = await pool.connect();
-				await client.query("SELECT * from users where username='" + token.toString() + "'", async function(error, result) {
+				await client.query("SELECT * from users where username='GOOGLE#AUTH#USER:" + responseObject.email + "'", async function(error, result) {
 					if (result.rows[0]) {
 						// Google user already exists:
 						
@@ -256,7 +256,7 @@ const pool = new Pool({
 						var sqlString = "(username, password, email, name) VALUES ('GOOGLE#AUTH#USER:" + responseObject.email + "', '' ,'" + responseObject.email + "', '" + responseObject.name + "')";
 						console.warn("Not in DB")
 						await client.query("INSERT INTO users " + sqlString);
-						await client.query("SELECT * from users where username='" + token.toString() + "'", async function(err, update) {
+						await client.query("SELECT * from users where username='GOOGLE#AUTH#USER:" + responseObject.email + "'", async function(err, update) {
 							 res.render('profile', { 'c' : [], 'r' : update.rows[0] });
 						});
 					}
