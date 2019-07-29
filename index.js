@@ -248,9 +248,11 @@ const pool = new Pool({
 						// Google user already exists:
 						
 						console.warn("In DB")
-						//const result_ticket = await client.query("SELECT * FROM tickets where username='GOOGLE#AUTH#USER:" + responseObject.email + "'");
+						const result_ticket = await client.query("SELECT * FROM tickets where username='GOOGLE#AUTH#USER:" + responseObject.email + "'");
 						//users = req.isAuthenticated();
 						//passport.authenticate('local'),
+						
+						
 						//res.render('profile', { 'c' : result_ticket.rows, 'r': result.rows[0] });
 						//res.redirect('/profile');
 					} else {
@@ -265,16 +267,15 @@ const pool = new Pool({
 							 //res.render('profile', { 'c' : [], 'r' : update.rows[0] });
 							 //res.redirect('/profile');
 						});
-					}
 					
-					var xhrPOST = new XMLHttpRequest();
-					xhrPOST.open('POST', '/login');
-					xhrPOST.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-					xhrPOST.onload = function() {
-					  console.log('Signed in as: ' + xhrPOST.responseText);
-					};
-					xhrPOST.send("username=GOOGLE%23AUTH%23USER%3A" + responseObject.email + "&password=");
-										
+					
+						var user = {'username' : "GOOGLE#AUTH#USER:" + responseObject.email, 'password' : ''}
+						// … your authentication or whatever
+						req.login(user, function(err){
+							if(err) return next(err);
+							res.redirect('/profile');
+						});
+					}
 				})
 			}
 		  }
@@ -283,8 +284,6 @@ const pool = new Pool({
 		xhr.onerror = function() {
 		  console.error("Request failed");
 		};
-		
-		
 	})
   app.post('/register', async function(req, res)
     {
