@@ -1,7 +1,7 @@
 <nav class="navigationbar">
   <meta name="google-signin-scope" content="profile email">
   <meta name="google-signin-client_id" content="915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com">
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
   <div class="container">
     <ul class="nav navbar-nav">
       <li class="active">
@@ -33,22 +33,20 @@
       </li>
       <li>
 		<script>
-		function initiate() {
-			gapi.load('auth2', function() {
-			gapi.auth2.init();
-			});
-			signOut();
+		function signOut() {
+		  var auth2 = gapi.auth2.getAuthInstance();
+		  auth2.signOut().then(function () {
+			console.log('User signed out.');
+		  });
 		}
-		
-		
-		  function signOut() {
-			var auth2 = gapi.auth2.getAuthInstance();
-			auth2.signOut().then(function () {
-			  console.log('User signed out.');
-			});
-		  }
+
+		function onLoad() {
+		  gapi.load('auth2', function() {
+			gapi.auth2.init();
+		  });
+		}
 		</script>
-        <a href="/logout" onclick="initiate();"><span class="glyphicon glyphicon-remove-sign"></span> Log Out </a>
+        <a href="/logout" onclick="signOut();"><span class="glyphicon glyphicon-remove-sign"></span> Log Out </a>
       </li>
       <% } %>
       <li>
