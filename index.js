@@ -169,12 +169,16 @@ app.post('/', authcheck, async (req, res) => {
         percent -= (n1+n2+n3+n4+n5)/10;
         console.log("WE ARE HERE RIGHT NOW");
         console.log(percent);
-
-        // await client.query("SELECT * FROM users where username='");
-        await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", function (err, result) {
+        var userRes = [];
+        await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", async function (err, result) {
             if (result.rows[0]) {
                 console.log(result.rows);
-                res.render('pages/index', { 'n': result.rows, percentmatch: percent, message: false });
+                for(i=0; i < result.rows.length; i++){
+                  k = await client.query("SELECT * FROM users where username='" + result.rows[i].username + "'");
+                  userRes[i] = k.rows[0];
+                  console.log(userRes[i].username);
+                }
+                res.render('pages/index', { 'n': result.rows, percentmatch: percent, message: false, user_for_match: userRes });
             }
             else {
                 res.render('pages/index', { message: 'no tickets found', n: dummy_array });
