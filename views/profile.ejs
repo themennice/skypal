@@ -21,11 +21,31 @@
 			<form name="qus" action="/profile" method="post">
 			<p>
 				<label class="lbl">Do you have good level of English?</label>
-				<input type="boolean" name="sos" value="<%=r.q_1%>">
+
+
+				<input type="range" id="start" name="sos1"
+         min="0" max="100" value = "<%=r.n_1%>">
+				 <script>
+					  getElementById("start").ionRangeSlider({
+					    min: 0,
+					    max: 100,
+					    from: 550
+					  });
+					</script>
+
 			</p>
 			<p>
-				<label class="lbl">Do you consume alchohol when you travel?</label>
-				<input type="boolean" name="sos" value="<%=r.q_2%>">
+				<label class="lbl">Are you a determined person?</label>
+				<input type="range" id="start" name="sos2"
+				 min="0" max="100" value = "<%=r.n_2%>">
+				 <script>
+						getElementById("start").ionRangeSlider({
+							min: 0,
+							max: 100,
+							from: 550
+						});
+					</script>
+				<!-- <input type="boolean" name="sos" value="<%=r.q_2%>"> -->
 			</p>
 			<!-- <p>
 				<label class="lbl">Do you smoke cigarettes?</label>
@@ -33,15 +53,42 @@
 			</p> -->
 			<p>
 				<label class="lbl">Do you like talking to people when you travel?</label>
-				<input type="boolean" name="sos" value="<%=r.q_3%>">
+				<input type="range" id="start" name="sos3"
+				 min="0" max="100" value = "<%=r.n_3%>">
+				 <script>
+						getElementById("start").ionRangeSlider({
+							min: 0,
+							max: 100,
+							from: 550
+						});
+					</script>
+				<!-- <input type="boolean" name="sos" value="<%=r.q_3%>"> -->
 			</p>
 			<p>
 				<label class="lbl">Can people rely on you?</label>
-				<input type="boolean" name="sos" value="<%=r.q_4%>">
+				<input type="range" id="start" name="sos4"
+				 min="0" max="100" value = "<%=r.n_4%>">
+				 <script>
+						getElementById("start").ionRangeSlider({
+							min: 0,
+							max: 100,
+							from: 550
+						});
+					</script>
+				<!-- <input type="boolean" name="sos" value="<%=r.q_4%>"> -->
 			</p>
 			<p>
 				<label class="lbl">Are you introverted?</label>
-				<input type="boolean" name="sos" value="<%=r.q_5%>">
+				<input type="range" id="start" name="sos5"
+				 min="0" max="100" value = "<%=r.n_5%>">
+				 <script>
+						getElementById("start").ionRangeSlider({
+							min: 0,
+							max: 100,
+							from: 550
+						});
+					</script>
+				<!-- <input type="boolean" name="sos" value="<%=r.q_5%>"> -->
 			</p>
 			<!-- <p>
 				<label class="lbl">Are you a determined person?</label>
@@ -268,7 +315,7 @@
 				.personality{
 				font-size: 16pt;
 				font-family: "Lato";
-        width: 420px;
+        width: 500px;
         box-sizing: border-box;
         background: rgba(230, 230, 230, 0.6);
 				margin-left: 150px;
