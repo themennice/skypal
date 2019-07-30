@@ -2,7 +2,7 @@
   <meta name="google-signin-scope" content="profile email">
   <meta name="google-signin-client_id" content="915733896108-03kb0m46abmrm4qq59vvu650rp86fulm.apps.googleusercontent.com">
   <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <% //include partials/adminPopupChat.ejs %>
+  <% include adminPopupChat.ejs %>
   <div class="container">
     <ul class="nav navbar-nav">
       <li class="active">
@@ -31,8 +31,8 @@
           <ul class="dropdown-menu" role="menu">
             <% if(users) {%><li><a href="/"><font color="black">Direct Chat</font></a></li><% } %>
             <li><a href="/chat"><font color="black"> Group Chat</font></a></li>
-            <li class="divider"></li>
-            <li><button class="open-button" onclick="openForm()"><font color="black">Chat with Admin</font></button></li>
+            <li><a onclick="openForm()" ><font color="black">Chat with Admin</font></a></li>
+            <li><a class="open-button" onclick="openForm()"><font color="black">Chat with Admin</font></a></li>
           </ul>
       </li>
       <li>
