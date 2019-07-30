@@ -15,7 +15,7 @@ const util = require('util');
 const fs = require('fs');
 const { Pool, Client } = require('pg')
 const uuidv4 = require('uuid/v4');
- 
+
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
@@ -136,7 +136,7 @@ app.post('/', async (req, res) => {
                     userRes[i] = nested_user.rows[0];
                   }
                   empty_array = [];
-                  res.render('pages/index', { 'n': result.rows, percentmatch: "LOGIN", message: false, user_for_match: userRes });
+                  res.render('pages/index', { 'n': result.rows, percentmatch: "", message: false, user_for_match: userRes });
               }
               else {
                   res.render('pages/index', { message: 'no tickets found', n: dummy_array });
