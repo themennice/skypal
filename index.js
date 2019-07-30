@@ -30,7 +30,7 @@ global.users = false;
 var server = app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 const http = require('http').Server(app);
 var io = require('socket.io').listen(server) || require('socket.io')(http)
-
+ 
 io.on('connection', function (socket) {
     console.log('Client connected.');
     socket.on('username', function (username) {
@@ -369,7 +369,7 @@ app.post('/register', async function (req, res) {
           console.log("WE ARE HERE!!!!!!!!!!!!!!!!!!!")
           var match_percent = 80;
           q1_a = checking_b.rows[0];
-          q1_b = checking_a.rows[0]; 
+          q1_b = checking_a.rows[0];
           if(q1_a == q1_b){
             match_percent += 1;
             console.log("THE QUESTIONS MATCHED");
