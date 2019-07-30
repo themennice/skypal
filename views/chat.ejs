@@ -25,7 +25,8 @@
     <script>
             var socket = io.connect();
             // ask username
-            var username = prompt('Please tell me your chat name');
+            var username = <%-JSON.stringify(user_name)%>;
+            //var username = prompt('Please tell me your chat name');
             socket.emit('username', username);
             // submit text message without reload/refresh the page
             $('form').submit(function(e){

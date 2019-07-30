@@ -193,8 +193,8 @@ app.post('/', async (req, res) => {
 })
 
 app.get('/chat', authcheck, function (req, res) {
-    console.log(req.user);
-    res.render('chat');
+    console.log(req.user[0].username);
+    res.render('chat', {user_name: req.user[0].username});
 });
 
 app.get('/register', (req, res) => res.render('register', { title: "Register", userData: req.user, message: '' }))
