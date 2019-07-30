@@ -87,7 +87,7 @@
             <p class="wrapParagraph"><%=u.description%></p> <br>
             <p>Flying Economy Class via <%=m.airline%></p>
               <a target="_blanc" href="https://www.google.com/flights#flt=<%=m.countryfrom%>.<%=m.countryto%>.<%=m.date%>;c:CAD;e:1;sd:1;t:f;tt:o"><button id="DynamicSubmitBtn" class="DynamicSubmitBtn">Book this flight with <%=m.fname%></button></a>
-              <button class="DynamicChatBtn">chat with <%=m.fname%></button>
+              <button class="DynamicChatBtn" onclick="openForm()">chat with <%=m.fname%></button>
           </div>
 
 
