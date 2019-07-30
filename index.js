@@ -126,6 +126,12 @@ app.post('/', async (req, res) => {
         const client = await pool.connect();
         dummy_array = [];
 
+        // await client.query("SELECT * FROM tickets where username= '" + 'Denys' + "'");
+        const denys_object =await client.query("SELECT * FROM users where username= '" + "Denys" + "'");
+        const a_object =await client.query("SELECT * FROM users where username= '" + "a" + "'");
+
+        console.log(denys_object.rows[0].n_1);
+
         await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", function (err, result) {
             if (result.rows[0]) {
                 console.log(result.rows);
@@ -369,7 +375,7 @@ app.post('/register', async function (req, res) {
           console.log("WE ARE HERE!!!!!!!!!!!!!!!!!!!")
           var match_percent = 80;
           q1_a = checking_b.rows[0];
-          q1_b = checking_a.rows[0]; 
+          q1_b = checking_a.rows[0];
           if(q1_a == q1_b){
             match_percent += 1;
             console.log("THE QUESTIONS MATCHED");
