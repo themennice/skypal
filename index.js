@@ -312,6 +312,8 @@ app.get('/googlelogin:t', async function (req, res) {
                         console.warn("In DB")
                         console.warn("About to try login");
                         var v = [{ 'email': responseObject.email, 'username': "GOOGLE#AUTH#USER:" + responseObject.email, 'password': '' }]
+
+                        global.user_name = "GOOGLE#AUTH#USER:" + responseObject.email;
                         req.login(v, function (err) {
                             if (err) return err;
                             res.redirect('/login');
@@ -323,6 +325,8 @@ app.get('/googlelogin:t', async function (req, res) {
                         await client.query("INSERT INTO users " + sqlString);
                         console.warn("About to try login");
                         var v = [{ 'email': responseObject.email, 'username': "GOOGLE#AUTH#USER:" + responseObject.email, 'password': '' }]
+
+                        global.user_name = "GOOGLE#AUTH#USER:" + responseObject.email;
                         req.login(v, function (err) {
                             if (err) return err;
                             res.redirect('/login');
@@ -477,7 +481,7 @@ app.post('/login', passport.authenticate('local'),//, {
             if ((uname != "" && upass != "") && result.rows[0]) {
                 if (bcrypt.compare(upass, result.rows[0].password)) {
                     users = req.isAuthenticated();
-                    global.user_name = uname; 
+                    global.user_name = uname;
                     res.render('profile', { 'c': result_ticket.rows, 'r': result.rows[0] });
                 } else {
                     res.send("Wrong password");
