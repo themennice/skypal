@@ -31,7 +31,7 @@ var server = app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 const http = require('http').Server(app);
 var io = require('socket.io').listen(server) || require('socket.io')(http)
 
- 
+
 io.on('connection', function (socket) {
     console.log('Client connected.');
     socket.on('username', function (username) {
@@ -131,12 +131,49 @@ app.post('/', async (req, res) => {
         const denys_object =await client.query("SELECT * FROM users where username= '" + "Denys" + "'");
         const a_object =await client.query("SELECT * FROM users where username= '" + "a" + "'");
 
-        console.log(denys_object.rows[0].n_1);
+        console.log(denys_object.rows[0].n_1-a_object.rows[0].n_1);
+
+        console.log(denys_object.rows[0].n_2);
+        console.log(a_object.rows[0].n_2);
+        console.log(denys_object.rows[0].n_3);
+        console.log(a_object.rows[0].n_3);
+        console.log(denys_object.rows[0].n_4);
+        console.log(a_object.rows[0].n_4);
+        console.log(denys_object.rows[0].n_5);
+        console.log(a_object.rows[0].n_5);
+
+        var percent = 100;
+        var n1 = denys_object.rows[0].n_1 - a_object.rows[0].n_1;
+        var n2 = denys_object.rows[0].n_2 - a_object.rows[0].n_2;
+        var n3 = denys_object.rows[0].n_3 - a_object.rows[0].n_3;
+        var n4 = denys_object.rows[0].n_4 - a_object.rows[0].n_4;
+        var n5 = denys_object.rows[0].n_5 - a_object.rows[0].n_5;
+        console.log("BEFORE");
+        console.log(n1);
+        console.log(n2);
+        console.log(n3);
+        console.log(n4);
+        console.log(n5);
+        n1 = Math.abs(n1);
+        n2 = Math.abs(n2)
+        n3 = Math.abs(n3)
+        n4 = Math.abs(n4)
+        n5 = Math.abs(n5)
+        console.log("AFTER");
+        console.log(n1);
+        console.log(n2);
+        console.log(n3);
+        console.log(n4);
+        console.log(n5);
+
+        percent -= (n1+n2+n3+n4+n5)/10;
+        console.log("WE ARE HERE RIGHT NOW");
+        console.log(percent);
 
         await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", function (err, result) {
             if (result.rows[0]) {
                 console.log(result.rows);
-                res.render('pages/index', { 'n': result.rows, message: false });
+                res.render('pages/index', { 'n': result.rows, percentmatch: percent, message: false });
             }
             else {
                 res.render('pages/index', { message: 'no tickets found', n: dummy_array });
