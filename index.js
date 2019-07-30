@@ -119,7 +119,7 @@ app.get('/', (req, res, next) => {
 })
 
 //Search & Display Tickets
-app.post('/', async (req, res) => {
+app.post('/', authcheck, async (req, res) => {
     var initialLocation = req.body.origin;
     var destinationLocation = req.body.destination;
     var day = req.body.date;
@@ -129,7 +129,7 @@ app.post('/', async (req, res) => {
 
         // await client.query("SELECT * FROM tickets where username= '" + 'Denys' + "'");
         const denys_object =await client.query("SELECT * FROM users where username= '" + "Denys" + "'");
-        const a_object =await client.query("SELECT * FROM users where username= '" + "a" + "'");
+        const a_object = await client.query("SELECT * FROM users where username= '" + req.user[0].username + "'");
 
         console.log(denys_object.rows[0].n_1-a_object.rows[0].n_1);
 
