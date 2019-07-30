@@ -119,77 +119,77 @@ app.get('/', (req, res, next) => {
 })
 
 //Search & Display Tickets
-app.post('/', authcheck, async (req, res) => {
+app.post('/', async (req, res) => {
     var initialLocation = req.body.origin;
     var destinationLocation = req.body.destination;
     var day = req.body.date;
-    try {
-        const client = await pool.connect();
-        dummy_array = [];
+    dummy_array = [];
+    if(!req.user){
+      try {
+          const client = await pool.connect();
+          var userRes = [];
+          await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", async function (err, result) {
+              if (result.rows[0]) {
+                  console.log(result.rows);
+                  for(i=0; i < result.rows.length; i++){
+                    nested_user = await client.query("SELECT * FROM users where username='" + result.rows[i].username + "'");
+                    userRes[i] = nested_user.rows[0];
+                  }
+                  empty_array = [];
+                  res.render('pages/index', { 'n': result.rows, percentmatch: "LOGIN", message: false, user_for_match: userRes });
+              }
+              else {
+                  res.render('pages/index', { message: 'no tickets found', n: dummy_array });
+              }
+              client.release();
+          });
+      }
+      catch (err) {
+          console.error(err);
+          res.send("Error " + err);
+      }
 
-        // await client.query("SELECT * FROM tickets where username= '" + 'Denys' + "'");
-        const denys_object =await client.query("SELECT * FROM users where username= '" + "Denys" + "'");
-        const a_object = await client.query("SELECT * FROM users where username= '" + req.user[0].username + "'");
-
-        console.log(denys_object.rows[0].n_1-a_object.rows[0].n_1);
-
-        console.log(denys_object.rows[0].n_2);
-        console.log(a_object.rows[0].n_2);
-        console.log(denys_object.rows[0].n_3);
-        console.log(a_object.rows[0].n_3);
-        console.log(denys_object.rows[0].n_4);
-        console.log(a_object.rows[0].n_4);
-        console.log(denys_object.rows[0].n_5);
-        console.log(a_object.rows[0].n_5);
-
-        var percent = 100;
-        var n1 = denys_object.rows[0].n_1 - a_object.rows[0].n_1;
-        var n2 = denys_object.rows[0].n_2 - a_object.rows[0].n_2;
-        var n3 = denys_object.rows[0].n_3 - a_object.rows[0].n_3;
-        var n4 = denys_object.rows[0].n_4 - a_object.rows[0].n_4;
-        var n5 = denys_object.rows[0].n_5 - a_object.rows[0].n_5;
-        console.log("BEFORE");
-        console.log(n1);
-        console.log(n2);
-        console.log(n3);
-        console.log(n4);
-        console.log(n5);
-        n1 = Math.abs(n1);
-        n2 = Math.abs(n2)
-        n3 = Math.abs(n3)
-        n4 = Math.abs(n4)
-        n5 = Math.abs(n5)
-        console.log("AFTER");
-        console.log(n1);
-        console.log(n2);
-        console.log(n3);
-        console.log(n4);
-        console.log(n5);
-
-        percent -= (n1+n2+n3+n4+n5)/10;
-        console.log("WE ARE HERE RIGHT NOW");
-        console.log(percent);
-        var userRes = [];
-        await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", async function (err, result) {
-            if (result.rows[0]) {
-                console.log(result.rows);
-                for(i=0; i < result.rows.length; i++){
-                  k = await client.query("SELECT * FROM users where username='" + result.rows[i].username + "'");
-                  userRes[i] = k.rows[0];
-                  console.log(userRes[i].username);
-                }
-                res.render('pages/index', { 'n': result.rows, percentmatch: percent, message: false, user_for_match: userRes });
-            }
-            else {
-                res.render('pages/index', { message: 'no tickets found', n: dummy_array });
-            }
-            client.release();
-        });
     }
-    catch (err) {
-        console.error(err);
-        res.send("Error " + err);
-    }
+    else
+    {
+      try {
+          const client = await pool.connect();
+          const current_user_object = await client.query("SELECT * FROM users where username= '" + req.user[0].username + "'");
+          percent_array = [];
+          console.log("WE ARE HERE RIGHT NOW");
+          var userRes = [];
+          await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", async function (err, result) {
+              if (result.rows[0]) {
+                  console.log(result.rows);
+                  for(i=0; i < result.rows.length; i++){
+                    var percent = 100;
+                    nested_user = await client.query("SELECT * FROM users where username='" + result.rows[i].username + "'");
+                    userRes[i] = nested_user.rows[0];
+                    var n1 = userRes[i].n_1 - current_user_object.rows[0].n_1;
+                    var n2 = userRes[i].n_2 - current_user_object.rows[0].n_2;
+                    var n3 = userRes[i].n_3 - current_user_object.rows[0].n_3;
+                    var n4 = userRes[i].n_4 - current_user_object.rows[0].n_4;
+                    var n5 = userRes[i].n_5 - current_user_object.rows[0].n_5;
+                    n1 = Math.abs(n1);
+                    n2 = Math.abs(n2)
+                    n3 = Math.abs(n3)
+                    n4 = Math.abs(n4)
+                    n5 = Math.abs(n5)
+                    percent_array[i] = percent - (n1+n2+n3+n4+n5)/10;
+                  }
+                  res.render('pages/index', { 'n': result.rows, percentmatch: percent_array, message: false, user_for_match: userRes });
+              }
+              else {
+                  res.render('pages/index', { message: 'no tickets found', n: dummy_array });
+              }
+              client.release();
+          });
+        }
+        catch (err) {
+          console.error(err);
+          res.send("Error " + err);
+      }
+  }
 })
 
 app.get('/chat', authcheck, function (req, res) {
