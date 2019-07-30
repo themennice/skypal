@@ -29,7 +29,11 @@
         <a href="/chat"><span class="glyphicon glyphicon-send"></span> Chatbox </a>
       </li>
       <li>
-        <a href="/profile"><span class="glyphicon glyphicon-user"></span> My profile </a>
+        <% if(user_name) {%>
+          <a href="/profile"><span class="glyphicon glyphicon-user"></span> <%=user_name%>'s profile </a>
+        <%} else {%>
+          <a href="/profile"><span class="glyphicon glyphicon-user"></span> My profile </a>
+          <% } %>
       </li>
       <li>
 		<script>
