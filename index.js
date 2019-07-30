@@ -170,6 +170,7 @@ app.post('/', authcheck, async (req, res) => {
         console.log("WE ARE HERE RIGHT NOW");
         console.log(percent);
 
+        // await client.query("SELECT * FROM users where username='");
         await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", function (err, result) {
             if (result.rows[0]) {
                 console.log(result.rows);
