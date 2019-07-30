@@ -72,7 +72,8 @@
 
     <div class="slider">
     <%for (i=0; i < n.length; i++){ %>
-					<% m = n[i];%>
+					<% m = n[i];
+              u = user_for_match[i]%>
 
     <!-- slider for differernt cards -->
 
@@ -80,7 +81,7 @@
           <p>Travel Match: <font color="red"><%=percentmatch%>%</font></p>
           <img src="empty-avatar.png" alt="avatar" class="avatar">
           <p><%=m.fname%></p>
-          <p>efswef</p> <br>
+          <p><%=u.username%></p> <br>
           <p>Flying Economy Class via <%=m.airline%></p>
           <a target="_blanc" href="https://www.google.com/flights#flt=<%=m.countryfrom%>.<%=m.countryto%>.<%=m.date%>;c:CAD;e:1;sd:1;t:f;tt:o"><button id="DynamicSubmitBtn" class="DynamicSubmitBtn">Book this flight with <%=m.fname%></button></a>
         </div>
