@@ -97,25 +97,30 @@ button:hover {background: #1b3b63;}
   height: 40px;
 }
 .slider{
-  height: 550px;
+  margin-top: 42px;
+  margin-left: 200px;
+  width: 500px;
+  height: 90vw;;
   overflow-y: auto;
   overflow-x: auto;
+  transform: rotate(-90deg) translateY(-42vw);
+  transform-origin: right top;
 }
 .InfoCard{
-display: inline-block;
-
-background-image: linear-gradient(rgba(43, 100, 100, 0.5), rgba(255, 255, 255, 0.3), rgba(65, 95, 31, 0.7));
-text-align: center;
-border-radius: 15px;
-width: 210px;
-height: 450px;
-margin: auto;
-margin-top: 80px;
-margin-left: 50px;
-font-size: 14pt;
-color: white;
-padding:20px;
-float: left;
+  background-image: linear-gradient(rgba(43, 100, 100, 0.5), rgba(255, 255, 255, 0.3), rgba(65, 95, 31, 0.7));
+  text-align: center;
+  border-radius: 15px;
+  width: 260px;
+  height: 450px;
+  margin-top: 300px;
+  margin-left: 250px;
+  margin-bottom: -400px;
+  font-size: 14pt;
+  color: white;
+  padding:20px;
+  float: left;
+  transform: rotate(90deg);
+  transform-origin: right top;
 }
 .DynamicSubmitBtn{
   background-color: rgba(20, 52, 71, 0.9);
