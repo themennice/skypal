@@ -342,6 +342,7 @@ const pool = new Pool({
               const client = await pool.connect()
 
             		var test = "update users set name = '"+ req.body.Name + "', email = '"+ req.body.email + "', age = '"+ req.body.Age +"', description = '" + req.body.description +"', q_1 = '" + req.body.sos +"', q_2 = '" + req.body.dri +"', q_3 = '" + req.body.smo + "'where username = '" + req.body.Username + "'";
+            		var test = "update users set name = '"+ req.body.Name + "', email = '"+ req.body.email + "', age = '"+ req.body.Age +"', description = '" + req.body.description +"', n_1 = '" + req.body.sos1 +"', n_2 = '" + req.body.sos2 +"', n_3 = '" + req.body.sos3 + "', n_4 = '" + req.body.sos4 +"', n_5 = '" + req.body.sos5 +  "'where username = '" + req.body.Username + "'";
 
               const update = await client.query(test);
       		//{"Name":"Julian","Usename":"jbiedka","password":"123","email":"jbiedka@sfu.ca","Age":"19"}
@@ -354,8 +355,8 @@ const pool = new Pool({
       		console.assert(result.rows[0], { result : result.rows[0], error : "database error, user not found or is returning null" } );
           console.log("WE ARE HERE!!!!!!!!!!!!!!!!!!!")
           var match_percent = 80;
-          q1_a = checking_b.rows[0].q_1;
-          q1_b = checking_a.rows[0].q_1;
+          q1_a = checking_b.rows[0];
+          q1_b = checking_a.rows[0];
           if(q1_a == q1_b){
             match_percent += 1;
             console.log("THE QUESTIONS MATCHED");
