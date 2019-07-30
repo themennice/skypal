@@ -97,8 +97,9 @@ button:hover {background: #1b3b63;}
   height: 40px;
 }
 .slider{
-overflow: auto;
-white-space: nowrap;
+  height: 550px;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 .InfoCard{
 display: inline-block;

@@ -67,11 +67,12 @@
         <%if(message){%>
       <h1><%=message%></h1>
       <%}%>
+    <div class="slider">
     <%for (i=0; i < n.length; i++){ %>
 					<% m = n[i];%>
+
     <!-- slider for differernt cards -->
-    <div class="Slider">
-      <div class="Slider">
+
         <div class="InfoCard">
           <img src="empty-avatar.png" alt="avatar" class="avatar">
           <p><%=m.fname%></p>
@@ -85,10 +86,10 @@
     					};
     			</script>
         </div>
-      </div>
-    </div>
+
       <% } %>
-    </div>
+      </div>
+
   </section>
 
 
