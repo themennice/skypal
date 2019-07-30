@@ -9,7 +9,7 @@ input[type=text], select {
 }
 
 button[name="submit"]{
-    width: 100%;
+    width: 80%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
