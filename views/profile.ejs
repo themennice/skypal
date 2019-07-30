@@ -195,10 +195,12 @@
 				</div>
 
 		<div class="header_tickets"><h1>My Tickets</h1></div>
+
 		<div class="horizantalSlider">
 		<%for (i=0; i < c.length; i++){ %>
 					<%b = c[i];%>
 		<div class = "tickets" >
+			<form action="/del" method="post">
 			<h2><h2>
 
 				<label class="lbl">Flight #</label>
@@ -225,7 +227,8 @@
 				<label class="lbl">time</label>
 				<input type="text" name="time" value="<%=b.time%>"readonly>
 			</p>
-
+			<button name="submit" value="remove" style="font-size : 20px; width: 120px; height: 42px;">Delete ticket</button>
+ </form>
 		</div>
 		<% } %>
 		</div>
