@@ -1,5 +1,5 @@
 const PORT = process.env.PORT || 5000
-const assert = require('assert');
+const assert = require('assert').strict;
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const { OAuth2Client } = require('google-auth-library');
 const express = require('express')
@@ -153,16 +153,18 @@ app.get('/register', (req, res) => res.render('register', { title: "Register", u
 app.get('/add-ticket', authcheck, (req, res) => res.render('add-ticket', { username: req.user[0].username }))
 
 app.get('/profile', authcheck, async function (req, res, next) {
-    console.log("GOOOOOOOOOOOOOD?");
-    console.log(req.user);
-    console.log(req.user[0].username); // WHY IS THIS UNDEFINED???
+    console.log(req.user[0].username);
     if (req.isAuthenticated()) {
         console.log("I am here");
         try {
             const client = await pool.connect()
             const result = await client.query("SELECT * FROM users where username='" + req.user[0].username + "'"); // CANNOT ACCESS req.user.username and can get req.user as an object, cannot get specific features within the object
             const result_ticket = await client.query("SELECT * FROM tickets where username='" + req.user[0].username + "'"); // fix this so it matches username
-            console.assert(result.rows[0], { result: result.rows[0], error: "database error, user not found or is returning null" });
+			
+			// Test for valid database returns
+			assert.ok(typeof result_ticket.rows != 'undefined', "Could not pull ticket data from database!");
+			assert.ok(typeof result.rows[0] 	!= 'undefined', "Could not pull user data from database!");
+			
             res.render('profile', { 'c': result_ticket.rows, 'r': result.rows[0] });
             client.release();
         } catch (err) {
@@ -177,7 +179,6 @@ app.get('/profile', authcheck, async function (req, res, next) {
 });
 
 app.get('/login', (req, res, next) => {
-
     if (req.isAuthenticated()) {
         users = req.isAuthenticated();
         console.log("isAuthenticated returned true");
@@ -185,7 +186,6 @@ app.get('/login', (req, res, next) => {
     }
     else {
         res.render('login', { title: "Log in", userData: req.user, message: req.session.success });
-        //delete res.session.success;
         console.log("Not logged in, render the login page")
     }
 })
@@ -376,7 +376,11 @@ app.post("/profile", async (req, res) => {
             console.log("THE QUESTION 1 DID NOT MATCH");
         }
 
-        console.log("WE ARE HERE DONE !!!!!!!!!!!!!!!!!!!")
+        
+		// Test for valid database returns
+		assert.ok(typeof result_ticket.rows != 'undefined', "Could not pull ticket data from database!");
+		assert.ok(typeof result.rows[0] 	!= 'undefined', "Could not pull user data from database!");
+			
         res.render('profile', { 'c': result_ticket.rows, 'r': result.rows[0] });
 
         client.release();
@@ -411,7 +415,14 @@ app.post('/login', passport.authenticate('local'),//, {
             const client = await pool.connect()
             const result = await client.query("SELECT * FROM users where username='" + uname + "'");
             const result_ticket = await client.query("SELECT * FROM tickets where username='" + uname + "'"); // fix this so it matches username
-            console.assert(uname != "" && upass != "", { username: uname, password: upass, error: "username and password can't be empty" });
+			
+			// Test for valid database returns
+			assert.ok(typeof result_ticket.rows != 'undefined', "Could not pull ticket data from database!");
+			assert.ok(typeof result.rows[0] 	!= 'undefined', "Could not pull user data from database!");
+			
+			// Test for non-null user input strings.
+			assert.ok((uname != "") && (upass != ""), "username and password can't be empty!");
+
             if ((uname != "" && upass != "") && result.rows[0]) {
                 if (bcrypt.compare(upass, result.rows[0].password)) {
                     users = req.isAuthenticated();
