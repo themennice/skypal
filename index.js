@@ -115,10 +115,10 @@ const pool = new Pool({
        try{
          const client = await pool.connect();
          dummy_array = [];
-         await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", function(err, resul){
-           if (resul.rows[0]) {
-             console.log(resul.rows);
-             res.render('pages/index', { 'n': resul.rows, message: false} );
+         await client.query("SELECT * FROM tickets where countryfrom='" + initialLocation + "' AND countryto='" + destinationLocation + "' AND date='" + day + "'", function(err, tktRes){
+           if (tktRes.rows[0]) {
+             console.log(tktRes.rows);
+             res.render('pages/index', { 'n': tktRes.rows, message: false} );
            }
            else {
              res.render('pages/index', {message: 'no tickets found', n: dummy_array});
