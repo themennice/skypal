@@ -338,7 +338,6 @@ app.post('/register', async function (req, res) {
         }
 
         client.release();
-<<<<<<< HEAD
         }
         catch (err)
         {
@@ -370,41 +369,8 @@ app.post('/register', async function (req, res) {
           console.log("WE ARE HERE!!!!!!!!!!!!!!!!!!!")
           var match_percent = 80;
           q1_a = checking_b.rows[0];
-          q1_b = checking_a.rows[0];
+          q1_b = checking_a.rows[0]; 
           if(q1_a == q1_b){
-=======
-    }
-    catch (err) {
-        console.error(err);
-        res.send("Error " + err);
-    }
-})
-
-app.post("/profile", async (req, res) => {
-    console.log(req.body);
-    console.log(req.body.Username);
-    console.log("kk" + req.body.pic);
-
-    try {
-        const client = await pool.connect()
-
-        var test = "update users set name = '" + req.body.Name + "', email = '" + req.body.email + "', age = '" + req.body.Age + "', description = '" + req.body.description + "', q_1 = '" + req.body.sos + "', q_2 = '" + req.body.dri + "', q_3 = '" + req.body.smo + "'where username = '" + req.body.Username + "'";
-
-        const update = await client.query(test);
-        //{"Name":"Julian","Usename":"jbiedka","password":"123","email":"jbiedka@sfu.ca","Age":"19"}
-        const result = await client.query("SELECT * FROM users where username='" + req.body.Username + "'");
-        const result_ticket = await client.query("SELECT * FROM tickets where username='" + req.body.Username + "'"); // fix this so it matches username
-        var a = "arash";
-        var b = "Denys";
-        const checking_a = await client.query("SELECT * FROM users where username='" + a + "'");
-        const checking_b = await client.query("SELECT * FROM users where username='" + b + "'");
-        console.assert(result.rows[0], { result: result.rows[0], error: "database error, user not found or is returning null" });
-        console.log("WE ARE HERE!!!!!!!!!!!!!!!!!!!")
-        var match_percent = 80;
-        q1_a = checking_b.rows[0].q_1;
-        q1_b = checking_a.rows[0].q_1;
-        if (q1_a == q1_b) {
->>>>>>> ae0cac74ef00a95ebcf7b191fbe2e6c6c75d4532
             match_percent += 1;
             console.log("THE QUESTIONS MATCHED");
         }
