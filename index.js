@@ -117,6 +117,23 @@ app.get('/', (req, res, next) => {
     res.render('pages/index', { title: "Home", userData: req.user, n: dummy_array, message: false });
     console.log("The user  in '/' is " + req.user);
 })
+function DBremove(sender) {
+	pool.query("delete from tickets where flightno = '"  + sender.flightno + "'", function (error, result) {
+
+	});
+};
+
+app.post("/del", function(req, res){
+	var e = req.body;
+  console.log(e);
+  if (e.submit == "remove") {
+		DBremove(e);
+	}
+
+	res.redirect('/login');
+});
+
+
 
 //Search & Display Tickets
 app.post('/', async (req, res) => {
