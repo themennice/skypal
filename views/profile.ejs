@@ -14,14 +14,98 @@
 
 	<body>
 		<% include partials/nav.ejs %>
-		<img src="profile_BG.jpg" alt="background" class="bg" />
+		<% include partials/popupchat.ejs %>
+		<img src="profileBG.jpg" alt="background" class="bg" />
 
 		<div class="personality">
 			<h1> My Personality</h1>
 			<form name="qus" action="/profile" method="post">
 			<p>
-				<label class="lbl">Proficient in English?</label>
-				<input type="boolean" name="sos" value="<%=r.q_1%>">
+				<label class="lbl">Do you have good level of English?</label>
+
+
+				<input type="range" id="start" name="sos1"
+         min="0" max="100" value = "<%=r.n_1%>">
+				 <script>
+					  getElementById("start").ionRangeSlider({
+					    min: 0,
+					    max: 100,
+					    from: 550
+					  });
+					</script>
+
+			</p>
+			<p>
+				<label class="lbl">Are you a determined person?</label>
+				<input type="range" id="start" name="sos2"
+				 min="0" max="100" value = "<%=r.n_2%>">
+				 <script>
+						getElementById("start").ionRangeSlider({
+							min: 0,
+							max: 100,
+							from: 550
+						});
+					</script>
+				<!-- <input type="boolean" name="sos" value="<%=r.q_2%>"> -->
+			</p>
+			<!-- <p>
+				<label class="lbl">Do you smoke cigarettes?</label>
+				<input type="boolean" name="sos" value="<%=r.q_5%>">
+			</p> -->
+			<p>
+				<label class="lbl">Do you like talking to people when you travel?</label>
+				<input type="range" id="start" name="sos3"
+				 min="0" max="100" value = "<%=r.n_3%>">
+				 <script>
+						getElementById("start").ionRangeSlider({
+							min: 0,
+							max: 100,
+							from: 550
+						});
+					</script>
+				<!-- <input type="boolean" name="sos" value="<%=r.q_3%>"> -->
+			</p>
+			<p>
+				<label class="lbl">Can people rely on you?</label>
+				<input type="range" id="start" name="sos4"
+				 min="0" max="100" value = "<%=r.n_4%>">
+				 <script>
+						getElementById("start").ionRangeSlider({
+							min: 0,
+							max: 100,
+							from: 550
+						});
+					</script>
+				<!-- <input type="boolean" name="sos" value="<%=r.q_4%>"> -->
+			</p>
+			<p>
+				<label class="lbl">Are you introverted?</label>
+				<input type="range" id="start" name="sos5"
+				 min="0" max="100" value = "<%=r.n_5%>">
+				 <script>
+						getElementById("start").ionRangeSlider({
+							min: 0,
+							max: 100,
+							from: 550
+						});
+					</script>
+				<!-- <input type="boolean" name="sos" value="<%=r.q_5%>"> -->
+			</p>
+			<!-- <p>
+				<label class="lbl">Are you a determined person?</label>
+				<input type="boolean" name="sos" value="<%=r.q_9%>">
+			</p>
+			<p>
+				<label class="lbl">Do you think you have an unusual personality?</label>
+				<input type="boolean" name="sos" value="<%=r.q_10%>">
+			</p>
+			<p>
+				<label class="lbl">Do you watch movies on the plane?</label>
+				<input type="boolean" name="sos" value="<%=r.q_11%>">
+			</p>
+			<p>
+				<label class="lbl">Do you consider yourself selfish?</label>
+				<input type="boolean" name="sos" value="<%=r.q_12%>">
 			</p>
 			<p>
 				<label class="lbl">Are you a dog person?</label>
@@ -30,7 +114,7 @@
 			<p>
 				<label class="lbl">Snacks or meals?</label>
 				<input type="boolean" name="smo" value="<%=r.q_3%>">
-			</p>
+			</p> -->
 		</div>
 
 		<!-- <div class="personality">
@@ -230,9 +314,9 @@
 				border-radius: 42px;
 				}
 				.personality{
-				font-size:20pt;
+				font-size: 16pt;
 				font-family: "Lato";
-        width: 400px;
+        width: 500px;
         box-sizing: border-box;
         background: rgba(230, 230, 230, 0.6);
 				margin-left: 150px;
