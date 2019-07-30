@@ -25,7 +25,7 @@ app.use(require('body-parser').urlencoded({ extended: true }))
 app.use(require('cookie-parser')())
 app.use(cookieParser('secretString'));
 
-global.users = false;
+global.users = false; 
 
 var server = app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 const http = require('http').Server(app);
