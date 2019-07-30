@@ -25,7 +25,7 @@ app.use(require('body-parser').urlencoded({ extended: true }))
 app.use(require('cookie-parser')())
 app.use(cookieParser('secretString'));
 
-global.users = false; 
+global.users = false;
 
 var server = app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 const http = require('http').Server(app);
@@ -477,7 +477,7 @@ app.post('/login', passport.authenticate('local'),//, {
             if ((uname != "" && upass != "") && result.rows[0]) {
                 if (bcrypt.compare(upass, result.rows[0].password)) {
                     users = req.isAuthenticated();
-                    global.user_name = uname;
+                    global.user_name = uname; 
                     res.render('profile', { 'c': result_ticket.rows, 'r': result.rows[0] });
                 } else {
                     res.send("Wrong password");
