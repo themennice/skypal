@@ -160,11 +160,11 @@ app.get('/profile', authcheck, async function (req, res, next) {
             const client = await pool.connect()
             const result = await client.query("SELECT * FROM users where username='" + req.user[0].username + "'"); // CANNOT ACCESS req.user.username and can get req.user as an object, cannot get specific features within the object
             const result_ticket = await client.query("SELECT * FROM tickets where username='" + req.user[0].username + "'"); // fix this so it matches username
-			
+
 			// Test for valid database returns
 			assert.ok(typeof result_ticket.rows != 'undefined', "Could not pull ticket data from database!");
 			assert.ok(typeof result.rows[0] 	!= 'undefined', "Could not pull user data from database!");
-			
+
             res.render('profile', { 'c': result_ticket.rows, 'r': result.rows[0] });
             client.release();
         } catch (err) {
@@ -412,11 +412,11 @@ app.post("/profile", async (req, res) => {
             console.log("THE QUESTION 1 DID NOT MATCH");
         }
 
-        
+
 		// Test for valid database returns
 		assert.ok(typeof result_ticket.rows != 'undefined', "Could not pull ticket data from database!");
 		assert.ok(typeof result.rows[0] 	!= 'undefined', "Could not pull user data from database!");
-			
+
         res.render('profile', { 'c': result_ticket.rows, 'r': result.rows[0] });
 
         client.release();
@@ -451,11 +451,11 @@ app.post('/login', passport.authenticate('local'),//, {
             const client = await pool.connect()
             const result = await client.query("SELECT * FROM users where username='" + uname + "'");
             const result_ticket = await client.query("SELECT * FROM tickets where username='" + uname + "'"); // fix this so it matches username
-			
+
 			// Test for valid database returns
 			assert.ok(typeof result_ticket.rows != 'undefined', "Could not pull ticket data from database!");
 			assert.ok(typeof result.rows[0] 	!= 'undefined', "Could not pull user data from database!");
-			
+
 			// Test for non-null user input strings.
 			assert.ok((uname != "") && (upass != ""), "username and password can't be empty!");
 
