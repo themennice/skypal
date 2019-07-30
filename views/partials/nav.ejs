@@ -25,8 +25,14 @@
       <li>
         <a href="/login"><span class="glyphicon glyphicon-user"></span> Log in</a>
       </li> <%} else {%>
-      <li>
-        <a href="/chat"><span class="glyphicon glyphicon-send"></span> Chatbox </a>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-send"></span> Chatbox <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <% if(users) {%><li><a href="/"><font color="black">Direct Chat</font></a></li><% } %>
+            <li><a href="/chat"><font color="black"> Group Chat</font></a></li>
+            <li class="divider"></li>
+            <li><a href="/chat_admin"><font color="black">Chat with Admin</font></a></li>
+          </ul>
       </li>
       <li>
         <% if(user_name) {%>
