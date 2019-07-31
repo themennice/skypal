@@ -318,8 +318,8 @@ app.get('/googlelogin:t', async function (req, res) {
     xhr.onload = async function () {
         if (xhr.status != 200) { // analyze HTTP status of the response
             console.error("Error: " + xhr.status + ": " + xhr.statusText) // e.g. 404: Not Found
-        } else {
- 
+        } else { 
+
             const responseObject = JSON.parse(xhr.responseText);
             if (responseObject.email_verified) {
                 const client = await pool.connect();
