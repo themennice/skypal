@@ -129,8 +129,19 @@ app.post("/del", function(req, res){
   if (e.submit == "remove") {
 		DBremove(e);
 	}
+  if (e.submit == "pdf") {
+        var file = path.join(__dirname, 'public/pdf.pdf');
+        res.download(file, function (err) {
+        if (err) {
+           console.log("Error");
+           console.log(err);
+        } else {
+           console.log("Success");
+        }
+        });
+    }
 
-	res.redirect('/login');
+	res.redirect('/profile');
 });
 
 
