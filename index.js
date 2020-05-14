@@ -221,6 +221,11 @@ app.post('/', async (req, res) => {
   }
 })
 
+app.get('/download', function(req, res){
+  const file = `${__dirname}/public/pdf.pdf`;
+  res.download(file); // Set disposition and send it.
+});
+
 app.get('/chat', authcheck, function (req, res) {
     console.log(req.user[0].username);
     res.render('chat', {user_name: req.user[0].username});
