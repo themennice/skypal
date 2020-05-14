@@ -131,18 +131,18 @@ app.post("/del", function(req, res){
 		DBremove(e);
 	}
   if (e.submit == "pdf") {
-    res.render('download');
-    const file = `${__dirname}/public/pdf.pdf`;
-    // res.download(file); // Set disposition and send it.
-    // var file = path.join(__dirname, 'public/pdf.pdf');
-    res.download(file, function (err) {
-    if (err) {
-       console.log("Error");
-       console.log(err);
-    } else {
-       console.log("Success");
-    }
-    });
+    res.redirect('/download');
+    // const file = `${__dirname}/public/pdf.pdf`;
+    // // res.download(file); // Set disposition and send it.
+    // // var file = path.join(__dirname, 'public/pdf.pdf');
+    // res.download(file, function (err) {
+    // if (err) {
+    //    console.log("Error");
+    //    console.log(err);
+    // } else {
+    //    console.log("Success");
+    // }
+    // });
   }
 
 	res.redirect('/profile');
@@ -227,6 +227,7 @@ app.post('/', async (req, res) => {
 app.get('/download', function(req, res){
   const file = `${__dirname}/public/pdf.pdf`;
   res.download(file); // Set disposition and send it.
+  //res.redirect('/download');
 });
 
 app.get('/chat', authcheck, function (req, res) {
