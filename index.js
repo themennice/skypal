@@ -126,6 +126,7 @@ function DBremove(sender) {
 app.post("/del", function(req, res){
 	var e = req.body;
   console.log(e);
+  console.log("What is going on here");
   if (e.submit == "remove") {
 		DBremove(e);
 	}
