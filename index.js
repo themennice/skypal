@@ -145,7 +145,7 @@ app.post("/del", function(req, res){
     // });
   }
 
-	res.redirect('/profile');
+	//res.redirect('/profile');
 });
 
 
