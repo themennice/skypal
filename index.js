@@ -132,23 +132,10 @@ app.post("/del", function(req, res){
 	}
   if (e.submit == "pdf") {
     res.redirect('/download');
-    // const file = `${__dirname}/public/pdf.pdf`;
-    // // res.download(file); // Set disposition and send it.
-    // // var file = path.join(__dirname, 'public/pdf.pdf');
-    // res.download(file, function (err) {
-    // if (err) {
-    //    console.log("Error");
-    //    console.log(err);
-    // } else {
-    //    console.log("Success");
-    // }
-    // });
   }
 
 	//res.redirect('/profile');
 });
-
-
 
 //Search & Display Tickets
 app.post('/', async (req, res) => {
